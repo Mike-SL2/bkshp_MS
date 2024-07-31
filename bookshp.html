@@ -1,34 +1,51 @@
 ﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta charset="UTF-8">		
 				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  				
-<title>BookShop</title><body>
-<style> header,main,slider,.slider_nav{display:flex;}
-	header {background:pink;height:70px;}
-	slider {flex-flow:column wrap;align-items:center;background:aqua;position:relative;}
-		.slider_pic{height:300px;width:300px;background:lightgray;}
+<title>BookShop</title>
+<style> .container0{max-width:1860px;margin:0px auto 0px;}
+	header,main{display:flex;}
+	header {align-items:center;height:175px;margin-top:19px;border:1px solid gold;}
+		.eSpc{flex-shrink:4; border:1px solid lime; } .eSpc_w410{width:410px;  } .eSpc_w420{width:420px;  } .eSpc_w70{width:70px;  }
+		.logo{font-size:38px;font-weight:700;}
+		.hdr_links{text-decoration:none; color:black;font-size:28px;flex-shrink:0;}
+			.link_w100{width:90px;}.link_w220{width:180px;}.link_w310{width:310px;}
+		.hdr_links:focus{ color:red;font-weight:700; }
+		.books_link{}
+	slider {position:relative;}
+		.sliderContainer{width:100%; /*height:1169px;*/}
 		.slider_pic_link{position:absolute;height:100px;width:100px;right:200px;}
-			.link_1{background:blue;}	.link_2{background:red;right:180px;top:150px;}
-		.slider_nav{gap:10px;align-items:center;justify-content:center;background:yellow; height:30px;width:100px;}
-		.slider_nav_button{background:red;height:20px;width:20px;border-radius:50%;}
+			.link_1{background:blue;right:100px;top:10px;}	.link_2{background:red;right:180px;top:150px;}
+		.sliderSwitch{width:100px; height:25px;margin:0px auto 0px;}
 	main   {background:palegreen;}
 		sidebar    {background:goldenrod;height:170px;width:100px;}
 		.bookblock {background:lime;height:270px;width:90%;margin-left:-10px;opacity:0.5;}
 	footer {background:magenta;height:70px;}
-</style>
-<header>HEADER</header>
+</style><body>
+<div class="container0"> 
+<header>
+	<div class="logo">Bookshop</div>	<div class="eSpc eSpc_w410"> </div>
+	  <a href='#' class="hdr_links link_w100">BOOKS</a>			<div class="eSpc eSpc_w70"> </div>
+	  <a href='#' class="hdr_links link_w220">AUDIOBOOKS</a>		<div class="eSpc eSpc_w70"> </div>
+	  <a href='#' class="hdr_links link_w310" >STATIONARY&nbsp;&&nbsp;GIFTS</a>	<div class="eSpc eSpc_w70"> </div>
+	  <a href='#footer_blk' class="hdr_links link_w100">BLOG</a>		<div class="eSpc eSpc_w420"> </div>
+</header>
 <slider>
-	<div class="slider_pic">slider_pic</div>
+	<div class="sliderContainer"> </div>
 	<div class="slider_pic_link link_1">Link1</div>	<div class="slider_pic_link link_2">Link1</div>
-	<div class="slider_nav">
-		<div class="slider_nav_button"></div>
-		<div class="slider_nav_button"></div>
-		<div class="slider_nav_button"></div>
-	</div>
+	<div class="sliderSwitch"> </div>
 </slider>
 <main>
 	<sidebar>sidebar</sidebar>
 	<div class="bookblock">bookblock</div>
 </main>
 
-<footer>footer</footer>
+<footer>
+<div id="footer_blk"> </div>
+footer</footer>
+</div>
+<script src="bshp_modules/slider.js"></script>
+
+<script>
+slideShow(3,4);
+</script>
 </body></html>
