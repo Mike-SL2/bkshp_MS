@@ -2,20 +2,31 @@
 				<meta charset="UTF-8">		
 				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  				
 <title>BookShop</title>
-<style> .container0{max-width:1860px;margin:0px auto 0px;}
-	header,main{display:flex;}
-	header {align-items:center;height:175px;margin-top:19px;border:1px solid gold;}
-		.eSpc{flex-shrink:4;} .eSpc_w410{width:410px;  } .eSpc_w420{width:420px;  } .eSpc_w70{width:70px;  }
-		.logo{font-size:38px;font-weight:700;}
-		.hdr_links{text-decoration:none; color:black;font-size:28px;flex-shrink:0;}
-			.link_w100{width:90px;}.link_w220{width:180px;}.link_w310{width:310px;}
-		.hdr_links:focus{ color:red;font-weight:700; }
-		.books_link{}
+<style> 
+*::selection{background:transparent;}
+@font-face {font-family: "Montserrat-Bold";	src: url("font2/Montserrat-Bold.ttf") format("truetype");} 
+@font-face {font-family: "Montserrat-Regular";	src: url("font2/Montserrat-Regular.ttf") format("truetype");} 	
+.container0{max-width:1440px;margin:0px auto 0px;}
+	header,main,.menu,.icons{display:flex;}
+		    .menu,.icons{justify-content:space-between;}
+	header {height:116px;align-items:center;margin-top:19px;}							    
+		.logo{width:128px;height:29px;font-size:24px;font-family:Montserrat-Bold;font-weight:700;cursor:default;}
+		.menu{width:332px;height:12px; }
+		.mnu_links{flex-shrink:0;text-decoration:none;text-transform: uppercase;color:black;font-size:10px;
+			   font-family:Montserrat-Regular;margin:0px 5px 0px 5px;}
+		.mnu_eSpc{flex-shrink:4;} 
+							    .link_w244{width:244px;} .link_w166{width:166px;} 
+							    .link_w39{width:39px;}   .link_w74{width:74px;}
+							    .link_w109{width:109px;} .link_w30{width:30px;}
+			.link_w270{width:270px;}	
+		.icons{width:131px;height:17px;}
+		.mnu_links:focus{ font-weight:900; }
+		
 	slider {position:relative;}
-		.sliderContainer{width:100%;}
+		.sliderContainer{width:77%;margin:0px auto 0px;}
 		.slider_pic_link{position:absolute;height:100px;width:100px;right:200px;}
 			.link_1{background:blue;right:100px;top:10px;}	.link_2{background:red;right:180px;top:150px;}
-		.sliderSwitch{width:100px; height:25px;margin:0px auto 0px;}
+		.sliderSwitch{width:56px; height:12px;margin:17px auto 129px;border:1px solid gold;}
 	main   {background:palegreen;}
 		sidebar    {background:goldenrod;height:170px;width:100px;}
 		.bookblock {background:lime;height:270px;width:90%;margin-left:-10px;opacity:0.5;}
@@ -23,11 +34,22 @@
 </style><body>
 <div class="container0"> 
 <header>
-	<div class="logo">Bookshop</div>	<div class="eSpc eSpc_w410"> </div>
-	  <a href='#' class="hdr_links link_w100">BOOKS</a>			<div class="eSpc eSpc_w70"> </div>
-	  <a href='#' class="hdr_links link_w220">AUDIOBOOKS</a>		<div class="eSpc eSpc_w70"> </div>
-	  <a href='#' class="hdr_links link_w310" >STATIONERY&nbsp;&&nbsp;GIFTS</a>	<div class="eSpc eSpc_w70"> </div>
-	  <a href='#footer_blk' class="hdr_links link_w100">BLOG</a>		<div class="eSpc eSpc_w420"> </div>
+	<div class="mnu_eSpc link_w166"> </div>
+	<div class="logo">Bookshop</div>							<div class="mnu_eSpc link_w244"> </div>
+	<div class="menu">									
+	  <a href='#' class="mnu_links link_w39">		Books				</a>	
+	  <a href='#' class="mnu_links link_w74">		AUDIOBooks			</a>	
+	  <a href='#' class="mnu_links link_w109">		STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
+	  <a href='#footer_blk' class="mnu_links link_w30">	Blog				</a>		  	
+	</div>					<div class="mnu_eSpc link_w270"> </div>	
+	<div class="icons">
+		<a href='#' class="mnu_links">
+			<img src="menu_ico_profile.svg">	</a>
+		<a href='#' class="mnu_links">
+			<img src="menu_ico_search.svg">		</a>
+		<a href='#' class="mnu_links">		
+			<img src="menu_ico_cart.svg">		</a>
+	</div>	
 </header>
 <slider>
 	<div class="sliderContainer"> </div>
