@@ -1,35 +1,43 @@
 ﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta charset="UTF-8">		
-				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  				
-<title>BookShop</title>
+				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  
+		<link rel="stylesheet" href="styl/rst-0.css">
+		<link rel="stylesheet" href="styl/fnt-0.css">				
+<title>BookShop-MS v.0.4.0</title>
 <style> 
-*::selection{background:transparent;}
-@font-face {font-family: "Montserrat-Bold";	src: url("font2/Montserrat-Bold.ttf") format("truetype");} 
-@font-face {font-family: "Montserrat-Regular";	src: url("font2/Montserrat-Regular.ttf") format("truetype");} 	
-.container0{max-width:1440px;margin:0px auto 0px;}
-	header,main,.menu,.ico_link_container{display:flex;}
-		    .menu,.ico_link_container{justify-content:space-between;}
-	header {height:116px;align-items:center;margin-top:19px;}							    
-		.logo{width:128px;height:29px;font-size:24px;font-family:Montserrat-Bold;font-weight:700;cursor:default;}
+.container0{max-width:1440px;}
+   .sliderContainer,header,.header_hoop,footer,main{width:77%;}
+	.menu,.ico_link_container{display:flex;}
+	.menu,.ico_link_container{justify-content:space-between;}
+.header_wrap{position:sticky;z-index:2;top:0px; height:127px;margin-top:19px; }
+	header,.header_hoop{background-color:white;}
+	header {height:92%; align-items:center;}
+	.header_hoop{border-top:2px solid lightgray;height:8%;}							    
+		.logo{width:128px;height:29px;font-family:Montserrat-Bold;font-weight:700;}
 		.menu{width:332px;height:12px; }
-		.mnu_links{flex-shrink:0;text-decoration:none; text-transform: uppercase;color:black;font-size:10px;
+		.mnu_links{flex-shrink:0;text-transform: uppercase;
 			   font-family:Montserrat-Regular;margin:0px 5px 0px 5px;}  
-	        .mnu_links:focus{font-weight:900;text-decoration:underline;text-underline-position:under;}
+	        .mnu_links:focus{font-weight:900;text-decoration:underline;}
 		.mnu_eSpc{flex-shrink:4;} 
-							    .link_w244{width:244px;} .link_w166{width:166px;} 
-							    .link_w39{width:39px;}   .link_w74{width:74px;}
-			.link_w270{width:270px;}	    .link_w109{width:109px;} .link_w30{width:30px;}
-		.menu_icons{margin:0px 2px 0px 3px; }
-		.icons,.icon_link{height:17px;}		    .ico_link_container,.cart_bage{position:absolute;}			
+							    .spc_244{width:244px;} 
+							    .spc_39{width:39px;}   .spc_74{width:74px;}
+			.spc_270{width:270px;}	    .spc_109{width:109px;} .spc_30{width:30px;}
+	.ico_link_container{width:121px;}
+		.menu_ico,.cart_bage{cursor:pointer;}
+		       .icon_link,.menu_ico{flex-shrink:0;width:17px;height:17px;}
+		/* icons selection circle when focused */
+		       .icon_link{border:1px solid transparent;}
+		       .icon_link:focus .menu_ico{transform:scale(0.67);}
 	    	       .icon_link:focus{transform:scale(1.5);border-radius:50%;border:1px solid pink;}
 		       .icon_link:focus .cart_bage{transition:all;transition-duration:1000ms;	  bottom:-10px;
-						   background-color:green;transform:scale(0.9);	   right:-10px;	}	
-			.cart_bage{justify-content:center;align-items:center;	bottom:-7px;	display:none;
-				   height:15px;width:15px;border-radius:50%;    right:-7px;
-				   background-color:red;font-size:10px;font-weight:600;		color:white;}
+						   background-color:green;transform:scale(0.67);   right:-10px;	}
+	
+			.cart_bage{position:absolute;	display:none; 		bottom:-7px;	
+				   height:15px;width:15px;border-radius:50%;	right:-7px;				      						
+				   background-color:red;	font-weight:600;	color:white;}
 
-	slider,.icons,.icon_link{position:relative;}
-		.sliderContainer{width:77%;margin:0px auto 0px;}
+	slider,.icon_link{position:relative;}
+		
 		.slider_pic_link{position:absolute;height:100px;width:100px;right:200px;}
 			.link_1{background:blue;right:100px;top:10px;}	.link_2{background:red;right:180px;top:150px;}
 		.sliderSwitch{width:56px; height:12px;margin:17px auto 129px;border:1px solid gold;}
@@ -38,27 +46,33 @@
 		.bookblock {background:lime;height:270px;width:90%;margin-left:-10px;opacity:0.5;}
 	footer {background:magenta;height:70px;}
 </style><body>
-<div class="container0"> 
+<div class="container0 blok_centr"> 
+<div class="header_wrap"> 
 <header>
-	<div class="mnu_eSpc link_w166"> </div>
-	<div class="logo" title="Bookshop logotype">Bookshop</div>							<div class="mnu_eSpc link_w244"> </div>
+<!-- LOGO -->	
+	<div class="logo fnt_size_24" title="Bookshop logotype">Bookshop</div>		<div class="mnu_eSpc spc_244"> </div>
+<!-- Nav MENU -->
 	<div class="menu">									
-	  <a href='#' class="mnu_links link_w39" title="Books">			Books				</a>	
-	  <a href='#' class="mnu_links link_w74" title="AUDIOBooks">		AUDIOBooks			</a>	
-	  <a href='#' class="mnu_links link_w109" title="STATIONERY and GIFTS">	STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
-	  <a href='#' class="mnu_links link_w30" title="Blog page">		Blog				</a>		  	
-	</div>					<div class="mnu_eSpc link_w270"> </div>	
-	<div class="icons">			
+	  <a href='#' class="mnu_links spc_39 fnt_size_10" title="Books">		 Books				</a>	
+	  <a href='#' class="mnu_links spc_74 fnt_size_10" title="AUDIOBooks">		 AUDIOBooks			</a>	
+	  <a href='#' class="mnu_links spc_109 fnt_size_10" title="STATIONERY and GIFTS">STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
+	  <a href='#' class="mnu_links spc_30 fnt_size_10" title="Blog page">		 Blog				</a>		  	
+	</div>					<div class="mnu_eSpc spc_270"> </div>	
+<!-- Nav Links: profile, search, client cart icons block -->			
 		<div class="ico_link_container">		
-			<a href='#' class="icon_link" title="client profile page"></a>	
-			<a href='#' class="icon_link" title="search page"></a>	
-			<a href='#' class="icon_link" title="client cart page"><div class="cart_bage"></div></a>
+			<a href='#' class="icon_link" title="client profile page">
+						<img src="ico/user.svg" class="menu_ico">		</a>	
+			<a href='#' class="icon_link" title="search page">
+						<img src="ico/search.svg" class="menu_ico">		</a>	
+			<a href='#' class="icon_link" title="client cart page">
+						<img src="ico/cart.svg" class="menu_ico">
+						<div class="cart_bage fnt_size_10 flex_centr"></div>	</a>
 		</div>				
-		<img src="ico/menu_icons.svg" class="menu_icons" alt= "profile, search, client cart icons block">		
-	</div>	
 </header>
+<div class="header_hoop blok_centr"> </div>
+</div><!-- header_wrap -->
 <slider>
-	<div class="sliderContainer"> </div>
+	<div class="sliderContainer blok_centr"> </div>
 	<div class="slider_pic_link link_1">Link1</div>	<div class="slider_pic_link link_2">Link1</div>
 	<div class="sliderSwitch"> </div>
 </slider>
@@ -76,17 +90,10 @@ footer</footer>
 
 <script>
 const doc0 = document;
-//ico_link_container class width calculation
-const ico_link_container=doc0.querySelector('.ico_link_container'), icons=doc0.querySelector('.icons');
-ico_link_container.style.width = window.getComputedStyle(icons,null).getPropertyValue('width');
-//icon_link class width calculation
-const icon_link=doc0.querySelectorAll('.icon_link'),
-icon_link_width = window.getComputedStyle(icon_link[0],null).getPropertyValue('height');
-icon_link.forEach((ico_lnk)=>{ico_lnk.style.width=icon_link_width;});
 //cart_bage element content fill
 const cart_bage=doc0.querySelector('.cart_bage'); 
 						 cart_bage.style.display='flex'; cart_bage.innerHTML='4';
 
-slideShow(3,4);
+slideShow(3,8);
 </script>
 </body></html>

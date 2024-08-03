@@ -1,0 +1,7 @@
+﻿*::selection{background-color:transparent;}
+*{background-color:transparent;text-underline-position:under;padding:0px;margin:0px;
+  cursor:default;}
+a{text-decoration:none;color:black;cursor:pointer;}
+.flex_centr{justify-content:center;align-items:center;}
+.blok_centr,header,main,footer{margin:0px auto 0px;}
+	    header,main,footer{display:flex;}

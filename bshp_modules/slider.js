@@ -1,6 +1,6 @@
 ﻿'use strict';
 console.log('slider module loaded');
-const slider=function(frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png", 	speed="normal"){
+const slider=function(frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png", 	speed="slow"){
 		const doc1 = document, 				container = doc1.querySelector('.'+frameclass),
 		      picFrame = doc1.createElement('div'),	warnBlk = doc1.createElement('div'),  
 		      pFStl=picFrame.style,			wbStl = warnBlk.style,		      		      
@@ -13,7 +13,7 @@ const slider=function(frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf=
 		picShiftX,
 		frameStep,warnFontSize,loadErr=false;
 function frameDim(){
-	const picRatio = 1.6;
+	const picRatio = 1.58;
 	frmWidth = window.getComputedStyle(container,null).getPropertyValue('width');	
 	frmWidth = frmWidth.match(/\d+/)[0];    frameStep = 1+Math.floor(frmWidth/200);	warnFontSize = (1+Math.floor(frmWidth/50));
 	pFStl.height=Math.round(frmWidth/picRatio)+px;
