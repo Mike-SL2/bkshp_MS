@@ -3,25 +3,27 @@
 				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  
 		<link rel="stylesheet" href="styl/rst-0.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">				
-<title>BookShop-MS v.0.4.0</title>
+<title>BookShop-MS v.0.5.2</title>
 <style> 
 .container0{max-width:1440px;}
-   .sliderContainer,header,.header_hoop,footer,main{width:77%;}
+   .sliderContainer,header,footer,main{width:77%;}
 	.menu,.ico_link_container{display:flex;}
-	.menu,.ico_link_container{justify-content:space-between;}
+	.menu,.ico_link_container,header{justify-content:space-between;}
 .header_wrap{position:sticky;z-index:2;top:0px; height:127px;margin-top:19px; }
 	header,.header_hoop{background-color:white;}
-	header {height:92%; align-items:center;}
-	.header_hoop{border-top:2px solid lightgray;height:8%;}							    
-		.logo{width:128px;height:29px;font-family:Montserrat-Bold;font-weight:700;}
-		.menu{width:332px;height:12px; }
+	header{min-width:500px;height:92%;padding:0% 1.5% 0%; }
+	.header_hoop{width:80%;}
+	.header_hoop{border-top:2px solid lightgray;height:8%;}
+header, .logo,.menu,.ico_link_container	{align-items:center;}
+	.logo,.menu,.ico_link_container	{height:29px;}						    
+		.logo{width:128px;font-family:Montserrat-Bold;font-weight:700;margin-left:4px;}
+		.menu{width:332px;}
 		.mnu_links{flex-shrink:0;text-transform: uppercase;
-			   font-family:Montserrat-Regular;margin:0px 5px 0px 5px;}  
+			   font-family:Montserrat-Regular;}  
 	        .mnu_links:focus{font-weight:900;text-decoration:underline;}
-		.mnu_eSpc{flex-shrink:4;} 
-							    .spc_244{width:244px;} 
 							    .spc_39{width:39px;}   .spc_74{width:74px;}
-			.spc_270{width:270px;}	    .spc_109{width:109px;} .spc_30{width:30px;}
+				     .spc_109{width:109px;} .spc_30{width:30px;}
+	.menu,.ico_link_container{flex-shrink:4;}
 	.ico_link_container{width:121px;}
 		.menu_ico,.cart_bage{cursor:pointer;}
 		       .icon_link,.menu_ico{flex-shrink:0;width:17px;height:17px;}
@@ -36,8 +38,7 @@
 				   height:15px;width:15px;border-radius:50%;	right:-7px;				      						
 				   background-color:red;	font-weight:600;	color:white;}
 
-	slider,.icon_link{position:relative;}
-		
+	slider,.icon_link{position:relative;}		
 		.slider_pic_link{position:absolute;height:100px;width:100px;right:200px;}
 			.link_1{background:blue;right:100px;top:10px;}	.link_2{background:red;right:180px;top:150px;}
 		.sliderSwitch{width:56px; height:12px;margin:17px auto 129px;border:1px solid gold;}
@@ -45,19 +46,25 @@
 		sidebar    {background:goldenrod;height:170px;width:100px;}
 		.bookblock {background:lime;height:270px;width:90%;margin-left:-10px;opacity:0.5;}
 	footer {background:magenta;height:70px;}
+@media (max-width: 800px) {header{height:14vw;padding:0;} 
+			   .header_wrap{height:15vw;margin-top:2.5vw;}
+			   .header_hoop,header{width:85vw;}	.menu{margin:0px 10px 0px 10px;}
+			   .fnt_size_10{font-size:8px;} .spc_39,.spc_74,.spc_109,.spc_30{width:auto;}
+			   .ico_link_container{width:15vw;}
+}
 </style><body>
 <div class="container0 blok_centr"> 
 <div class="header_wrap"> 
 <header>
 <!-- LOGO -->	
-	<div class="logo fnt_size_24" title="Bookshop logotype">Bookshop</div>		<div class="mnu_eSpc spc_244"> </div>
+	<div class="logo fnt_size_24" title="Bookshop logotype">Bookshop</div>		
 <!-- Nav MENU -->
 	<div class="menu">									
 	  <a href='#' class="mnu_links spc_39 fnt_size_10" title="Books">		 Books				</a>	
 	  <a href='#' class="mnu_links spc_74 fnt_size_10" title="AUDIOBooks">		 AUDIOBooks			</a>	
 	  <a href='#' class="mnu_links spc_109 fnt_size_10" title="STATIONERY and GIFTS">STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
 	  <a href='#' class="mnu_links spc_30 fnt_size_10" title="Blog page">		 Blog				</a>		  	
-	</div>					<div class="mnu_eSpc spc_270"> </div>	
+	</div>						
 <!-- Nav Links: profile, search, client cart icons block -->			
 		<div class="ico_link_container">		
 			<a href='#' class="icon_link" title="client profile page">

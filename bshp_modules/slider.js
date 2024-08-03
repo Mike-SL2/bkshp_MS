@@ -1,6 +1,9 @@
 ﻿'use strict';
 console.log('slider module loaded');
-const slider=function(frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png", 	speed="slow"){
+const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
+const diagMessages = false;
+if (diagMessages) {console.log('diag Messages Enabled');
+		   console.log('slider: speed',speed,'|',' frameclasss:',frameclass);}
 		const doc1 = document, 				container = doc1.querySelector('.'+frameclass),
 		      picFrame = doc1.createElement('div'),	warnBlk = doc1.createElement('div'),  
 		      pFStl=picFrame.style,			wbStl = warnBlk.style,		      		      
@@ -41,6 +44,7 @@ window.addEventListener('resize',frameDim);
 	function slider(nextSlide=0){
 		let probeImg = doc1.createElement('img'), idA, movInterval, loadFail = true;
 		    probeImg.src = `${bPrefx}${nextSlide}${bPstfx}`;
+		if (diagMessages) {console.log(nextSlide,'img src path: ',probeImg.src);}
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
 		probeImg.addEventListener("error", () => {wbStl.display='block';});		    
 		probeImg.addEventListener("load", () => {
@@ -114,4 +118,4 @@ if ((timeout>0) && (timeout<101)) {
 				swState(n);				
 	};
 return slide;};
-const launchSlide = slider();
+const launchSlide = slider('moderate');
