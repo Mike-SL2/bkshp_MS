@@ -3,5 +3,5 @@
   cursor:default;}
 a{text-decoration:none;color:black;cursor:pointer;}
 .flex_centr{justify-content:center;align-items:center;}
-.blok_centr,header,main,footer{margin:0px auto 0px;}
-	    header,main,footer{display:flex;}
+.blok_centr,header,footer{margin:0px auto 0px;}
+	    header,footer{display:flex;}

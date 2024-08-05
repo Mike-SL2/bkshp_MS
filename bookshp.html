@@ -3,8 +3,7 @@
 				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  
 		<link rel="stylesheet" href="styl/rst-0.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">				
-<title>BookShop-MS v.0.6.1</title>
-<style> 
+<title>BookShop-MS v.0.6.1</title>		<style> 
 .container0{max-width:1440px;}
    .sliderContainer,header,footer,main{width:77%;}
 	.menu,.ico_link_container{display:flex;flex-shrink:4;}
@@ -40,29 +39,45 @@ header, .logo,.menu,.ico_link_container	{align-items:center;}
 	slider,.icon_link,main{position:relative;}	
 	
 		.slider_pic_link{position:absolute;z-index:1;}
-		  .slider_pic_link_pos1{top:41px;right:90px;}
-		  .slider_pic_link_pos2{top:350px;right:0px;}
-		     .slider_pic_link_box{box-shadow:0px 15px 17px 0px lightgray;
-					  box-sizing:border-box;
-					  font-family:Arial;font-size:20px;font-weight:700;}
+		  .slider_pic_link_pos1{top:3vw;right:6vw;}
+		  .slider_pic_link_pos2{top:23vw;;right:0px;}
+		     .slider_pic_link_box{
+				box-shadow:0px 1vw 1.5vw 0px lightgray;	
+				font-size:1.3vw;				  
+				font-family:Arial;font-weight:700;box-sizing:border-box;}
 			
-			.slider_pic_link_box1{width:150px; height:200px;background:rgb(158,152,220);
-					      padding:90px 10px 10px 20px;}	
-			.slider_pic_link_box2{width:130px; height:250px;background:rgb(255,143,230);
-					      padding:120px 40px 10px 20px; }
+			.slider_pic_link_box1{width:10vw; height:13vw;		
+					      padding:6vw 1vw 1vw 1.5vw;	background:rgb(158,152,220);}	
+			.slider_pic_link_box2{width:9vw; height:17vw;		
+					      padding:8vw 4vw 1vw 1.5vw;	background:rgb(255,143,230);}
 
-		.sliderSwitch{width:56px; height:12px;margin:17px auto 0px;}
+	.sliderSwitch{width:4vw; height:0.8vw; margin:1vw auto 0px;}
 	main   {margin:129px auto 129px;}
 		sidebar    {position:absolute;background:goldenrod;height:170px;width:12%;top:40px; }
 		.bookblock {background:lime;height:270px;width:90%;margin-left:10%;opacity:0.5;}
 
 	footer {background:magenta;height:70px;}
-@media (max-width: 800px) {header{height:14vw;padding:0;} 
+@media (max-width: 800px) { 
+			header{height:14vw;padding:0;} 
 			   .header_wrap{height:15vw;margin-top:2.5vw;}
 			   .header_hoop,header{width:85vw;}	.menu{margin:0px 10px 0px 10px;}
 			   .fnt_size_10{font-size:8px;} .spc_39,.spc_74,.spc_109,.spc_30{width:auto;}
 			   .ico_link_container{width:15vw;}
-			main   {margin:15vw auto 15vw;}
+	.slider_pic_link_box{font-weight:500;}
+			main{margin:15vw auto 15vw;}			
+}
+@media (min-width: 1440px) {
+			.slider_pic_link_pos1{top:41px;right:90px;}
+		  .slider_pic_link_pos2{top:350px}
+		     .slider_pic_link_box{
+				box-shadow:0px 15px 17px 0px lightgray;
+				font-size:20px;}
+			
+			.slider_pic_link_box1{width:150px; height:200px;
+					      padding:90px 10px 10px 20px;}	
+			.slider_pic_link_box2{width:130px; height:250px;
+					      padding:120px 40px 10px 20px;}
+	.sliderSwitch{width:56px;height:12px;margin:17px auto 0px;}
 }
 </style><body>
 <div class="container0 blok_centr"> 

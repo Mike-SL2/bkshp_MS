@@ -1,5 +1,10 @@
-﻿'use strict';
+﻿//slider modeule v.3.0.1 for bookshop prj
+'use strict';
 console.log('slider module loaded');
+function getPropNum(blockName,propertyName){ 
+	const property = window.getComputedStyle(blockName,null).getPropertyValue(propertyName);
+return property.match(/\d+/)[0];  
+};
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 const diagMessages = false;
 if (diagMessages) {console.log('diag Messages Enabled');
@@ -17,8 +22,8 @@ if (diagMessages) {console.log('diag Messages Enabled');
 		frameStep,warnFontSize,loadErr=false;
 function frameDim(){
 	const picRatio = 1.58;
-	frmWidth = window.getComputedStyle(container,null).getPropertyValue('width');	
-	frmWidth = frmWidth.match(/\d+/)[0];    frameStep = 1+Math.floor(frmWidth/200);	warnFontSize = (1+Math.floor(frmWidth/50));
+	frmWidth = getPropNum(container,'width');	
+        frameStep = 1+Math.floor(frmWidth/200);	warnFontSize = (1+Math.floor(frmWidth/50));
 	pFStl.height=Math.round(frmWidth/picRatio)+px;
 };
 frameDim();
@@ -73,30 +78,37 @@ return slider;},
 
 slideShow=function(amount=0, timeout = 0, inactClr="palegreen", actClr="fuchsia", 
 		   frameclass="sliderSwitch", sliderName=launchSlide){
-		const doc1 = document,	switchBlock = doc1.querySelector('.'+frameclass);
+		const doc1 = document, px = 'px',	switchBlock = doc1.querySelector('.'+frameclass);
 if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wrong container name for sliderControl module'; 
 				     doc1.write(noPrnt+'<br>');	                  console.log(noPrnt);
 				    };
-function getProp(propertyName){return window.getComputedStyle(switchBlock,null).getPropertyValue(propertyName);
-};
-		const   swHeight = getProp('height'),	swHeightNum = swHeight.match(/\d+/)[0],
-		         swWidth = getProp('width'),	swWidthNum = swWidth.match(/\d+/)[0],
-			slideControlButtonClassName = "slideCtrlButton",
-			swBlkStl = switchBlock.style,   slideShowPauseCount = 2,
-			maxAmount = Math.round((swWidthNum/swHeightNum+0.5)/1.5);
+		const   slideControlButtonClassName = "slideCtrlButton",
+			swBlkStl = switchBlock.style,   slideShowPauseCount = 2;
 			swBlkStl.display='flex';	swBlkStl.justifyContent='space-between';
-		let ctrlBtn,cBtnStl, pauseShow = 0, slideNum = 0, amountMinusOne;	
-		if ((amount<2) || (amount>maxAmount))  {amount = maxAmount};		
+		let ctrlBtn = null,cBtnStl, pauseShow = 0, slideNum = 0,
+		    swHeightNum,  swWidthNum,  maxAmount, amountMinusOne;
+function switchDim (){
+	swHeightNum = getPropNum(switchBlock,'height');		
+	swWidthNum = getPropNum(switchBlock,'width');			
+};
+	switchDim ();
+maxAmount = Math.round((swWidthNum/swHeightNum+0.5)/1.5);	
+if ((amount<2) || (amount>maxAmount))  {amount = maxAmount};		
 amountMinusOne = amount-1;
 // switch block clear
 switchBlock.innerHTML='';
 for (let i=0;i<amount;i++) {ctrlBtn =doc1.createElement('div'); cBtnStl = ctrlBtn.style;		cBtnStl.cursor='pointer';
 			    cBtnStl.backgroundColor=inactClr;	cBtnStl.borderRadius='50%';
-			    cBtnStl.width=swHeight;		cBtnStl.height=swHeight;
+				cBtnStl.width=swHeightNum+px;		cBtnStl.height=swHeightNum+px;
 ctrlBtn.classList.add(slideControlButtonClassName);	
 switchBlock.appendChild(ctrlBtn);
 };
-	ctrlBtn	= doc1.querySelectorAll('.'+slideControlButtonClassName);
+ctrlBtn	= doc1.querySelectorAll('.'+slideControlButtonClassName);
+// switch block onresize
+window.addEventListener('resize',()=>{	
+		switchDim ();
+		ctrlBtn.forEach((i)=>{i.style.width=swHeightNum+px;	i.style.height=swHeightNum+px;});	
+});	
 function swState(activeBtnNumber){
 		ctrlBtn.forEach((i,n)=>{if (activeBtnNumber===n){i.style.backgroundColor=actClr;  sliderName(n);  slideNum=n;
 					} 	else		{i.style.backgroundColor=inactClr;}})
