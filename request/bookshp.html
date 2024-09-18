@@ -1,0 +1,44 @@
+﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta charset="UTF-8">					
+	<title>request-GOOGLE-API</title>	
+<body>
+<script src='sample_response.js'> </script>
+<script>
+//console.log('sample_response',JSON.parse(sample_response));
+const requestString = `https://www.googleapis.com/books/v1/volumes?q="subject:Business"&key=AIzaSyAOxRLvgkvNyb_NzWAoX2xvkwkVEa03wkU&printType=books&startIndex=0&maxResults=6&langRestrict=en`;
+const f_options={method:"GET",
+		 mode:"cors",
+		 headers:{'content-type':'application/json'}		 
+};
+let intervalID=null, out_data=null;
+console.log('fetch ',requestString);
+fetch(requestString,f_options)
+	.then((result)=>{return result.json();})	.then((data)=>{console.log('fetch result',data);
+									out_data=data;})
+	.catch(()=>{console.log('fetch error');clearInterval (intervalID);});
+
+intervalID=setInterval(()=>{if (out_data) {clearInterval (intervalID);console.log(out_data);}},600);
+
+
+
+
+
+
+function makeRequest(reqString) {  
+  let xhR = new XMLHttpRequest(),response = null, intervalID=null;
+      xhR.open("get", `${reqString}`);
+      xhR.onload = function () {
+        if (xhR.status === 200) { 		
+		localStorage.setItem('RRR', xhR.response); 
+		console.log(JSON.parse(localStorage.getItem('RRR')));
+		document.write("Готово.");    };           
+      };
+      xhR.onerror = function () {
+        document.write(`Ошибка! Cтатус запроса: ${xhR.status}`);
+      fOut(); 
+      };
+      document.write("Выполняется запрос...");
+      xhR.send();
+};//makeRequest(requestString);
+</script>
+</body></html>

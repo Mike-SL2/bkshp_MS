@@ -1,0 +1,23 @@
+﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta charset="UTF-8">					
+	<title>fetch request</title>	
+<body>
+<script>
+const requestString = `https://www.googleapis.com/books/v1/volumes?q="subject:Business"&key=AIzaSyAOxRLvgkvNyb_NzWAoX2xvkwkVEa03wkU&printType=books&startIndex=0&maxResults=6&langRestrict=en`;
+
+let intervalID=null, out_data=null;
+function fetchRequest(reqString) {
+const f_options={method:"GET",
+		 mode:"cors",
+		 headers:{'content-type':'application/json'}		 
+};
+fetch(reqString,f_options)
+	.then((result)=>{return result.json();})	.then((data)=>{console.log('fetch result',data);})
+	.catch(()=>{console.log('fetch error');if (intervalID) {clearInterval (intervalID);}});
+};
+//intervalID=setInterval(()=>{if (out_data) {clearInterval (intervalID);console.log(out_data);}},600);
+
+fetchRequest(requestString);
+
+</script>
+</body></html>

@@ -1,60 +1,21 @@
 ﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta charset="UTF-8">		
-				<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  
-		<link rel="stylesheet" href="styl/rst-0.css">
-		<link rel="stylesheet" href="styl/fnt-0.css">				
-<title>BookShop-MS v.0.6.1</title>		<style> 
-.container0{max-width:1440px;}
+	<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  
+		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
+		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">				
+	<title>BookShop-MS v.0.6.1</title></head>		<style> 
+body {background-color:oldlace;}
+.container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#E5E5E5;}
    .sliderContainer,header,footer,main{width:77%;}
-	.menu,.ico_link_container{display:flex;flex-shrink:4;}
-	.menu,.ico_link_container,header{justify-content:space-between;}
-   .mnu_links,.slider_pic_link_box{text-transform: uppercase;}
-.header_wrap{position:sticky;z-index:2;top:0px; height:127px;margin-top:19px;}
-	header{min-width:500px;height:92%;padding:0% 1.5% 0%; }
-	.header_hoop{width:80%;}
-	.header_hoop{border-top:2px solid lightgray;height:8%;}
-header, .logo,.menu,.ico_link_container	{align-items:center;}
-	.logo,.menu,.ico_link_container	{height:29px;}						    
-		.logo{width:128px;font-family:Montserrat-Bold;font-weight:700;margin-left:4px;}
-		.menu{width:332px;}
-		.mnu_links{flex-shrink:0;
-			   font-family:Montserrat-Regular;}  
-	        .mnu_links:focus{font-weight:900;text-decoration:underline;}
-							    .spc_39{width:39px;}   .spc_74{width:74px;}
-				     .spc_109{width:109px;} .spc_30{width:30px;}
-	.ico_link_container{width:121px;}
-		.menu_ico,.cart_bage,.slider_pic_link_box{cursor:pointer;}
-		       .icon_link,.menu_ico{flex-shrink:0;width:17px;height:17px;}
-		/* icons selection circle when focused */
-		       .icon_link{border:1px solid transparent;}
-		       .icon_link:focus .menu_ico{transform:scale(0.67);}
-	    	       .icon_link:focus{transform:scale(1.5);border-radius:50%;border:1px solid pink;}
-		       .icon_link:focus .cart_bage{transition:all;transition-duration:1000ms;	  bottom:-10px;
-						   background-color:green;transform:scale(0.67);   right:-10px;	}
-	
-			.cart_bage{position:absolute;	display:none; 		bottom:-7px;	
-				   height:15px;width:15px;border-radius:50%;	right:-7px;				      						
-				   background-color:red;	font-weight:600;	color:white;}
-
-	slider,.icon_link,main{position:relative;}	
-	
-		.slider_pic_link{position:absolute;z-index:1;}
-		  .slider_pic_link_pos1{top:3vw;right:6vw;}
-		  .slider_pic_link_pos2{top:23vw;;right:0px;}
-		     .slider_pic_link_box{
-				box-shadow:0px 1vw 1.5vw 0px lightgray;	
-				font-size:1.3vw;				  
-				font-family:Arial;font-weight:700;box-sizing:border-box;}
-			
-			.slider_pic_link_box1{width:10vw; height:13vw;		
-					      padding:6vw 1vw 1vw 1.5vw;	background:rgb(158,152,220);}	
-			.slider_pic_link_box2{width:9vw; height:17vw;		
-					      padding:8vw 4vw 1vw 1.5vw;	background:rgb(255,143,230);}
-
-	.sliderSwitch{width:4vw; height:0.8vw; margin:1vw auto 0px;}
-	main   {margin:129px auto 129px;}
-		sidebar    {position:absolute;background:goldenrod;height:170px;width:12%;top:40px; }
-		.bookblock {background:lime;height:270px;width:90%;margin-left:10%;opacity:0.5;}
+	main   {margin:129px auto 129px;border:1px solid red; }
+		sidebar    {background-color:#EFEEF6;height:710px;width:416px; }				  
+			.sidebarTextBlock{width:75%;height:80%;	  margin-top:10%;}
+			.sidebarItem,.sibarMark{align-items:center;}   		   
+			   .sibarMark{width:13%;height:50%;padding:0px 0px 3% 0px;font-size:250%;color:darkmagenta; }				
+			   .sidebarItem{font-size:16px;height:6%; }
+	.goodsBlock,.card {height:100%;}
+		.goodsBlock {flex-flow:row wrap;background:lime;width:73%;margin:3% 0px 0px -4%;}
+		.card{width:49.5%;border:1px solid blue; background:palegreen;opacity:0.5;}
 
 	footer {background:magenta;height:70px;}
 @media (max-width: 800px) { 
@@ -76,7 +37,7 @@ header, .logo,.menu,.ico_link_container	{align-items:center;}
 			.slider_pic_link_box1{width:150px; height:200px;
 					      padding:90px 10px 10px 20px;}	
 			.slider_pic_link_box2{width:130px; height:250px;
-					      padding:120px 40px 10px 20px;}
+					      padding:110px 40px 10px 20px;}
 	.sliderSwitch{width:56px;height:12px;margin:17px auto 0px;}
 }
 </style><body>
@@ -106,43 +67,52 @@ header, .logo,.menu,.ico_link_container	{align-items:center;}
 <div class="header_hoop blok_centr"> </div>
 </div><!-- header_wrap -->
 <slider>
-   	<a href="#" class="slider_pic_link slider_pic_link_pos1">
-		<div class="slider_pic_link_box slider_pic_link_box1">Change old book on new</div></a>	
-	<a href="#" class="slider_pic_link slider_pic_link_pos2">
-		<div class="slider_pic_link_box slider_pic_link_box2">top 100 books 2022</div></a>
-  
+   	<a href="pages/href_debug.htm" class="slider_pic_link slider_pic_link_pos1">
+		<div class="slider_pic_link_box slider_pic_link_box1">Change old book on new
+		<img src="img/arrow.svg" class="slider_pic_link_arrow slider_pic_link_arrow1"></div>
+	</a>	
+	<a href="pages/href_debug.htm" class="slider_pic_link slider_pic_link_pos2">
+		<div class="slider_pic_link_box slider_pic_link_box2">top 100 books 2022
+		<img src="img/arrow.svg" class="slider_pic_link_arrow slider_pic_link_arrow2"></div>
+	</a>  
 	<div class="sliderContainer blok_centr"></div>
 	<div class="sliderSwitch"> 		</div>
 </slider>
 <main>
-	<div class="bookblock">bookblock
-
-	</div>
-	<sidebar>sidebar
-
+	<sidebar>		
+			<div class="sidebarTextBlock">
+			</div>
 	</sidebar>
-	
+	<div class="goodsBlock">
+		<div class="card">A</div><div class="card">B </div><div class="card"> C</div>
+		<div class="card">D </div><div class="card">E </div><div class="card">F </div>
+	</div>	
 </main>
 
 <footer>
-<div id="footer_blk"> </div>
-footer</footer>
-</div>
-
-<script src="bshp_modules/slider.js"></script>
-
+		<div id="footer_blk"> footer block</div>
+</footer>
+</div><!-- container0 blok_centr -->
+<script src="bshp_modules/Init00.js">  </script>
+<script src="bshp_modules/slider.js">  </script>
+<script src="bshp_modules/sidebar2.js"></script>
 <script>
-const doc0 = document;
+
 //cart_bage element content fill
 const cart_bage=doc0.querySelector('.cart_bage'); 
-						 cart_bage.style.display='flex'; cart_bage.innerHTML='4';
-//get header color from body background color
-const   body=doc0.body,
-	bodyColor= window.getComputedStyle(body,null).getPropertyValue('background-color'),
-	headerWrapStyle=doc0.querySelector('.header_wrap').style;
-if (bodyColor==='rgba(0, 0, 0, 0)') {headerWrapStyle.backgroundColor = 'white';} else {headerWrapStyle.backgroundColor = bodyColor;}
-   
+						 cart_bage.style.display='flex'; cart_bage.innerHTML='4'; 
+//fires when sidebar category selected
+function categorySelected (categoryNumber) {
+	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style;
 
-slideShow(3,8);
+	switch 	(categoryNumber) {case 0:	bbStl.backgroundColor='red'; break;
+				  case 1:	bbStl.backgroundColor='blue'; break;
+				  case 2:	bbStl.backgroundColor='green'; break;	}
+        /* category name
+	bookblk.innerHTML = siList[categoryNumber];	*/	
+	console.log(categoryNumber,siList[categoryNumber]);}
+
+//categorySelected(sbItemSel);
+
 </script>
 </body></html>

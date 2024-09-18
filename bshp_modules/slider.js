@@ -1,10 +1,6 @@
-﻿//slider modeule v.3.0.1 for bookshop prj
+﻿//slider module v.3.0.2 for bookshop prj
 'use strict';
 console.log('slider module loaded');
-function getPropNum(blockName,propertyName){ 
-	const property = window.getComputedStyle(blockName,null).getPropertyValue(propertyName);
-return property.match(/\d+/)[0];  
-};
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 const diagMessages = false;
 if (diagMessages) {console.log('diag Messages Enabled');
@@ -13,8 +9,9 @@ if (diagMessages) {console.log('diag Messages Enabled');
 		      picFrame = doc1.createElement('div'),	warnBlk = doc1.createElement('div'),  
 		      pFStl=picFrame.style,			wbStl = warnBlk.style,		      		      
 		      sto=100,		prcnt = '%',		bPstfx="."+bPstf, 
-		      cntr = 'center', 	px = 'px', 		zpx =`px ${cntr}, ${cntr} ${cntr}`; 
-	      
+		      cntr = 'center', 		 		zpx =`px ${cntr}, ${cntr} ${cntr}`,
+		      backGndCLr = window.getComputedStyle(container,null).getPropertyValue('background-color'); 
+	     
 		if (!container) return function (){const noPrnt ='Slider: no parent/wrong container name for slider module'; 
 						   doc1.write(noPrnt+'<br>');	                  console.log(noPrnt);};
 		let previousSlide = null, movSlow, frmWidth, 
@@ -22,22 +19,22 @@ if (diagMessages) {console.log('diag Messages Enabled');
 		frameStep,warnFontSize,loadErr=false;
 function frameDim(){
 	const picRatio = 1.58;
-	frmWidth = getPropNum(container,'width');	
+	frmWidth = getProp2(container,'width');	
         frameStep = 1+Math.floor(frmWidth/200);	warnFontSize = (1+Math.floor(frmWidth/50));
-	pFStl.height=Math.round(frmWidth/picRatio)+px;
+	pFStl.height=plusPX(frmWidth/picRatio);
 };
 frameDim();
 window.addEventListener('resize',frameDim);												
 
-	pFStl.width=sto+prcnt; 		 pFStl.backgroundSize='contain';	pFStl.backgroundColor='whitesmoke';	
+	pFStl.width=sto+prcnt; 		 pFStl.backgroundSize='contain';	pFStl.backgroundColor=backGndCLr;	
 	pFStl.backgroundRepeat='no-repeat';
 	pFStl.display='flex';		 pFStl.justifyContent =cntr;		pFStl.alignItems =cntr;	
 	
 	container.appendChild(picFrame);	
-					 wbStl.color='gray';				wbStl.fontSize=Math.floor(warnFontSize*1.7)+px;
+					 wbStl.color='gray';				wbStl.fontSize=plusPX(warnFontSize*1.7);
 					 wbStl.backgroundColor='gainsboro';		wbStl.textAlign =cntr;
 					 						wbStl.fontWeight='600';
-					 wbStl.maxWidth='90'+prcnt;	 		wbStl.letterSpacing=frameStep+px;		 
+					 wbStl.maxWidth='90'+prcnt;	 		wbStl.letterSpacing=plusPX(frameStep);		 
 					 wbStl.overflowWrap='break-word';		wbStl.opacity='0.95';
 					 wbStl.padding='1'+prcnt;			wbStl.display='none';
 	picFrame.appendChild(warnBlk);   
@@ -78,7 +75,7 @@ return slider;},
 
 slideShow=function(amount=0, timeout = 0, inactClr="palegreen", actClr="fuchsia", 
 		   frameclass="sliderSwitch", sliderName=launchSlide){
-		const doc1 = document, px = 'px',	switchBlock = doc1.querySelector('.'+frameclass);
+		const doc1 = document, 	switchBlock = doc1.querySelector('.'+frameclass);
 if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wrong container name for sliderControl module'; 
 				     doc1.write(noPrnt+'<br>');	                  console.log(noPrnt);
 				    };
@@ -88,8 +85,8 @@ if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wro
 		let ctrlBtn = null,cBtnStl, pauseShow = 0, slideNum = 0,
 		    swHeightNum,  swWidthNum,  maxAmount, amountMinusOne;
 function switchDim (){
-	swHeightNum = getPropNum(switchBlock,'height');		
-	swWidthNum = getPropNum(switchBlock,'width');			
+	swHeightNum = getProp2(switchBlock,'height');		
+	swWidthNum = getProp2(switchBlock,'width');			
 };
 	switchDim ();
 maxAmount = Math.round((swWidthNum/swHeightNum+0.5)/1.5);	
@@ -99,7 +96,7 @@ amountMinusOne = amount-1;
 switchBlock.innerHTML='';
 for (let i=0;i<amount;i++) {ctrlBtn =doc1.createElement('div'); cBtnStl = ctrlBtn.style;		cBtnStl.cursor='pointer';
 			    cBtnStl.backgroundColor=inactClr;	cBtnStl.borderRadius='50%';
-				cBtnStl.width=swHeightNum+px;		cBtnStl.height=swHeightNum+px;
+				cBtnStl.width=plusPX(swHeightNum);		cBtnStl.height=plusPX(swHeightNum);
 ctrlBtn.classList.add(slideControlButtonClassName);	
 switchBlock.appendChild(ctrlBtn);
 };
@@ -107,7 +104,7 @@ ctrlBtn	= doc1.querySelectorAll('.'+slideControlButtonClassName);
 // switch block onresize
 window.addEventListener('resize',()=>{	
 		switchDim ();
-		ctrlBtn.forEach((i)=>{i.style.width=swHeightNum+px;	i.style.height=swHeightNum+px;});	
+		ctrlBtn.forEach((i)=>{i.style.width=plusPX(swHeightNum);	i.style.height=plusPX(swHeightNum);});	
 });	
 function swState(activeBtnNumber){
 		ctrlBtn.forEach((i,n)=>{if (activeBtnNumber===n){i.style.backgroundColor=actClr;  sliderName(n);  slideNum=n;
@@ -131,3 +128,5 @@ if ((timeout>0) && (timeout<101)) {
 	};
 return slide;};
 const launchSlide = slider('moderate');
+
+slideShow(3,8);
