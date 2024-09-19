@@ -1,22 +1,22 @@
 ﻿/* card style - file cardStyl.css */
 /* for buildCard module - file buildCard.js*/
-.cardContainer,.cardContainer1{width:54.6vw; margin:10px;
-	       display:flex; flex-flow:row nowrap;border:1px solid lime;
-} 
+
+.cardContainer,.goodDesc,.rating,.ratStar{background-color:inherit;}
 .goodImg,.goodDesc{flex-shrink:0;}
-.goodImgWrap{position:relative;display:flex;justify-content:center;align-items:center;
-	     color:white;font-weight:600;font-size:1.5vw; 
+.goodImgWrap{
+	     color:white;font-weight:600;font-size:150%; 
 	     width:42.5%; height:76.5%;border-radius:3px;
 	     background:radial-gradient(circle at 20% 15%, aqua, darkblue,palegreen);
 }
-.coverPH{color:#F3E7CF;font-size:2vw; text-shadow: 3px 4px #56433D;}
-.goodImg{position:absolute;top:0px;left:0px;width:100%; height:100%;}
+.coverPH{color:#F3E7CF; text-shadow: 3px 4px #56433D;}
+
 .spc1{width:7.2%; height:1px;flex-shrink:4;}
-.goodDesc{width:35%;margin-top:10%;font-size:2vw; font-family: "Montserrat-Regular";color:dimgray;}
+
+.goodDesc{width:35%;margin-top:10%;font-size:200%; font-family: "Montserrat-Regular";color:dimgray;}
 	.author{height:9%;font-size:50%;font-weight:600;}
 	.caption{height:12%;font-size:87%;font-family: "Montserrat-Bold";color:black; }
-	.rating{display:flex;height:15%;font-size:60%; }
-		.ratStar{display:flex;gap:1%;height:40%;width:36%; }
+	.rating{height:15%;font-size:60%; }
+		.ratStar{height:40%; }
 		.starImg{height:90%;}
 		.reviewCnt{margin-left:4%;}
 	.annot{height:21%;width:100%;margin-bottom:6%; font-size:51%;line-height:144%; 
@@ -26,5 +26,6 @@
    	 	overflow: hidden; /* Обрезаем за пределами блока*/
 }
 	.price{height:15%;font-size:70%; font-family: "Montserrat-Bold";color:black;}
-	.buyNowBtn{width:100%;height:24%;font-size:50%; font-family: "Montserrat-Bold";color:blueviolet;background-color:transparent; border-color:blueviolet;}
+	.buyNowBtn{width:100%;height:24%;font-size:50%; font-family: "Montserrat-Bold";
+		   color:blueviolet;background-color:transparent; border-color:blueviolet;}
 	.buyNowBtn:focus{background:red;color:white;}

@@ -2,29 +2,33 @@
 				<meta charset="UTF-8">				
 	<title>rateModule + demo v.5.3</title>		<style> 
 *{padding:0px;margin:0px;}
-.rateModule,.rateModule1{margin-top:10px;height:100px;background:oldlace;}
+.rateModule,.rateModule1{margin-top:10px;height:50px;background:oldlace;}
 </style><body><div class="rateModule"></div><div class="rateModule1"></div>
 <script src='../bshp_modules/Init00.js'> </script>
 <script> 
+// rateModule  v.5.5 for bookshop prj
+// dependencies : bshp_modules/Init00.js
 'use strict';
 const rateModule = (quantity=5, rateModul=document.querySelector('.rateModule') , 
-		    aClr= 'red', bClr = 'blue', spaceBetween = 5) => { 
+		    aClr= 'red', bClr = 'blue', 
+		    //gap between stars - percents of module width
+		    spaceBetween = 20) => { 
 let rate=0, rModHeight,
 	/* intervalID for DEMO MODE on/off control */
     	intervalID=null;	
-const   d1=document, starWrapClasName = 'starWrap', minHeight = 15,
-	moduleName = 'rateModule',	moduleVer =' v.5.2 ',	demoMode = 'demo mode ', act='activated',
+const   d1=document, starWrapClasName = 'starWrap', minHeight = 5,
+	moduleName = 'rateModule',	moduleVer =' v.5.5 ',	demoMode = 'demo mode ', act='activated',
 	//error handle function
 	dumbFunc = () =>{console.log('dumbFunc');return null;};
 	if (rateModul) {
 	       if (rateModul.querySelector('.'+starWrapClasName)) {rateModul.style.background=''; 
+								   rateModul.style.height=''; 
 								   rateModul.innerHTML='';	
 								   msgSrv({'':moduleName+' Secondary instance'});}
 	} else {msgSrv({'':moduleName+' No '+moduleName+' DomElement Specified'}); return dumbFunc;}
 // successful loading
 msgSrv({'':moduleName+moduleVer+'loaded ---'});
     rModHeight  = getProp2(rateModul,'height');	if (rModHeight<minHeight) {rModHeight  = minHeight;}
-
 const fillColor = getProp2(rateModul,'background-color'),
 starWrapWidth=Math.round(rModHeight/11*12),
 	/* star SVG image */
@@ -44,9 +48,11 @@ rModQQ = d1.createElement('div'),	rModQQStyle = rModQQ.style,		rModStyle=rateMod
 					rModQQStyle.position='absolute';	rModQQStyle.bottom=plusPX();
 					rModQQStyle.width='100%';		rModQQStyle.borderBottom=`1px solid ${fillColor}`;
 rateModul.appendChild(rModQQ);					
-rModStyle.display='flex';		rModStyle.position='relative';	
+rModStyle.display='flex';		rModStyle.position='relative';
+				spaceBetween = Math.round(starWrapWidth*spaceBetween/100);	
 					rModStyle.width = plusPX(Math.round(starWrapWidth*quantity+spaceBetween*(quantity-1)));
 					rModStyle.height = plusPX(rModHeight); // так надо <= if (rModHeight<minHeight)...
+msgSrv({'width':moduleName+' '+rModStyle.width,'height':moduleName+' '+rModStyle.height,'gap':moduleName+' '+spaceBetween});
 /* rating block filling with stars and space hoopers between */
 for (let i=0;i<quantity;i++){
 	const starWrap=d1.createElement("div"), spcBlk = d1.createElement("div"), starWrapStyle=starWrap.style;
@@ -78,6 +84,7 @@ function ratingDisplay(rate1=75,  demo=false) {
 		}
 }; return ratingDisplay;
 };
+
 
 //usage
 let rating = rateModule(10,document.querySelector('.rateModule'));

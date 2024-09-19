@@ -1,28 +1,29 @@
 ﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<meta charset="UTF-8">				
-	<title>card v.3.0</title>		<style> 
+				<meta charset="UTF-8">	
+<link rel="stylesheet" href="../styl/rst-0.css">			
+	<title>card v.3.5</title>		<style> 
 @font-face {font-family: "Montserrat-Regular";	src: url("../font2/Montserrat-Regular.ttf") format("truetype");} 
 @font-face {font-family: "Montserrat-Bold";	src: url("../font2/Montserrat-Bold.ttf") format("truetype");} 
 *{margin:0px;padding:0px;}
 
-/* card style cardStyl.css */
-.cardContainer,.cardContainer1{width:54.6vw; margin:10px;
-	       display:flex; flex-flow:row nowrap;border:1px solid lime;
+/* card style file styl/cardStyl.css */
+.cardContainer,.cardContainer1{width:54.6vw; margin:10px;  border:1px solid lime;
 } 
+.cardContainer,.goodDesc,.rating,.ratStar{background-color:inherit;}
 .goodImg,.goodDesc{flex-shrink:0;}
-.goodImgWrap{position:relative;display:flex;justify-content:center;align-items:center;
-	     color:white;font-weight:600;font-size:1.5vw; 
+.goodImgWrap{
+	     color:white;font-weight:600;font-size:150%; 
 	     width:42.5%; height:76.5%;border-radius:3px;
 	     background:radial-gradient(circle at 20% 15%, aqua, darkblue,palegreen);
 }
-.coverPH{color:#F3E7CF;font-size:2vw; text-shadow: 3px 4px #56433D;}
-.goodImg{position:absolute;top:0px;left:0px;width:100%; height:100%;}
+.coverPH{color:#F3E7CF; text-shadow: 3px 4px #56433D;}
+
 .spc1{width:7.2%; height:1px;flex-shrink:4;}
-.goodDesc{width:35%;margin-top:10%;font-size:2vw; font-family: "Montserrat-Regular";color:dimgray;}
+.goodDesc{width:35%;margin-top:10%;font-size:200%; font-family: "Montserrat-Regular";color:dimgray;}
 	.author{height:9%;font-size:50%;font-weight:600;}
 	.caption{height:12%;font-size:87%;font-family: "Montserrat-Bold";color:black; }
-	.rating{display:flex;height:15%;font-size:60%; }
-		.ratStar{display:flex;gap:1%;height:40%;width:36%; }
+	.rating{height:15%;font-size:60%; }
+		.ratStar{height:40%; }
 		.starImg{height:90%;}
 		.reviewCnt{margin-left:4%;}
 	.annot{height:21%;width:100%;margin-bottom:6%; font-size:51%;line-height:144%; 
@@ -59,6 +60,7 @@
 </div>
 <div class="cardContainer1"></div>
 <script src='../bshp_modules/Init00.js'> </script> 
+<script src='../bshp_modules/rateStars.js'> </script> 
 <script> 
 'use strict';
 //building card
@@ -68,11 +70,12 @@ const buildCard = (container,   opt1={},
      				opt2={}) => {
 let review=' review';
 const opt1Default = {
-	'imageSrc':'goodImg0.png',
+	'imageSrc':'goodImg01.png',
 	'imageAlt':'book cover image',
 	'author':'Kevin Kwan',
 	'caption':'Crazy rich asians',
-	'reviewCnt':252,
+	'maxReviewCnt':400,
+	'reviewCnt':354, 
 	'annot':'The Outrageously Funny Debut Novel About Three Super-Rich, Pedigreed Chinese Families And The Gossip about third world war',
 	'price':4.99,
 	'buyNowBtnTxt':'BuY nOW'
@@ -114,18 +117,29 @@ fillDef = (defaults, inputOptions) => {
 	};
 };	fillDef(opt1Default,opt1);	fillDef(klasDefault,klas);	fillDef(opt2Default,opt2);
 
-const goodImgWrap = putEl(klas.goodImgWrap), goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt), 
-goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating),
+const 	sto=100, flex = 'flex',
+	containerStl = container.style, 
+	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
+						goodImgStl = goodImg.style,
+	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),
 //set card container height 78% of width
 setProp =() => {
+	let rateBlk;
 	const cardContainerWidth = getProp2 (container,'width'),
 		shd1=plusPX(cardContainerWidth*.04),shd2=plusPX(cardContainerWidth*.036),
 		shd3=plusPX(cardContainerWidth*.024);	
-	container.style.height=plusPX(cardContainerWidth/1.277);
-	goodImg.style.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
+	containerStl.height=plusPX(cardContainerWidth/1.277);	containerStl.fontSize=plusPX(cardContainerWidth/54.6);
+	goodImgStl.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
 	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
+rateBlk = rateModule(5,rateDisplay);
+rateBlk(Math.round(Number(opt1.reviewCnt)*sto/Number(opt1.maxReviewCnt)));
 };
 //build card
+containerStl.display=flex;	containerStl.flexFlow='row nowrap';
+rating.style.display=flex;
+goodImgWrap.classList.add('flex_centr'); //../styl/rst-0.css
+goodImgWrap.style.position='relative';	goodImgStl.position='absolute';	goodImgStl.top=plusPX();	goodImgStl.width=sto+'%';
+									goodImgStl.left=plusPX();	goodImgStl.height=sto+'%';
 container.appendChild(goodImgWrap);
 	goodImgWrap.appendChild(putEl(klas.coverPH,opt2.noCvrImgText));	
 	goodImgWrap.appendChild(goodImg);
@@ -134,7 +148,7 @@ container.appendChild(goodDesc);
 	goodDesc.appendChild(putEl(klas.author,opt1.author));
 	goodDesc.appendChild(putEl(klas.caption,opt1.caption));
 	goodDesc.appendChild(rating);
-		rating.appendChild(putEl(klas.ratStar));
+		rating.appendChild(rateDisplay);			
 		if (Number(opt1.reviewCnt)>1) {review=review+'s';}
 		rating.appendChild(putEl(klas.reviewCnt,opt1.reviewCnt+review));
 	goodDesc.appendChild(putEl(klas.annot,opt1.annot));

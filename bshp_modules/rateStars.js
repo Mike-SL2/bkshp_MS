@@ -1,24 +1,27 @@
-﻿// rateModule  v.5.2 for bookshop prj
+﻿// rateModule  v.5.5.2 for bookshop prj
 // dependencies : bshp_modules/Init00.js
 'use strict';
 const rateModule = (quantity=5, rateModul=document.querySelector('.rateModule') , 
-		    aClr= 'red', bClr = 'blue', spaceBetween = 5) => { 
-let rate=0, rModHeight,
+		    aClr= 'red', bClr = 'blue', 
+		    //gap between stars - percents of module width
+		    spaceBetween = 10) => { 
+let rate=0, rModHeight, rModStyle,
 	/* intervalID for DEMO MODE on/off control */
     	intervalID=null;	
-const   d1=document, starWrapClasName = 'starWrap', minHeight = 15,
-	moduleName = 'rateModule',	moduleVer =' v.5.2 ',	demoMode = 'demo mode ', act='activated',
+const   d1=document, divEl='div', es='', starWrapClasName = 'starWrap', minHeight = 5,
+	moduleName = 'rateModule',	moduleVer =' v.5.5.2 ',	demoMode = 'demo mode ', act='activated',
 	//error handle function
 	dumbFunc = () =>{console.log('dumbFunc');return null;};
 	if (rateModul) {
-	       if (rateModul.querySelector('.'+starWrapClasName)) {rateModul.style.background=''; 
-								   rateModul.innerHTML='';	
+	       rModStyle=rateModul.style;
+	       if (rateModul.querySelector('.'+starWrapClasName)) {   rModStyle.background=es; 
+								      rModStyle.height=es; 
+								      rateModul.innerHTML=es;	
 								   msgSrv({'':moduleName+' Secondary instance'});}
 	} else {msgSrv({'':moduleName+' No '+moduleName+' DomElement Specified'}); return dumbFunc;}
-// successful loading
+// successful loading report
 msgSrv({'':moduleName+moduleVer+'loaded ---'});
     rModHeight  = getProp2(rateModul,'height');	if (rModHeight<minHeight) {rModHeight  = minHeight;}
-
 const fillColor = getProp2(rateModul,'background-color'),
 starWrapWidth=Math.round(rModHeight/11*12),
 	/* star SVG image */
@@ -34,16 +37,18 @@ starAsy=`<svg viewBox="0 0 12 11" fill="none">
 	${path}12 0 L12 11${svgStyle}
 </svg>`,
 /* bottom mask-line element */	
-rModQQ = d1.createElement('div'),	rModQQStyle = rModQQ.style,		rModStyle=rateModul.style; 
+rModQQ = d1.createElement(divEl),	rModQQStyle = rModQQ.style; 
 					rModQQStyle.position='absolute';	rModQQStyle.bottom=plusPX();
 					rModQQStyle.width='100%';		rModQQStyle.borderBottom=`1px solid ${fillColor}`;
 rateModul.appendChild(rModQQ);					
-rModStyle.display='flex';		rModStyle.position='relative';	
+rModStyle.display='flex';		rModStyle.position='relative';
+				spaceBetween = Math.round(starWrapWidth*spaceBetween/100);	
 					rModStyle.width = plusPX(Math.round(starWrapWidth*quantity+spaceBetween*(quantity-1)));
 					rModStyle.height = plusPX(rModHeight); // так надо <= if (rModHeight<minHeight)...
+msgSrv({'width':moduleName+' '+rModStyle.width,'height':moduleName+' '+rModStyle.height,'gap':moduleName+' '+spaceBetween});
 /* rating block filling with stars and space hoopers between */
 for (let i=0;i<quantity;i++){
-	const starWrap=d1.createElement("div"), spcBlk = d1.createElement("div"), starWrapStyle=starWrap.style;
+	const starWrap=d1.createElement(divEl), spcBlk = d1.createElement(divEl), starWrapStyle=starWrap.style;
 	starWrap.innerHTML=starAsy;		starWrapStyle.width = plusPX(starWrapWidth);
 	starWrap.className=starWrapClasName;	starWrapStyle.height =plusPX(rModHeight);					
 	rateModul.appendChild(starWrap);

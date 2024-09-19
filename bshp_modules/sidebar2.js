@@ -11,7 +11,8 @@ siList.forEach((i)=>{let siItem = doc0.createElement("div");	siItem.innerHTML=li
 //sidebar selector
 const sbItemSel=function(){let selectedItem =0; 
 			   const sbItems=doc0.querySelectorAll('.sidebarItem'), sbMarkers=doc0.querySelectorAll('.sibarMark'),
-			         selectedFontWeight='900', selectedFontSize='110%', markerSign='&#8226;';
+			         selectedFontWeight='900', selectedFontSizeFactor=1.1, markerSign='&#8226;';
+
 console.log('sidebar selector module loaded');
 			sbItems.forEach((i)=>{i.addEventListener('click',(ev)=>{categorySelected(sbItemSel(ev));})});
 			function rst0(x=null){let locItemStl = sbItems[selectedItem].style;
@@ -20,7 +21,7 @@ console.log('sidebar selector module loaded');
 						 sbMarkers[selectedItem].innerHTML='';}
 					   else {locItemStl = sbItems[x].style;
 						 locItemStl.fontWeight=selectedFontWeight;
-						 locItemStl.fontSize=selectedFontSize;	  	   
+						 locItemStl.fontSize=plusPX(getProp2(sbItems[1],'font-size')*selectedFontSizeFactor);	  	   
 					sbMarkers[x].innerHTML=markerSign;}
 			};
 			rst0(selectedItem);	

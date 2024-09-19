@@ -29,7 +29,7 @@ headerColor = () => {
 	msgSrv({'headerColor func': 'loaded'});
 	const body=doc0.body,
 	bodyColor= getProp2(body,'background-color'),	headerWrap=doc0.querySelector('.header_wrap');
-
+msgSrv({'body-color':bodyColor});
    if (headerWrap){let headerWrapStyle=headerWrap.style;
 
 	if (bodyColor==='rgba(0, 0, 0, 0)') {headerWrapStyle.backgroundColor = 'white';
