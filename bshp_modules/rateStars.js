@@ -8,7 +8,7 @@ const rateModule = (quantity=5, rateModul=document.querySelector('.rateModule') 
 let rate=0, rModHeight, rModStyle,
 	/* intervalID for DEMO MODE on/off control */
     	intervalID=null;	
-const   d1=document, divEl='div', es='', starWrapClasName = 'starWrap', minHeight = 5,
+const   es='', starWrapClasName = 'starWrap', minHeight = 5,
 	moduleName = 'rateModule',	moduleVer =' v.5.5.2 ',	demoMode = 'demo mode ', act='activated',
 	//error handle function
 	dumbFunc = () =>{console.log('dumbFunc');return null;};
@@ -37,9 +37,9 @@ starAsy=`<svg viewBox="0 0 12 11" fill="none">
 	${path}12 0 L12 11${svgStyle}
 </svg>`,
 /* bottom mask-line element */	
-rModQQ = d1.createElement(divEl),	rModQQStyle = rModQQ.style; 
-					rModQQStyle.position='absolute';	rModQQStyle.bottom=plusPX();
-					rModQQStyle.width='100%';		rModQQStyle.borderBottom=`1px solid ${fillColor}`;
+rModQQ = putEl(),	rModQQStyle = rModQQ.style; 
+			rModQQStyle.position='absolute';	rModQQStyle.bottom=plusPX();
+			rModQQStyle.width='100%';		rModQQStyle.borderBottom=`1px solid ${fillColor}`;
 rateModul.appendChild(rModQQ);					
 rModStyle.display='flex';		rModStyle.position='relative';
 				spaceBetween = Math.round(starWrapWidth*spaceBetween/100);	
@@ -48,13 +48,12 @@ rModStyle.display='flex';		rModStyle.position='relative';
 msgSrv({'width':moduleName+' '+rModStyle.width,'height':moduleName+' '+rModStyle.height,'gap':moduleName+' '+spaceBetween});
 /* rating block filling with stars and space hoopers between */
 for (let i=0;i<quantity;i++){
-	const starWrap=d1.createElement(divEl), spcBlk = d1.createElement(divEl), starWrapStyle=starWrap.style;
-	starWrap.innerHTML=starAsy;		starWrapStyle.width = plusPX(starWrapWidth);
-	starWrap.className=starWrapClasName;	starWrapStyle.height =plusPX(rModHeight);					
+	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl('spcBlk'), starWrapStyle=starWrap.style;
+		starWrapStyle.width = plusPX(starWrapWidth);
+		starWrapStyle.height =plusPX(rModHeight);					
 	rateModul.appendChild(starWrap);
 	if (i) {
 		spcBlk.style.backgroundColor=fillColor;		spcBlk.style.width=plusPX(spaceBetween);
-		spcBlk.className='spcBlk';
 		rateModul.insertBefore(spcBlk,starWrap);}
 };
 /* main function - rating background fill */

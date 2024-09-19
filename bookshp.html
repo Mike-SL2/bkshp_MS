@@ -4,16 +4,16 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.7.0</title></head>		<style> 
+	<title>BookShop-MS v.0.7.5</title></head>		<style> 
 body {background-color:oldlace;}
-.container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#E5E5E5;}
-   .sliderContainer,header,footer,main{width:77%;}
-	main   {margin:129px auto 129px;border:1px solid red; }
-		sidebar    {background-color:#EFEEF6;height:710px;width:30%; }				  
+.container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
+   .sliderContainer,header,footer,main{width:95%;}
+	main   {margin:129px auto 129px;border:1px solid mediumseagreen; }
+		sidebar    {background-color:#EAEAF5;height:46vw;width:30%; }				  
 			.sidebarTextBlock{width:75%;height:80%;	  margin-top:10%;}
 			.sidebarItem,.sibarMark{align-items:center;}   		   
 			   .sibarMark{width:13%;height:50%;padding:0px 0px 3% 0px;font-size:250%;color:darkmagenta; }				
-			   .sidebarItem{font-size:1vw;height:6%; }
+			   .sidebarItem{font-size:1vw;height:7%; }
 	.goodsBlock{height:100%;}
 		.goodsBlock {flex-flow:row wrap;background:white;width:73%;margin:3% 0px 0px -4%;}
 		.cardContainer{width:49.5%;border:1px solid blue; background:palegreen;}
@@ -40,6 +40,8 @@ body {background-color:oldlace;}
 			.slider_pic_link_box2{width:130px; height:250px;
 					      padding:110px 40px 10px 20px;}
 	.sliderSwitch{width:56px;height:12px;margin:17px auto 0px;}
+	sidebar    {height:700px; }
+	.sidebarItem{font-size:14px;height:38px; }
 }
 </style><body>
 <div class="container0 blok_centr"> 
@@ -86,7 +88,7 @@ body {background-color:oldlace;}
 	</sidebar>
 	<div class="goodsBlock">
 		<div class="cardContainer"></div>
-		
+		<div class="testCategory"></div>
 	</div>	
 </main>
 
@@ -106,14 +108,16 @@ const cart_bage=doc0.querySelector('.cart_bage');
 						 cart_bage.style.display='flex'; cart_bage.innerHTML='4'; 
 //fires when sidebar category selected
 function categorySelected (categoryNumber) {
-	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style;
+	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style,
+	      testCategory=doc0.querySelector('.testCategory');
 
 	switch 	(categoryNumber) {case 0:	bbStl.backgroundColor='red'; break;
 				  case 1:	bbStl.backgroundColor='blue'; break;
-				  case 2:	bbStl.backgroundColor='green'; break;	}
-        /* category name
-	bookblk.innerHTML = siList[categoryNumber];	*/	
-	console.log(categoryNumber,siList[categoryNumber]);}
+				  case 2:	bbStl.backgroundColor='green'; break;
+	default:bbStl.backgroundColor='';	}
+        
+	testCategory.innerHTML =categoryNumber+' - '+siList[categoryNumber];		
+	}
 
 //categorySelected(sbItemSel);
 buildCard(doc0.querySelector('.cardContainer'),{'imageSrc':'img/goodImg0.png'});

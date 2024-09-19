@@ -5,7 +5,7 @@ const buildCard = (container,   opt1={},
      				opt2={}) => {
 let review=' review';
 const opt1Default = {
-	'imageSrc':'goodImg01.png',
+	'imageSrc':'goodImg0.png',
 	'imageAlt':'book cover image',
 	'author':'Kevin Kwan',
 	'caption':'Crazy rich asians',
@@ -35,16 +35,6 @@ opt2Default={
 	'noCvrImgText':'NO COVER IMAGE',
 	'coverShdClr':'lightgray'
 },
-putEl = (className,innerContent='',altTxt='') => {
-	let aux; 
-	if (altTxt) {
-		aux = doc0.createElement('img');	aux.src = innerContent;		aux.alt=altTxt;} 
-	else {
-		if (className.match(/Btn/)) {aux = doc0.createElement('button');}
-		else {aux = doc0.createElement('div');}	
-		aux.innerHTML=innerContent;} 
-	aux.className=(className); 	return aux;
-},
 //fill options with defaults meanings
 fillDef = (defaults, inputOptions) => {
 	for (let key in defaults){	
@@ -52,7 +42,7 @@ fillDef = (defaults, inputOptions) => {
 	};
 };	fillDef(opt1Default,opt1);	fillDef(klasDefault,klas);	fillDef(opt2Default,opt2);
 
-const 	sto=100, flex = 'flex',
+const 	
 	containerStl = container.style, 
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
 						goodImgStl = goodImg.style,

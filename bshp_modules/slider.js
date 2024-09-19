@@ -1,19 +1,18 @@
-﻿//slider module v.3.0.2 for bookshop prj
+﻿//slider module v.3.0.3 for bookshop prj
 'use strict';
-console.log('slider module loaded');
+msgSrv({'slider module':'loaded'});
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
-const diagMessages = false;
-if (diagMessages) {console.log('diag Messages Enabled');
-		   console.log('slider: speed',speed,'|',' frameclasss:',frameclass);}
-		const doc1 = document, 				container = doc1.querySelector('.'+frameclass),
-		      picFrame = doc1.createElement('div'),	warnBlk = doc1.createElement('div'),  
-		      pFStl=picFrame.style,			wbStl = warnBlk.style,		      		      
-		      sto=100,		prcnt = '%',		bPstfx="."+bPstf, 
+msgSrv({'slider speed' : speed,'frameclass': frameclass});
+
+		const container = doc0.querySelector('.'+frameclass),
+		      picFrame = putEl(),	warnBlk = putEl(),  
+		      pFStl=picFrame.style,	wbStl = warnBlk.style,		      		      
+		      prcnt = '%',		bPstfx="."+bPstf, 
 		      cntr = 'center', 		 		zpx =`px ${cntr}, ${cntr} ${cntr}`,
-		      backGndCLr = window.getComputedStyle(container,null).getPropertyValue('background-color'); 
+		      backGndCLr = getProp2(container,'background-color'); 
 	     
-		if (!container) return function (){const noPrnt ='Slider: no parent/wrong container name for slider module'; 
-						   doc1.write(noPrnt+'<br>');	                  console.log(noPrnt);};
+		if (!container) return function (){const noPrnt ='Slider no parent/wrong container name for slider module'; 
+						   doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});};
 		let previousSlide = null, movSlow, frmWidth, 
 		picShiftX,
 		frameStep,warnFontSize,loadErr=false;
@@ -28,7 +27,7 @@ window.addEventListener('resize',frameDim);
 
 	pFStl.width=sto+prcnt; 		 pFStl.backgroundSize='contain';	pFStl.backgroundColor=backGndCLr;	
 	pFStl.backgroundRepeat='no-repeat';
-	pFStl.display='flex';		 pFStl.justifyContent =cntr;		pFStl.alignItems =cntr;	
+	pFStl.display=flex;		 pFStl.justifyContent =cntr;		pFStl.alignItems =cntr;	
 	
 	container.appendChild(picFrame);	
 					 wbStl.color='gray';				wbStl.fontSize=plusPX(warnFontSize*1.7);
@@ -44,9 +43,8 @@ window.addEventListener('resize',frameDim);
 		 	 case "fast":	 movSlow = 3;	break;
 			 case "veryfast":movSlow = 0;	break;	default: movSlow = 10;}								 	
 	function slider(nextSlide=0){
-		let probeImg = doc1.createElement('img'), idA, movInterval, loadFail = true;
-		    probeImg.src = `${bPrefx}${nextSlide}${bPstfx}`;
-		if (diagMessages) {console.log(nextSlide,'img src path: ',probeImg.src);}
+		let probeImg = putEl('',`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
+		msgSrv({'':'slider '+nextSlide+' img src path: '+probeImg.src});
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
 		probeImg.addEventListener("error", () => {wbStl.display='block';});		    
 		probeImg.addEventListener("load", () => {
@@ -75,13 +73,13 @@ return slider;},
 
 slideShow=function(amount=0, timeout = 0, inactClr="palegreen", actClr="fuchsia", 
 		   frameclass="sliderSwitch", sliderName=launchSlide){
-		const doc1 = document, 	switchBlock = doc1.querySelector('.'+frameclass);
+		const switchBlock = doc0.querySelector('.'+frameclass);
 if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wrong container name for sliderControl module'; 
-				     doc1.write(noPrnt+'<br>');	                  console.log(noPrnt);
+				     doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});
 				    };
 		const   slideControlButtonClassName = "slideCtrlButton",
 			swBlkStl = switchBlock.style,   slideShowPauseCount = 2;
-			swBlkStl.display='flex';	swBlkStl.justifyContent='space-between';
+			swBlkStl.display=flex;	swBlkStl.justifyContent='space-between';
 		let ctrlBtn = null,cBtnStl, pauseShow = 0, slideNum = 0,
 		    swHeightNum,  swWidthNum,  maxAmount, amountMinusOne;
 function switchDim (){
@@ -94,13 +92,12 @@ if ((amount<2) || (amount>maxAmount))  {amount = maxAmount};
 amountMinusOne = amount-1;
 // switch block clear
 switchBlock.innerHTML='';
-for (let i=0;i<amount;i++) {ctrlBtn =doc1.createElement('div'); cBtnStl = ctrlBtn.style;		cBtnStl.cursor='pointer';
-			    cBtnStl.backgroundColor=inactClr;	cBtnStl.borderRadius='50%';
-				cBtnStl.width=plusPX(swHeightNum);		cBtnStl.height=plusPX(swHeightNum);
-ctrlBtn.classList.add(slideControlButtonClassName);	
+for (let i=0;i<amount;i++) {ctrlBtn =putEl(slideControlButtonClassName); cBtnStl = ctrlBtn.style;		cBtnStl.cursor='pointer';
+			    cBtnStl.backgroundColor=inactClr;		 cBtnStl.borderRadius='50%';
+			    cBtnStl.width=plusPX(swHeightNum);		 cBtnStl.height=plusPX(swHeightNum);	
 switchBlock.appendChild(ctrlBtn);
 };
-ctrlBtn	= doc1.querySelectorAll('.'+slideControlButtonClassName);
+ctrlBtn	= doc0.querySelectorAll('.'+slideControlButtonClassName);
 // switch block onresize
 window.addEventListener('resize',()=>{	
 		switchDim ();

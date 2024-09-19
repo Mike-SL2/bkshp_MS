@@ -1,6 +1,6 @@
-﻿//Iitialization module v.2.0.1 for bookshop prj
+﻿//Iitialization module v.3.0.1 for bookshop prj
 'use strict';
-const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
 	if (typeof msgObj !='object') {console.log('msgSrv error');return;}
@@ -9,7 +9,7 @@ const msgSrv = (msgObj) => {
 			console.log(startMark,msgObj[key].match(/\b\w{1,}\b/)[0],':',msgObj[key].match(/\s.+/)[0]);
 		} else {console.log(key,': ',msgObj[key]);}}
 },
-doc0 = document,
+doc0 = document, sto = 100, flex = 'flex',
 //goods categories
 siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink',
 	'Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],
@@ -37,6 +37,17 @@ msgSrv({'body-color':bodyColor});
 
    } else {return;} 
 },
+//returns DOM element with className
+putEl = (className='',innerContent='',altTxt='') => {
+	let aux; 
+	if (altTxt) {
+		aux = doc0.createElement('img');	aux.src = innerContent;		aux.alt=altTxt;} 
+	else {
+		if (className.match(/Btn/)) {aux = doc0.createElement('button');}
+		else {aux = doc0.createElement('div');}	
+		aux.innerHTML=innerContent;} 
+	if (className) { aux.className=className; }	return aux;
+},
 // add 'px' to the input value
 plusPX = (value=0)=>{
 	const px = 'px ';
@@ -49,8 +60,9 @@ headerColor();
 // this mod defined constants list display
 msgSrv({'':'Init00 module global func/const list ---',
 	'verbose':verbose,
-	'doc0':doc0,	
+	'doc0':doc0,		'sto':sto, 'flex':flex,	
 	'siList':siList,
 	'getProp2':getProp2,
 	'headerColor':headerColor,
+	'putEl':putEl,
 	'plusPX':plusPX});
