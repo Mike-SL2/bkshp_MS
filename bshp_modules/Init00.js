@@ -1,4 +1,4 @@
-﻿//Iitialization module v.3.0.1 for bookshop prj
+﻿//Iitialization module v.3.1.1 for bookshop prj
 'use strict';
 const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 const msgSrv = (msgObj) => {
@@ -52,7 +52,10 @@ putEl = (className='',innerContent='',altTxt='') => {
 plusPX = (value=0)=>{
 	const px = 'px ';
 	if (isNaN(value)) {return '0'+px;
-	} else {return Math.round(value)+px;}
+	} else {
+		if (value>1) {return Math.round(value)+px;} 
+			else {return value+px;}
+	};
 };
 //-------------------------------------------------------
 headerColor();

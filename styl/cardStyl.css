@@ -16,8 +16,7 @@
 	.author{height:9%;font-size:50%;font-weight:600;}
 	.caption{height:12%;font-size:87%;font-family: "Montserrat-Bold";color:black; }
 	.rating{height:15%;font-size:60%; }
-		.ratStar{height:40%; }
-		.starImg{height:90%;}
+		.ratStar{height:40%;}
 		.reviewCnt{margin-left:4%;}
 	.annot{height:21%;width:100%;margin-bottom:6%; font-size:51%;line-height:144%; 
  		-webkit-line-clamp: 3; /* Число отображаемых строк */
