@@ -16,7 +16,8 @@ body {background-color:oldlace;}
 			   .sidebarItem{font-size:1vw;height:7%; }
 	.goodsBlock{height:100%;}
 		.goodsBlock {flex-flow:row wrap;background:white;width:73%;margin:3% 0px 0px -4%;}
-		.cardContainer{width:49.5%;border:1px solid blue; background:palegreen;}
+		.cardContainer{width:49.5%;transition:transform;transition-duration:1000ms;}
+			.cardContainer:hover{transform:scale(1.1); }
 
 	footer {background:magenta;height:70px;}
 @media (max-width: 800px) { 
@@ -62,7 +63,7 @@ body {background-color:oldlace;}
 						<img src="ico/user.svg" class="menu_ico">		</a>	
 			<a href='#' class="icon_link" title="search page">
 						<img src="ico/search.svg" class="menu_ico">		</a>	
-			<a href='#' class="icon_link" title="client cart page">
+			<a href='pages/usr_cart.html' class="icon_link" title="client cart page">
 						<img src="ico/cart.svg" class="menu_ico">
 						<div class="cart_bage fnt_size_10 flex_centr"></div>	</a>
 		</div>				
@@ -87,8 +88,7 @@ body {background-color:oldlace;}
 			</div>
 	</sidebar>
 	<div class="goodsBlock">
-		<div class="cardContainer"></div>
-		<div class="testCategory"></div>
+		<!-- content to be generated when user selection occur -->
 	</div>	
 </main>
 
@@ -101,25 +101,55 @@ body {background-color:oldlace;}
 <script src="bshp_modules/sidebar2.js"></script>
 <script src='bshp_modules/rateStars.js'> </script> 
 <script src='bshp_modules/buildCard.js'> </script>
+
+<script src='bshp_modules/locbase_respns.js'></script>
+<script src='bshp_modules/fetchReq.js'></script>
 <script>
 
 //cart_bage element content fill
 const cart_bage=doc0.querySelector('.cart_bage'); 
 						 cart_bage.style.display='flex'; cart_bage.innerHTML='4'; 
 //fires when sidebar category selected
-function categorySelected (categoryNumber) {
+function categorySelect (category) {
+/* category: {'number':number,'name':String} */
+ if (!category) {category={'number':0,'name':siList[0]};}
 	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style,
-	      testCategory=doc0.querySelector('.testCategory');
+cardDeal = (cardData) => {
+	console.log('fetch cardData',cardData);
+	cardData = cardData.items;
+	bookblk.innerHTML='';
+    for (let i=0;i<6;i++){
+		const volInf = cardData[i].volumeInfo,		      
+		      searchInf = cardData[i].searchInfo,
+		      volAuthors = volInf.authors,
+		      saleInfo = cardData[i].saleInfo;		
+		
+		let authorCaption = '',cena = 'HE',
+	         		       valut = 'ПРОДАЁТСЯ',	annot = 'НЕТ ОПИСАНИЯ';
 
-	switch 	(categoryNumber) {case 0:	bbStl.backgroundColor='red'; break;
-				  case 1:	bbStl.backgroundColor='blue'; break;
-				  case 2:	bbStl.backgroundColor='green'; break;
-	default:bbStl.backgroundColor='';	}
-        
-	testCategory.innerHTML =categoryNumber+' - '+siList[categoryNumber];		
-	}
+ 		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
 
-//categorySelected(sbItemSel);
-buildCard(doc0.querySelector('.cardContainer'),{'imageSrc':'img/goodImg0.png'});
+		if (saleInfo.saleability==='FOR_SALE') {cena = saleInfo.listPrice.amount;valut = saleInfo.listPrice.currencyCode;}
+		
+
+		if (volAuthors) {authorCaption=volAuthors[0]};
+	    volAuthors.forEach ((i,n)=>{ if (n) {authorCaption=authorCaption+', '+i;}
+	    });
+	const cardContainer = putEl('cardContainer');
+		bookblk.appendChild(cardContainer);
+	buildCard(cardContainer,
+	{'imageSrc':'img/goodImg0.png',
+	 'author':authorCaption,
+	 'caption':volInf.title,
+	 'annot':annot,
+	 'price':cena+' '+valut});
+    };//for (let i=0;i<6;i++)...
+};   	
+  fetchData(category.name,cardDeal);	
+};
+
+categorySelect();
+
+
 </script>
 </body></html>

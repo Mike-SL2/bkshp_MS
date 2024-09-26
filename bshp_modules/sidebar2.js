@@ -1,7 +1,13 @@
-﻿//sidebar menu build & selector module v.1.3.0 for bookshop prj
+﻿//sidebar menu build & selector module v.2.3.0 for bookshop prj
 //sidebar menu build section
 const sbList=function(){
-msgSrv({'':'sidebar_menu_module loaded'});
+msgSrv({'':'sidebarMenu module loaded'});
+/*
+	<div class="sidebarItem">
+		<div class="sibarMark"></div>	// - firstChild
+		Art & Fashion			// - lastChild
+	</div>
+*/
 const sidebar=doc0.querySelector('.sidebarTextBlock'), 
       liPrefx='<div class="sibarMark"></div>';
 siList.forEach((i)=>{let siItem = putEl('sidebarItem',liPrefx+i); sidebar.appendChild(siItem);});
@@ -15,8 +21,8 @@ const sbItemSel=function(){
 			   let selectedItem =0, unselectedFontSize;
 			function getFontSize (){unselectedFontSize=getProp2(sbItems[selectedItem],'font-size');}
 			getFontSize();
-msgSrv({'':'sidebar_selector_module loaded'});
-			sbItems.forEach((i)=>{i.addEventListener('click',(ev)=>{categorySelected(sbItemSel(ev));})});
+msgSrv({'':'sidebarSelector module loaded'});
+			sbItems.forEach((i)=>{i.addEventListener('click',(ev)=>{categorySelect(sbItemSel(ev));})});
 
 			function rst0(x=null){let locItemStl = sbItems[selectedItem].style;
 				           
@@ -34,6 +40,6 @@ msgSrv({'':'sidebar_selector_module loaded'});
 			function sbItemSel(ev){				
 				rst0();
 				sbItems.forEach((i,n)=>{if (i===ev.target) {selectedItem=n;}});				
-				rst0(selectedItem);					 			
-			return selectedItem};
+				rst0(selectedItem);				 			
+			return {'number':selectedItem,'name':ev.target.lastChild.textContent};};
 return selectedItem;}();

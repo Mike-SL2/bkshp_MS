@@ -1,6 +1,6 @@
 ﻿//slider module v.3.0.3 for bookshop prj
 'use strict';
-msgSrv({'slider module':'loaded'});
+msgSrv({'':'slider module loaded'});
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 msgSrv({'slider speed' : speed,'frameclass': frameclass});
 

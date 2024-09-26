@@ -3,12 +3,12 @@
 const buildCard = (container,   opt1={},
      				klas={},
      				opt2={}) => {
-let review=' review';
+
 const opt1Default = {
 	'imageSrc':'goodImg0.png',
 	'imageAlt':'book cover image',
-	'author':'Kevin Kwan',
-	'caption':'Crazy rich asians',
+	'author':'HO Commission on Social Determinants of Health, World Health Organization',
+	'caption':'Harry Potter: Crochet Wizardry | Crochet Patterns | Harry Potter Crafts',
 	'maxReviewCnt':400,
 	'reviewCnt':354, 
 	'annot':'The Outrageously Funny Debut Novel About Three Super-Rich, Pedigreed Chinese Families And The Gossip about third world war',
@@ -29,7 +29,8 @@ klasDefault={
 	'annot':'annot',
 	'price':'price',
 //buyNowBtn key value should contain 'Btn' in the name
-	'buyNowBtn':'buyNowBtn'
+	'buyNowBtn':'buyNowBtn',
+	'noBuyBtn':'noBuyBtn'
 },
 opt2Default={
 	'noCvrImgText':'NO COVER IMAGE',
@@ -41,12 +42,13 @@ fillDef = (defaults, inputOptions) => {
 		if (!(key in inputOptions)){inputOptions[key]=defaults[key];}
 	};
 };	fillDef(opt1Default,opt1);	fillDef(klasDefault,klas);	fillDef(opt2Default,opt2);
-
+let review=' review', btnClass = klas.buyNowBtn;
 const 	
 	containerStl = container.style, 
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
 						goodImgStl = goodImg.style,
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),
+	price = putEl(klas.price,opt1.price),
 //set card container height 78% of width
 setProp =() => {
 	let rateBlk;
@@ -77,8 +79,11 @@ container.appendChild(goodDesc);
 		if (Number(opt1.reviewCnt)>1) {review=review+'s';}
 		rating.appendChild(putEl(klas.reviewCnt,opt1.reviewCnt+review));
 	goodDesc.appendChild(putEl(klas.annot,opt1.annot));
-	goodDesc.appendChild(putEl(klas.price,'$'+opt1.price));
-	goodDesc.appendChild(putEl(klas.buyNowBtn,opt1.buyNowBtnTxt.toUpperCase()));
+
+	goodDesc.appendChild(price);
+		if (!opt1.price.match( /\d+/ )) {price.style.opacity = '0.4';btnClass = klas.noBuyBtn} 
+		
+	goodDesc.appendChild(putEl(btnClass,opt1.buyNowBtnTxt.toUpperCase()));
 //set card container height			
 setProp();
 //set card container height on resize event

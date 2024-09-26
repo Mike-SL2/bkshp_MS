@@ -23,7 +23,7 @@ const dl = (data) => {
 		console.log('categories:',catString);});
 },
 /* data acquisition by category name */
-fetchData = (category) =>{
+fetchData = (category,cbFuncName) =>{
 // func console header forming
 let underLIne = '', funcHeader = 'fetching '+category;
 console.log(''); 	console.log(funcHeader);	for (let x=0;x<funcHeader.length;x++){underLIne=underLIne+'-';}	
@@ -41,18 +41,18 @@ fetch(requestString,f_options)
 	.then((data)=>{
 			// data net load success
 			localStorage.setItem(storItemName,JSON.stringify(data));
-			dl(data);
+			cbFuncName(data);
 	})
 	.catch(()=>{
 			let y = JSON.parse(localStorage.getItem(storItemName));
 			if (y) {
 				// data localStorage load success
 				console.log('fetch from storage -', storItemName);
-				dl(y);
+				cbFuncName(y);
 			} else {
 				// data localStorage load fail - loading from local file - locbase_respns.js
 				console.log('fetch from loc file -',category);
-				dl(JSON.parse(loc_response[category]));}
+				cbFuncName(JSON.parse(loc_response[category]));}
 	});
 };
 /* button handler - data to be fetched category selector */
@@ -60,7 +60,7 @@ const sendReq=function(){let categoryNumber = 0;
 			 const siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink','Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],
       			 categoryMaxNumber = siList.length-1;
 		  function sendReq(){
-				fetchData(siList[categoryNumber]);	
+				fetchData(siList[categoryNumber],dl);	
 				categoryNumber++; 	
 				if (categoryNumber>categoryMaxNumber) {categoryNumber=0;}
 		  };

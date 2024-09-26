@@ -24,7 +24,8 @@ msgSrv({'':moduleName+moduleVer+'loaded ---'});
 const fillColor = getProp2(rateModul,'background-color'),
 starWrapWidth=Math.ceil(getProp2(rateModul,'height')/11*12),
 	/* star SVG image */
-	svgStyle1 = `" style="stroke:${fillColor};stroke-width:0.3`, svgStylePstFx =`"/>`,
+	svgStyle2 = `" style="stroke:${fillColor};stroke-width:`,
+	svgStyle1 = `${svgStyle2}0.3`, 					svgStylePstFx =`"/>`,
 	svgStyle=` Z${svgStyle1};fill:${fillColor}${svgStylePstFx}`,
 	path=`<path d="M`, 
 starAsy=`<svg viewBox="0 0 12 11" fill="none">
@@ -33,15 +34,27 @@ starAsy=`<svg viewBox="0 0 12 11" fill="none">
 	${path}9.52671 11 L6 9.072 L2.179629 11 ${svgStyle}
 	${path}2.179629 11 L3.07835 6.9493 L0.293661 4.1459 L0 4.1459 L0 11${svgStyle}
 	${path}0 4.2459 L0.293661 4.1459 L4.19432 3.5147 L6 0 L0 0${svgStyle}
-	${path}12 0 L12 11${svgStyle}
+	
+	${path}0 0 L12 0${svgStyle2}1${svgStylePstFx}
+	${path}12 0 L12 11${svgStyle2}1${svgStylePstFx}
+	${path}12 11 L0 11${svgStyle2}1${svgStylePstFx}
+	${path}0 11 L0 0${svgStyle2}1${svgStylePstFx}
 </svg>`;				
 rModStyle.display='flex';	spaceBetween = Math.round(starWrapWidth*spaceBetween/100);	
-					
+//${path}12 0 L12 11${svgStyle}					
 msgSrv({'height':moduleName+' '+getProp2(rateModul,'height'),'gap':moduleName+' '+spaceBetween});
 /* rating block filling with stars and space hoopers between */
 for (let i=0;i<quantity;i++){
-	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl('spcBlk'), spcBlkStyle=spcBlk.style;
-		starWrap.style.width = plusPX(starWrapWidth);					
+	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl('spcBlk'), spcBlkStyle=spcBlk.style,
+	      starWrapBorder = putEl(), wrapBord = starWrapBorder.style;
+		starWrap.style.position='relative';
+		starWrap.style.width = plusPX(starWrapWidth);
+		wrapBord.zIndex='2';
+		wrapBord.position='absolute';			wrapBord.top=plusPX();
+		wrapBord.border=plusPX(1)+`solid ${fillColor}`;	wrapBord.left=plusPX();
+								wrapBord.right=plusPX();
+								wrapBord.bottom=plusPX();
+	starWrap.appendChild(starWrapBorder);				
 	rateModul.appendChild(starWrap);
 	if (i) {
 		spcBlkStyle.backgroundColor=fillColor;		spcBlkStyle.width=plusPX(spaceBetween);
@@ -52,7 +65,7 @@ function ratingDisplay(rate1=75,  demo=false) {
 	let dir=true;  rate = rate1;
 	msgSrv({'rateModule':'rating '+rate});	
 	const display = () => {
-		const maskLineH = plusPX(.5);
+		const maskLineH = plusPX(1);
 		if (rate>100) {rate=100;dir=false;} if (rate<0) {rate=0;dir=true;} 
 		
 		rModStyle.background = `linear-gradient(to top, ${fillColor} ${maskLineH}, transparent ${maskLineH}, transparent),
