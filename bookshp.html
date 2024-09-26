@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.7.6</title></head>		<style> 
+	<title>BookShop-MS v.0.8.0</title></head>		<style> 
 body {background-color:oldlace;}
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
@@ -115,8 +115,8 @@ function categorySelect (category) {
  if (!category) {category={'number':0,'name':siList[0]};}
 	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style,
 cardDeal = (cardData) => {
-	console.log('fetch cardData',cardData);
-	cardData = cardData.items;
+	
+	cardData = cardData.items;	
 	bookblk.innerHTML='';
     for (let i=0;i<6;i++){
 		const volInf = cardData[i].volumeInfo,		      
@@ -128,13 +128,10 @@ cardDeal = (cardData) => {
 	         		       valut = 'ПРОДАЁТСЯ',	annot = 'НЕТ ОПИСАНИЯ';
 
  		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
-
 		if (saleInfo.saleability==='FOR_SALE') {cena = saleInfo.listPrice.amount;valut = saleInfo.listPrice.currencyCode;}
-		
-
-		if (volAuthors) {authorCaption=volAuthors[0]};
-	    volAuthors.forEach ((i,n)=>{ if (n) {authorCaption=authorCaption+', '+i;}
-	    });
+		if (volAuthors) {authorCaption=volAuthors[0];
+			volAuthors.forEach ((i,n)=>{ if (n) {authorCaption=authorCaption+', '+i;}});
+		};
 	const cardContainer = putEl('cardContainer');
 		bookblk.appendChild(cardContainer);
 	buildCard(cardContainer,
