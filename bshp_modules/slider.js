@@ -1,4 +1,5 @@
-﻿//slider module v.3.0.3 for bookshop prj
+﻿//slider module v.3.0.5 for bookshop prj
+// dependencies : bshp_modules/Init00.js - plusPX func
 'use strict';
 msgSrv({'':'slider module loaded'});
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
@@ -8,14 +9,14 @@ msgSrv({'slider speed' : speed,'frameclass': frameclass});
 		      picFrame = putEl(),	warnBlk = putEl(),  
 		      pFStl=picFrame.style,	wbStl = warnBlk.style,		      		      
 		      prcnt = '%',		bPstfx="."+bPstf, 
-		      cntr = 'center', 		 		zpx =`px ${cntr}, ${cntr} ${cntr}`,
+		      cntr = 'center', 		 		zpx =`${cntr}, `+plusPX()+cntr,	/* center, 0px center */
 		      backGndCLr = getProp2(container,'background-color'); 
 	     
 		if (!container) return function (){const noPrnt ='Slider no parent/wrong container name for slider module'; 
 						   doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});};
 		let previousSlide = null, movSlow, frmWidth, 
 		picShiftX,
-		frameStep,warnFontSize,loadErr=false;
+		frameStep,warnFontSize,loadErr=false; 
 function frameDim(){
 	const picRatio = 1.58;
 	frmWidth = getProp2(container,'width');	
@@ -45,8 +46,10 @@ window.addEventListener('resize',frameDim);
 	function slider(nextSlide=0){
 		let probeImg = putEl('',`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
 		msgSrv({'':'slider '+nextSlide+' img src path: '+probeImg.src});
+
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
-		probeImg.addEventListener("error", () => {wbStl.display='block';});		    
+		probeImg.addEventListener("error", () => {wbStl.display='block';});
+		    
 		probeImg.addEventListener("load", () => {
 				wbStl.display='none';
 				if (previousSlide===null) {pFStl.backgroundImage=`url('${bPrefx}${nextSlide}${bPstfx}')`;				
@@ -55,15 +58,19 @@ window.addEventListener('resize',frameDim);
 					pFStl.backgroundImage=`url('${bPrefx}${nextSlide}${bPstfx}'), url('${bPrefx}${previousSlide}${bPstfx}')`;
 					picShiftX = frmWidth;
 					function frameMoving (){
-						pFStl.backgroundPosition=`${picShiftX}${zpx}`;
+							// Xpx center, 0px center 
+						pFStl.backgroundPosition=plusPX(picShiftX)+zpx;
 				        	movInterval = null;
-						if (picShiftX>0) {picShiftX-=frameStep;
-						   if (movSlow) {
-							movInterval = setTimeout (()=>{requestAnimationFrame(frameMoving);},movSlow);}
-						   else 			      {requestAnimationFrame(frameMoving);}
+						if (picShiftX>0) {
+						      picShiftX-=frameStep;
+						      if (movSlow) {
+							  movInterval = setTimeout (()=>{requestAnimationFrame(frameMoving);},movSlow);
+						      } else {requestAnimationFrame(frameMoving);}
 						} else {
 							cancelAnimationFrame(idA);
-							pFStl.backgroundPosition=`0${zpx}`;	}
+							pFStl.backgroundImage=`url('${bPrefx}${nextSlide}${bPstfx}')`;
+								// 0px center, 0px center 
+							pFStl.backgroundPosition=plusPX()+zpx;	}
 					};
 					idA = requestAnimationFrame(frameMoving);
 				};};	previousSlide = nextSlide;	
