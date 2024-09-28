@@ -4,8 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.8.0</title></head>		<style> 
-body {background-color:oldlace;}
+	<title>BookShop-MS v.0.9.0</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 129px;border:1px solid mediumseagreen; }
@@ -97,8 +96,10 @@ body {background-color:oldlace;}
 </footer>
 </div><!-- container0 blok_centr -->
 <script src="bshp_modules/Init00.js">  </script>
+
 <script src="bshp_modules/slider.js">  </script>
 <script src="bshp_modules/sidebar2.js"></script>
+
 <script src='bshp_modules/rateStars.js'> </script> 
 <script src='bshp_modules/buildCard.js'> </script>
 
@@ -106,16 +107,15 @@ body {background-color:oldlace;}
 <script src='bshp_modules/fetchReq.js'></script>
 <script>
 
-//cart_bage element content fill
-const cart_bage=doc0.querySelector('.cart_bage'); 
-						 cart_bage.style.display='flex'; cart_bage.innerHTML='4'; 
+//cart_bage element content fill (Init00.js)
+cartBage();
+
 //fires when sidebar category selected
 function categorySelect (category) {
 /* category: {'number':number,'name':String} */
  if (!category) {category={'number':0,'name':siList[0]};}
 	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style,
-cardDeal = (cardData) => {
-	
+cardDeal = (cardData) => {	
 	cardData = cardData.items;	
 	bookblk.innerHTML='';
     for (let i=0;i<6;i++){
@@ -144,7 +144,6 @@ cardDeal = (cardData) => {
 };   	
   fetchData(category.name,cardDeal);	
 };
-
 categorySelect();
 
 

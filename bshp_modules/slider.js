@@ -1,7 +1,7 @@
 ﻿//slider module v.3.0.5 for bookshop prj
-// dependencies : bshp_modules/Init00.js - plusPX func
+// dependencies : bshp_modules/Init00.js - plusPX func, putEl func
 'use strict';
-msgSrv({'':'slider module loaded'});
+msgSrv({'':'slider module v.3.0.5 loaded'});
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 msgSrv({'slider speed' : speed,'frameclass': frameclass});
 
@@ -45,7 +45,7 @@ window.addEventListener('resize',frameDim);
 			 case "veryfast":movSlow = 0;	break;	default: movSlow = 10;}								 	
 	function slider(nextSlide=0){
 		let probeImg = putEl('',`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
-		msgSrv({'':'slider '+nextSlide+' img src path: '+probeImg.src});
+		msgSrv({'slider module':nextSlide+' image: '+probeImg.src});
 
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
 		probeImg.addEventListener("error", () => {wbStl.display='block';});

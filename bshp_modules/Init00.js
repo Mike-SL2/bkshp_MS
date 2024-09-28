@@ -1,6 +1,6 @@
-﻿//Iitialization module v.3.1.1 for bookshop prj
+﻿//Iitialization module v.5.0.1 for bookshop prj
 'use strict';
-const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
 	if (typeof msgObj !='object') {console.log('msgSrv error');return;}
@@ -56,7 +56,32 @@ plusPX = (value=0)=>{
 		if (value>1) {return Math.round(value)+px;} 
 			else {return value+px;}
 	};
+},
+//cart to local store bridge
+processCart = (itemID=null,putToCart=false) => {
+msgSrv({'':'processCart func loaded','write to Cart':putToCart,'value':itemID});
+     const keyName = 'cart9170436'; 
+     let aux=localStorage.getItem(keyName), temp=[];	
+ 	if (aux) {
+		aux=JSON.parse(aux);		
+	} else {aux=[];}
+	if (itemID===null) {msgSrv({'processCart read Cart': aux}); return aux;}
+	if (putToCart) {aux.push(itemID); }
+	else { 		
+		aux.forEach((i)=>{			
+			if (JSON.stringify(itemID)!=JSON.stringify(i)) {temp.push(i);}
+		}); aux=temp;						  
+	};		localStorage.setItem(keyName,JSON.stringify(aux));	
+},
+//cart_bage element content fill
+cartBage = () =>{
+const cart_bage=doc0.querySelector('.cart_bage'), cartItemsQuantity = processCart().length; 
+	if (cartItemsQuantity) {
+		cart_bage.style.display=flex; cart_bage.innerHTML=cartItemsQuantity;}
+	else {	cart_bage.style.display=''; }						  
 };
+
+
 //-------------------------------------------------------
 headerColor();
 
@@ -68,4 +93,6 @@ msgSrv({'':'Init00 module global func/const list ---',
 	'getProp2':getProp2,
 	'headerColor':headerColor,
 	'putEl':putEl,
-	'plusPX':plusPX});
+	'plusPX':plusPX,
+	'processCart':processCart,
+	'cartBage':cartBage});

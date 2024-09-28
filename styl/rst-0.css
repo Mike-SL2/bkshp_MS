@@ -1,7 +1,7 @@
 ﻿*::selection{background-color:transparent;}
 *{background-color:transparent;text-underline-position:under;padding:0px;margin:0px;
   cursor:default;}
-body{background-color:white;}
+body{background-color:ivory;}
 a,.sidebarItem{cursor:pointer;}
 a{text-decoration:none;color:black;}
 .flex_centr{justify-content:center;align-items:center;}

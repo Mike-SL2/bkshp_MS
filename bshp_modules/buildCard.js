@@ -13,7 +13,8 @@ const opt1Default = {
 	'reviewCnt':354, 
 	'annot':'The Outrageously Funny Debut Novel About Three Super-Rich, Pedigreed Chinese Families And The Gossip about third world war',
 	'price':4.99,
-	'buyNowBtnTxt':'BuY nOW'
+	'buyNowBtnTxt':'BuY nOW',
+	'inCartTxt':'In CART'
 },
 klasDefault={
 	'goodImgWrap':'goodImgWrap',
@@ -42,13 +43,13 @@ fillDef = (defaults, inputOptions) => {
 		if (!(key in inputOptions)){inputOptions[key]=defaults[key];}
 	};
 };	fillDef(opt1Default,opt1);	fillDef(klasDefault,klas);	fillDef(opt2Default,opt2);
-let review=' review', btnClass = klas.buyNowBtn;
 const 	
-	containerStl = container.style, 
+	containerStl = container.style, buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
 						goodImgStl = goodImg.style,
-	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),
-	price = putEl(klas.price,opt1.price),
+	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
+	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
+	innerCart = processCart(),
 //set card container height 78% of width
 setProp =() => {
 	let rateBlk;
@@ -61,6 +62,9 @@ setProp =() => {
 rateBlk = rateModule(5,rateDisplay);
 rateBlk(Math.round(Number(opt1.reviewCnt)*sto/Number(opt1.maxReviewCnt)));
 };
+let review=' review', 
+	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;
+
 //build card
 containerStl.display=flex;	containerStl.flexFlow='row nowrap';
 rating.style.display=flex;
@@ -81,9 +85,30 @@ container.appendChild(goodDesc);
 	goodDesc.appendChild(putEl(klas.annot,opt1.annot));
 
 	goodDesc.appendChild(price);
-		if (!opt1.price.match( /\d+/ )) {price.style.opacity = '0.4';btnClass = klas.noBuyBtn} 
+	/* button 'BUY NOW' */	   
+	  innerCart.forEach ((i)=>{
+		if (JSON.stringify(i)===JSON.stringify(itemID)) {
+			buyNowBtnCaption1=opt1.inCartTxt;   btnClass = klas.buyNowBtn + " buyNowBtnPressed";}
+	  });
+		buyNowBtn=  putEl(btnClass,buyNowBtnCaption1);
+		if (opt1.price.match( /\d+/ )) {
+			buyNowBtn.addEventListener('click',(ev)=>{
+				const buyBtn = ev.target;
+				if (buyBtn.textContent===buyNowBtnCaption) {buyBtn.textContent=opt1.inCartTxt;									
+									 buyBtn.classList.add("buyNowBtnPressed");
+									//put item to buyer cart (Init00.js)
+									 processCart(itemID,true);
+									 
+				} else {buyBtn.textContent=buyNowBtnCaption;
+					//remove item from buyer cart (Init00.js)
+					processCart(itemID,false); 
+				      	buyBtn.classList.remove("buyNowBtnPressed");}
+				//cart_bage element content fill (Init00.js)
+				cartBage();
+			});
+		} else {price.style.opacity = '0.4';buyNowBtn =  putEl(klas.noBuyBtn,buyNowBtnCaption);}
+		goodDesc.appendChild(buyNowBtn);
 		
-	goodDesc.appendChild(putEl(btnClass,opt1.buyNowBtnTxt.toUpperCase()));
 //set card container height			
 setProp();
 //set card container height on resize event
