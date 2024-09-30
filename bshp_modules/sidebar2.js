@@ -1,4 +1,4 @@
-﻿//sidebar menu build & selector module v.2.4.0 for bookshop prj
+﻿//sidebar menu build & selector module v.2.5.0 for bookshop prj
 //sidebar menu build section
 const sbList=function(){
 msgSrv({'':'sidebarMenu module loaded'});
