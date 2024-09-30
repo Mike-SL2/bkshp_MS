@@ -1,4 +1,4 @@
-﻿//sidebar menu build & selector module v.2.3.0 for bookshop prj
+﻿//sidebar menu build & selector module v.2.4.0 for bookshop prj
 //sidebar menu build section
 const sbList=function(){
 msgSrv({'':'sidebarMenu module loaded'});
@@ -23,19 +23,19 @@ const sbItemSel=function(){
 			getFontSize();
 msgSrv({'':'sidebarSelector module loaded'});
 			sbItems.forEach((i)=>{i.addEventListener('click',(ev)=>{categorySelect(sbItemSel(ev));})});
-
-			function rst0(x=null){let locItemStl = sbItems[selectedItem].style;
-				           
-				  if (x===null) {locItemStl.fontWeight='';  locItemStl.fontSize='';
-						 sbMarkers[selectedItem].innerHTML='';
+			function rst0(x=null){				           
+				  if (x===null) {
+						 setProp(sbItems[selectedItem], {'fontWeight':es, 'fontSize':es});
+						 sbMarkers[selectedItem].innerHTML=es;
 						 getFontSize();
 						 msgSrv({'sidebar selector':'item '+selectedItem+' mark clear "'+siList[selectedItem]+'"'});}
-					   else {locItemStl = sbItems[x].style;
-						 locItemStl.fontWeight=selectedFontWeight;
-						 locItemStl.fontSize = plusPX(unselectedFontSize*selectedFontSizeFactor);	  	   
-					sbMarkers[x].innerHTML=markerSign;
-					msgSrv({'sidebar selector':'item '+selectedItem+' mark set "'+siList[selectedItem]+'"'});}
+					   else {
+						 setProp(sbItems[x], {'fontWeight':selectedFontWeight, 
+								      'fontSize':plusPX(unselectedFontSize*selectedFontSizeFactor)});	  	   
+						 sbMarkers[x].innerHTML=markerSign;
+						 msgSrv({'sidebar selector':'item '+selectedItem+' mark set "'+siList[selectedItem]+'"'});}
 			};
+			//set initial selection 
 			rst0(selectedItem); window.addEventListener('resize',()=>{rst0();rst0(selectedItem);});	
 			function sbItemSel(ev){				
 				rst0();

@@ -1,6 +1,7 @@
-﻿//Iitialization module v.5.0.1 for bookshop prj
+﻿//Iitialization module v.5.3.2 for bookshop prj
 'use strict';
 const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+//false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
 	if (typeof msgObj !='object') {console.log('msgSrv error');return;}
@@ -9,7 +10,7 @@ const msgSrv = (msgObj) => {
 			console.log(startMark,msgObj[key].match(/\b\w{1,}\b/)[0],':',msgObj[key].match(/\s.+/)[0]);
 		} else {console.log(key,': ',msgObj[key]);}}
 },
-doc0 = document, sto = 100, flex = 'flex',
+doc0 = document, sto = 100, flex = 'flex', es='',
 //goods categories
 siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink',
 	'Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],
@@ -23,7 +24,12 @@ getProp2 = (DomElement,propertyName) =>{
 		 'propertyName':propertyName,
 		 'getProp2_return':prVal})
 	return prVal;	
-},	
+},
+//setting style properties	
+setProp = (domEl,propObj)=>{
+	const elementStyle = domEl.style; 
+	for (let prop in propObj){	elementStyle[prop]=propObj[prop];	}
+},
 //get header color from body background color
 headerColor = () => {
 	msgSrv({'headerColor func': 'loaded'});
@@ -38,7 +44,7 @@ msgSrv({'body-color':bodyColor});
    } else {return;} 
 },
 //returns DOM element with className
-putEl = (className='',innerContent='',altTxt='') => {
+putEl = (className=es,innerContent=es,altTxt=es) => {
 	let aux; 
 	if (altTxt) {
 		aux = doc0.createElement('img');	aux.src = innerContent;		aux.alt=altTxt;} 
@@ -61,24 +67,32 @@ plusPX = (value=0)=>{
 processCart = (itemID=null,putToCart=false) => {
 msgSrv({'':'processCart func loaded','write to Cart':putToCart,'value':itemID});
      const keyName = 'cart9170436'; 
-     let aux=localStorage.getItem(keyName), temp=[];	
+     let aux=localStorage.getItem(keyName), temp=[], putToCartEnable = true;	
  	if (aux) {
-		aux=JSON.parse(aux);		
-	} else {aux=[];}
+		  aux=JSON.parse(aux);		
+	  } else {aux=[];}
+	aux.forEach((i)=>{			
+			if (JSON.stringify(itemID)===JSON.stringify(i)) {putToCartEnable = false;} else {temp.push(i);}
+			});
+	//returns cart contents when called with no args 
 	if (itemID===null) {msgSrv({'processCart read Cart': aux}); return aux;}
-	if (putToCart) {aux.push(itemID); }
-	else { 		
-		aux.forEach((i)=>{			
-			if (JSON.stringify(itemID)!=JSON.stringify(i)) {temp.push(i);}
-		}); aux=temp;						  
-	};		localStorage.setItem(keyName,JSON.stringify(aux));	
+	//put an item to the cart if the cart doesn't have it
+	if (putToCart) {if (putToCartEnable) {aux.push(itemID);} else { msgSrv({'processCart': 'item is already in cart','processCart rejected':itemID});
+									return  putToCartEnable;}}
+	else { 	
+	      putToCartEnable = true;	
+	      aux=temp;						  
+	};		localStorage.setItem(keyName,JSON.stringify(aux));
+// returns true if cart operation was successful
+return putToCartEnable;	
 },
 //cart_bage element content fill
 cartBage = () =>{
 const cart_bage=doc0.querySelector('.cart_bage'), cartItemsQuantity = processCart().length; 
+msgSrv({'':'cartBage func loaded','cartBage volume':cartItemsQuantity});
 	if (cartItemsQuantity) {
 		cart_bage.style.display=flex; cart_bage.innerHTML=cartItemsQuantity;}
-	else {	cart_bage.style.display=''; }						  
+	else {	cart_bage.style.display=es; }						  
 };
 
 
@@ -91,6 +105,7 @@ msgSrv({'':'Init00 module global func/const list ---',
 	'doc0':doc0,		'sto':sto, 'flex':flex,	
 	'siList':siList,
 	'getProp2':getProp2,
+	'setProp':setProp,
 	'headerColor':headerColor,
 	'putEl':putEl,
 	'plusPX':plusPX,

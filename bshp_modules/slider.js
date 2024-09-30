@@ -1,13 +1,12 @@
-﻿//slider module v.3.0.5 for bookshop prj
+﻿//slider module v.3.2.5 for bookshop prj
 // dependencies : bshp_modules/Init00.js - plusPX func, putEl func
 'use strict';
 msgSrv({'':'slider module v.3.0.5 loaded'});
-const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
-msgSrv({'slider speed' : speed,'frameclass': frameclass});
 
+const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
+msgSrv({'slider speed' : speed,'frameclass': frameclass});	
 		const container = doc0.querySelector('.'+frameclass),
-		      picFrame = putEl(),	warnBlk = putEl(),  
-		      pFStl=picFrame.style,	wbStl = warnBlk.style,		      		      
+		      picFrame = putEl(),	warnBlk = putEl(),  	      		      
 		      prcnt = '%',		bPstfx="."+bPstf, 
 		      cntr = 'center', 		 		zpx =`${cntr}, `+plusPX()+cntr,	/* center, 0px center */
 		      backGndCLr = getProp2(container,'background-color'); 
@@ -21,45 +20,44 @@ function frameDim(){
 	const picRatio = 1.58;
 	frmWidth = getProp2(container,'width');	
         frameStep = 1+Math.floor(frmWidth/200);	warnFontSize = (1+Math.floor(frmWidth/50));
-	pFStl.height=plusPX(frmWidth/picRatio);
+	setProp(picFrame,{'height':plusPX(frmWidth/picRatio)});
+	
 };
 frameDim();
-window.addEventListener('resize',frameDim);												
-
-	pFStl.width=sto+prcnt; 		 pFStl.backgroundSize='contain';	pFStl.backgroundColor=backGndCLr;	
-	pFStl.backgroundRepeat='no-repeat';
-	pFStl.display=flex;		 pFStl.justifyContent =cntr;		pFStl.alignItems =cntr;	
+window.addEventListener('resize',frameDim);
+												
+	setProp(picFrame,{'width':sto+prcnt, 'backgroundSize':'contain', 'backgroundColor':backGndCLr,
+			  'backgroundRepeat':'no-repeat', 'display':flex, 'justifyContent':cntr, 'alignItems':cntr});	
+	container.appendChild(picFrame);
 	
-	container.appendChild(picFrame);	
-					 wbStl.color='gray';				wbStl.fontSize=plusPX(warnFontSize*1.7);
-					 wbStl.backgroundColor='gainsboro';		wbStl.textAlign =cntr;
-					 						wbStl.fontWeight='600';
-					 wbStl.maxWidth='90'+prcnt;	 		wbStl.letterSpacing=plusPX(frameStep);		 
-					 wbStl.overflowWrap='break-word';		wbStl.opacity='0.95';
-					 wbStl.padding='1'+prcnt;			wbStl.display='none';
+	setProp(warnBlk,{'color':'gray', 'backgroundColor':'gainsboro', 'opacity':'0.95', 'display':'none',
+			 'maxWidth':'90'+prcnt, 'padding':'1'+prcnt, 'fontSize':plusPX(warnFontSize*1.7),
+			 'fontWeight':'600', 'letterSpacing':plusPX(frameStep), 'textAlign':cntr, 'overflowWrap':'break-word'});					 			
 	picFrame.appendChild(warnBlk);   
+
         switch (speed) 	{case "slow":	 movSlow = 25;	break;
 		 	 case "moderate":movSlow = 15;	break;
 		 	 case "normal":	 movSlow = 8;	break;
 		 	 case "fast":	 movSlow = 3;	break;
 			 case "veryfast":movSlow = 0;	break;	default: movSlow = 10;}								 	
 	function slider(nextSlide=0){
-		let probeImg = putEl('',`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
+		let probeImg = putEl(es,`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
 		msgSrv({'slider module':nextSlide+' image: '+probeImg.src});
 
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
-		probeImg.addEventListener("error", () => {wbStl.display='block';});
+		probeImg.addEventListener("error", () => {setProp(warnBlk,{'display':'block'});});
 		    
 		probeImg.addEventListener("load", () => {
-				wbStl.display='none';
-				if (previousSlide===null) {pFStl.backgroundImage=`url('${bPrefx}${nextSlide}${bPstfx}')`;				
+				setProp(warnBlk,{'display':'none'});
+				if (previousSlide===null) {setProp(picFrame,{'backgroundImage':`url('${bPrefx}${nextSlide}${bPstfx}')`});				
 				} else {
 				if (previousSlide!=nextSlide) {	
-					pFStl.backgroundImage=`url('${bPrefx}${nextSlide}${bPstfx}'), url('${bPrefx}${previousSlide}${bPstfx}')`;
+						setProp(picFrame,{'backgroundImage':`url('${bPrefx}${nextSlide}${bPstfx}'), url('${bPrefx}${previousSlide}${bPstfx}')`});
 					picShiftX = frmWidth;
 					function frameMoving (){
 							// Xpx center, 0px center 
-						pFStl.backgroundPosition=plusPX(picShiftX)+zpx;
+							setProp(picFrame,{'backgroundPosition':plusPX(picShiftX)+zpx});
+
 				        	movInterval = null;
 						if (picShiftX>0) {
 						      picShiftX-=frameStep;
@@ -68,9 +66,10 @@ window.addEventListener('resize',frameDim);
 						      } else {requestAnimationFrame(frameMoving);}
 						} else {
 							cancelAnimationFrame(idA);
-							pFStl.backgroundImage=`url('${bPrefx}${nextSlide}${bPstfx}')`;
+							setProp(picFrame,{'backgroundImage':`url('${bPrefx}${nextSlide}${bPstfx}')`});
 								// 0px center, 0px center 
-							pFStl.backgroundPosition=plusPX()+zpx;	}
+							setProp(picFrame,{'backgroundPosition':plusPX()+zpx});	
+							};
 					};
 					idA = requestAnimationFrame(frameMoving);
 				};};	previousSlide = nextSlide;	
@@ -84,11 +83,10 @@ slideShow=function(amount=0, timeout = 0, inactClr="palegreen", actClr="fuchsia"
 if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wrong container name for sliderControl module'; 
 				     doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});
 				    };
-		const   slideControlButtonClassName = "slideCtrlButton",
-			swBlkStl = switchBlock.style,   slideShowPauseCount = 2;
-			swBlkStl.display=flex;	swBlkStl.justifyContent='space-between';
-		let ctrlBtn = null,cBtnStl, pauseShow = 0, slideNum = 0,
+		const   slideControlButtonClassName = "slideCtrlButton", slideShowPauseCount = 2;
+		let ctrlBtn = null, pauseShow = 0, slideNum = 0,
 		    swHeightNum,  swWidthNum,  maxAmount, amountMinusOne;
+setProp(switchBlock,{'display':flex, 'justifyContent':'space-between'});
 function switchDim (){
 	swHeightNum = getProp2(switchBlock,'height');		
 	swWidthNum = getProp2(switchBlock,'width');			
@@ -98,17 +96,17 @@ maxAmount = Math.round((swWidthNum/swHeightNum+0.5)/1.5);
 if ((amount<2) || (amount>maxAmount))  {amount = maxAmount};		
 amountMinusOne = amount-1;
 // switch block clear
-switchBlock.innerHTML='';
-for (let i=0;i<amount;i++) {ctrlBtn =putEl(slideControlButtonClassName); cBtnStl = ctrlBtn.style;		cBtnStl.cursor='pointer';
-			    cBtnStl.backgroundColor=inactClr;		 cBtnStl.borderRadius='50%';
-			    cBtnStl.width=plusPX(swHeightNum);		 cBtnStl.height=plusPX(swHeightNum);	
-switchBlock.appendChild(ctrlBtn);
+switchBlock.innerHTML=es;
+for (let i=0;i<amount;i++) {ctrlBtn =putEl(slideControlButtonClassName); 
+		    setProp(ctrlBtn,{'cursor':'pointer', 'borderRadius':'50%', 'backgroundColor':inactClr, 
+			 	     'width':plusPX(swHeightNum), 'height':plusPX(swHeightNum)});	
+    switchBlock.appendChild(ctrlBtn);
 };
 ctrlBtn	= doc0.querySelectorAll('.'+slideControlButtonClassName);
 // switch block onresize
 window.addEventListener('resize',()=>{	
-		switchDim ();
-		ctrlBtn.forEach((i)=>{i.style.width=plusPX(swHeightNum);	i.style.height=plusPX(swHeightNum);});	
+		switchDim ();		
+		ctrlBtn.forEach((i)=>{setProp(i,{'width':plusPX(swHeightNum), 'height':plusPX(swHeightNum)});});	
 });	
 function swState(activeBtnNumber){
 		ctrlBtn.forEach((i,n)=>{if (activeBtnNumber===n){i.style.backgroundColor=actClr;  sliderName(n);  slideNum=n;

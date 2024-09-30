@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.9.0</title></head>		<style> 
+	<title>BookShop-MS v.0.9.1</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 129px;border:1px solid mediumseagreen; }
@@ -114,7 +114,7 @@ cartBage();
 function categorySelect (category) {
 /* category: {'number':number,'name':String} */
  if (!category) {category={'number':0,'name':siList[0]};}
-	const bookblk = doc0.querySelector('.goodsBlock'), bbStl=bookblk.style,
+	const bookblk = doc0.querySelector('.goodsBlock'), 
 cardDeal = (cardData) => {	
 	cardData = cardData.items;	
 	bookblk.innerHTML='';
