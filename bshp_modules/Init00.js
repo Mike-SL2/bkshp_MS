@@ -1,6 +1,6 @@
 ﻿//Iitialization module v.5.3.2 for bookshop prj
 'use strict';
-const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}

@@ -1,16 +1,64 @@
 ﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<meta charset="UTF-8">	
+				<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../ico/cart.gif">	
 <link rel="stylesheet" href="../styl/rst-0.css">			
-	<title>Client cart contents</title>	</head>	
+	<title>Client cart</title>	</head>	
 <style>
-
-
+.cartPicWrap,.cartHeader,.itemWrap{align-items:center;}
+.cartPicWrap{width:30%;justify-content:space-around;}
+.cartPicture{width:20%;}
+.cartHeader,.headerGoods,.ordNum{font-size:2vw;font-weight:800;letter-spacing:.2vw;}
+.cartHeader,.authorCart,.captionCart{padding:1ch;box-sizing:border-box;}
+.cartBlock{margin:2vw 2vw 0px 2vw;}
+  .headerGoods{border:1px solid gray;padding:0px;}
+	.itemWrap,.authorCart,.captionCart{min-height:3vw;}
+	.itemWrap{gap:1.5vw;margin-bottom:1vw;background:mistyrose;}	
+		.ordNum{margin-left:.5vw;width:2.5vw;height:2.5vw; font-weight:400;border:1px solid red;background:#FFFFFF80; }
+		.authorCart,.captionCart{font-size:1.8vw;align-items:center;background:palegreen; }
+		.authorCart{width:40%;}
+		.captionCart{width:60%;}.noBackNoBorder{background:transparent;border:1px solid transparent;}
 </style>
 <body>
-Client cart contents
+<div class='cartPicWrap'><img src='../img/cartGrad.gif'  class='cartPicture'><div class='cartHeader'>Client cart</div></div>
 <hr>
+<div class='cartBlock'></div>
 <script src="../bshp_modules/Init00.js">  </script>
 <script>
-	console.log('Client cart contents',processCart());
+'use strict';
+msgSrv({'':'client_cart_page loaded'});
+const showCart = function (){
+	msgSrv({'':'client_cart_page showCart func loaded'});
+	const innerCart = processCart(), cartBlock = doc0.querySelector('.cartBlock'),
+	      itemWrapKlas = 'itemWrap', authorCartKlas='authorCart', captionCartKlas='captionCart';
+    if (innerCart.length) {
+	let itemWrap = putEl(itemWrapKlas+' noBackNoBorder'), authEl, capEl;	
+			cartBlock.appendChild(itemWrap);
+		itemWrap.appendChild(putEl('ordNum flex_centr noBackNoBorder'));  
+			itemWrap.appendChild(putEl(authorCartKlas+' flex_centr headerGoods','Author'));
+			itemWrap.appendChild(putEl(captionCartKlas+' flex_centr headerGoods','Caption'));
+	  innerCart.forEach((i,n)=>{
+		itemWrap = putEl(itemWrapKlas);	
+			cartBlock.appendChild(itemWrap);
+		itemWrap.appendChild(putEl('ordNum flex_centr',n+1)); 
+			 authEl=putEl(authorCartKlas,i.author);		itemWrap.appendChild(authEl);
+			 capEl =putEl(captionCartKlas,i.caption);	itemWrap.appendChild(capEl);	     
+	  });
+        const setHei = () => {
+		const itemWrapArr = doc0.querySelectorAll('.'+itemWrapKlas); 
+		let hei;
+		itemWrapArr.forEach((i)=>{
+			authEl=i.querySelector('.'+authorCartKlas);	authEl.style.height=es;
+			capEl =i.querySelector('.'+captionCartKlas);	capEl.style.height=es;			
+			hei=plusPX(getProp2(i,'height'));		authEl.style.height=hei;
+									capEl.style.height=hei;
+		});
+	};setHei();
+	window.addEventListener('resize',setHei);
+    } else {cartBlock.innerHTML='Nothing in your cart. Empty :-((';
+	    setProp(cartBlock,{'display':'inline-block', 'background':'linear-gradient(to right, pink 35%, lime)',
+		'padding':'1ch','border-radius':'2vw', 'border':'1px solid gray', 'box-shadow':'1vw 1vw 5px 0px lightgray',
+		'font-size':'3vw'});
+	    return;}
+}();
 </script>
 </body></html>
