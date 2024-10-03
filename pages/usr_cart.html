@@ -5,10 +5,16 @@
 	<title>Client cart</title>	</head>	
 <style>
 .cartPicWrap,.cartHeader,.itemWrap{align-items:center;}
-.cartPicWrap{width:30%;justify-content:space-around;}
+.cartPicWrap{width:40%;justify-content:space-around;}
 .cartPicture{width:20%;}
 .cartHeader,.headerGoods,.ordNum{font-size:2vw;font-weight:800;letter-spacing:.2vw;}
-.cartHeader,.authorCart,.captionCart{padding:1ch;box-sizing:border-box;}
+.cartHeader,.authorCart,.captionCart,.emptyCardBtn{padding:1ch;box-sizing:border-box;}
+.emptyCardBtn:hover{background:radial-gradient(at center, pink, #FF00FF80);color:black;}
+.emptyCardBtn{font-size:1vw;font-weight:600;margin-left:0px;background-color:#FF00FF80;color:white;
+	      border-radius:1vw;display:none;box-shadow:0.5vw 0.5vw 5px 0px lightgray;
+	      cursor:pointer;
+	      transition:box-shadow,color,background;transition-duration:500ms;}
+
 .cartBlock{margin:2vw 2vw 0px 2vw;}
   .headerGoods{border:1px solid gray;padding:0px;}
 	.itemWrap,.authorCart,.captionCart{min-height:3vw;}
@@ -19,8 +25,11 @@
 		.captionCart{width:60%;}.noBackNoBorder{background:transparent;border:1px solid transparent;}
 </style>
 <body>
-<div class='cartPicWrap'><img src='../img/cartGrad.gif'  class='cartPicture'><div class='cartHeader'>Client cart</div></div>
+<div class='cartPicWrap'><img src='../img/cartGrad.gif'  class='cartPicture'><div class='cartHeader'>Client cart</div>
+			 <button  class='emptyCardBtn'>Empty cart</button><br>
+</div>
 <hr>
+
 <div class='cartBlock'></div>
 <script src="../bshp_modules/Init00.js">  </script>
 <script>
@@ -28,9 +37,11 @@
 msgSrv({'':'client_cart_page loaded'});
 const showCart = function (){
 	msgSrv({'':'client_cart_page showCart func loaded'});
-	const innerCart = processCart(), cartBlock = doc0.querySelector('.cartBlock'),
-	      itemWrapKlas = 'itemWrap', authorCartKlas='authorCart', captionCartKlas='captionCart';
-    if (innerCart.length) {
+	const cartBlock = doc0.querySelector('.cartBlock'), emptCardBtn= doc0.querySelector('.emptyCardBtn'),
+	      itemWrapKlas = 'itemWrap', authorCartKlas='authorCart', captionCartKlas='captionCart',
+showContent = () => {
+ const innerCart = processCart();
+   if (innerCart.length) { 
 	let itemWrap = putEl(itemWrapKlas+' noBackNoBorder'), authEl, capEl;	
 			cartBlock.appendChild(itemWrap);
 		itemWrap.appendChild(putEl('ordNum flex_centr noBackNoBorder'));  
@@ -54,11 +65,22 @@ const showCart = function (){
 		});
 	};setHei();
 	window.addEventListener('resize',setHei);
-    } else {cartBlock.innerHTML='Nothing in your cart. Empty :-((';
+	   emptCardBtn.style.display='block';
+   } else {emptCardBtn.style.display='';
+	    cartBlock.innerHTML='Nothing in your cart. Empty :-((';
 	    setProp(cartBlock,{'display':'inline-block', 'background':'linear-gradient(to right, pink 35%, lime)',
 		'padding':'1ch','border-radius':'2vw', 'border':'1px solid gray', 'box-shadow':'1vw 1vw 5px 0px lightgray',
-		'font-size':'3vw'});
-	    return;}
+		'font-size':'3vw'});}
+};
+ showContent();
+ emptCardBtn.addEventListener('click',()=>{let ans = confirm ("Are you shure you want to delete all cart items?");
+					   if (ans) {
+					   	processCart(null,false,true); // clean client's cart	     
+					   	setProp(emptCardBtn,{'backgroundColor':'red','boxShadow':'0px 0px 0px 0px white'});	
+					   	setTimeout(()=>{showContent();},500);}
+ });   
 }();
+
+
 </script>
 </body></html>

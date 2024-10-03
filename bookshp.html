@@ -4,19 +4,19 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.9.1</title></head>		<style> 
+	<title>BookShop-MS v.0.10.0</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
-	main   {margin:129px auto 129px;border:1px solid mediumseagreen; }
+	main   {margin:129px auto 0px;border:1px solid mediumseagreen; }
 		sidebar    {background-color:#EAEAF5;height:46vw;width:30%; }				  
 			.sidebarTextBlock{width:75%;height:80%;	  margin-top:10%;}
 			.sidebarItem,.sibarMark{align-items:center;}   		   
 			   .sibarMark{width:13%;height:50%;padding:0px 0px 3% 0px;font-size:250%;color:darkmagenta; }				
 			   .sidebarItem{font-size:1vw;height:7%; }
-	.goodsBlock{height:100%;}
 		.goodsBlock {flex-flow:row wrap;background:white;width:73%;margin:3% 0px 0px -4%;}
 		.cardContainer{width:49.5%;transition:transform;transition-duration:1000ms;}
 			.cardContainer:hover{transform:scale(1.1); }
+ 	.ldMoreBtn{width:150px;height:2vw;margin:0px auto;}
 
 	footer {background:magenta;height:70px;}
 @media (max-width: 800px) { 
@@ -26,7 +26,7 @@
 			   .fnt_size_10{font-size:8px;} .spc_39,.spc_74,.spc_109,.spc_30{width:auto;}
 			   .ico_link_container{width:15vw;}
 	.slider_pic_link_box{font-weight:500;}
-			main{margin:15vw auto 15vw;}			
+			main{margin:10vw auto 1vw;}			
 }
 @media (min-width: 1440px) {
 			.slider_pic_link_pos1{top:41px;right:90px;}
@@ -51,7 +51,7 @@
 	<div class="logo fnt_size_24" title="Bookshop logotype">Bookshop</div>		
 <!-- Nav MENU -->
 	<div class="menu">									
-	  <a href='#' class="mnu_links spc_39 fnt_size_10" title="Books">		 Books				</a>	
+	  <a href='#loadMoreAncor' class="mnu_links spc_39 fnt_size_10" title="Books">	 Books				</a>	
 	  <a href='#' class="mnu_links spc_74 fnt_size_10" title="AUDIOBooks">		 AUDIOBooks			</a>	
 	  <a href='#' class="mnu_links spc_109 fnt_size_10" title="STATIONERY and GIFTS">STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
 	  <a href='#' class="mnu_links spc_30 fnt_size_10" title="Blog page">		 Blog				</a>		  	
@@ -87,9 +87,9 @@
 			</div>
 	</sidebar>
 	<div class="goodsBlock">
-		<!-- content to be generated when user selection occur -->
+		<!-- content to be generated when user selection occur -->		
 	</div>	
-</main>
+</main><button class='ldMoreBtn' id='loadMoreAncor'>Load More</button>
 
 <footer>
 		<div id="footer_blk"> footer block</div>
@@ -115,18 +115,19 @@ function categorySelect (category) {
 /* category: {'number':number,'name':String} */
  if (!category) {category={'number':0,'name':siList[0]};}
 	const bookblk = doc0.querySelector('.goodsBlock'), 
-cardDeal = (cardData) => {	
+cardDeal = (cardData) => {
 	cardData = cardData.items;	
 	bookblk.innerHTML='';
     for (let i=0;i<6;i++){
-		const volInf = cardData[i].volumeInfo,		      
+		const volInf = cardData[i].volumeInfo,
+		      imgLinks = volInf.imageLinks,		      
 		      searchInf = cardData[i].searchInfo,
 		      volAuthors = volInf.authors,
 		      saleInfo = cardData[i].saleInfo;		
 		
-		let authorCaption = '',cena = 'HE',
+		let authorCaption = '',cena = 'HE',		imageCoverURL ='',
 	         		       valut = 'ПРОДАЁТСЯ',	annot = 'НЕТ ОПИСАНИЯ';
-
+		if (imgLinks) {imageCoverURL = imgLinks.thumbnail};
  		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
 		if (saleInfo.saleability==='FOR_SALE') {cena = saleInfo.listPrice.amount;valut = saleInfo.listPrice.currencyCode;}
 		if (volAuthors) {authorCaption=volAuthors[0];
@@ -135,7 +136,7 @@ cardDeal = (cardData) => {
 	const cardContainer = putEl('cardContainer');
 		bookblk.appendChild(cardContainer);
 	buildCard(cardContainer,
-	{'imageSrc':'img/goodImg0.png',
+	{'imageSrc':imageCoverURL, 
 	 'author':authorCaption,
 	 'caption':volInf.title,
 	 'annot':annot,

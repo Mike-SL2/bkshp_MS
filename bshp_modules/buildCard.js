@@ -1,4 +1,4 @@
-﻿//building card
+﻿//building card with loader and dynamic PH
 //dependencies: Init00.js, rst-0.css, cardStyl.css
 const buildCard = (container,   opt1={},
      				klas={},
@@ -19,6 +19,7 @@ klasDefault={
 	'goodImgWrap':'goodImgWrap',
 	'coverPH':'coverPH',
 	'goodImg':'goodImg',
+	'loaderRing':'loaderRing',
 	'spc1':'spc1',
 	'goodDesc':'goodDesc',
 	'author':'author',
@@ -45,6 +46,8 @@ fillDef = (defaults, inputOptions) => {
 const 	
 	buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
+	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'),
+	loadDelay = 500, blk = 'block',
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
 	innerCart = processCart(),
@@ -57,23 +60,37 @@ setPropCard =() => {
 	setProp(container,{'height':plusPX(cardContainerWidth/1.277), 'fontSize':plusPX(cardContainerWidth/54.6)});	
 	goodImg.style.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
 	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
+
 rateBlk = rateModule(5,rateDisplay);
 rateBlk(Math.round(Number(opt1.reviewCnt)*sto/Number(opt1.maxReviewCnt)));
 };
 let review=' review', 
 	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;
-
-//build card
+//building card
 setProp(container,{'display':flex, 'flexFlow':'row nowrap'});
 rating.style.display=flex;
 goodImgWrap.classList.add('flex_centr'); //../styl/rst-0.css
-goodImgWrap.style.position='relative';	
-setProp(goodImg, {'position':'absolute', 'top':plusPX(), 'left':plusPX(), 'height':sto+'%', 'width':sto+'%'});
-								
+setProp(goodImg, {'height':sto+'%', 'width':sto+'%'});						
 container.appendChild(goodImgWrap);
-	goodImgWrap.appendChild(putEl(klas.coverPH,opt2.noCvrImgText));	
-	goodImgWrap.appendChild(goodImg);
+// loader, placeholder, book cover image 
+	loader.style.display=blk;			coverPH.style.display=blk;
+	goodImgWrap.appendChild(loader);		goodImgWrap.appendChild(coverPH);
+const showNoCoverMessage = (mode=true) => {
+	const none = 'none';	loader.style.display=none;
+	if (mode) {coverPH.innerHTML=opt2.noCvrImgText;
+	} else {   coverPH.style.display=none;}						    	      
+};	
+	if (opt1.imageSrc) {
+		goodImg.addEventListener('load', ()=>{
+			setTimeout(()=>{goodImgWrap.appendChild(goodImg); showNoCoverMessage(false);},loadDelay);
+		});
+		goodImg.addEventListener('error',()=>{
+			setTimeout(()=>{showNoCoverMessage();},loadDelay);
+		});
+	} else {showNoCoverMessage();}	
+//space block 	
 container.appendChild(putEl(klas.spc1));
+//item description
 container.appendChild(goodDesc);
 	goodDesc.appendChild(putEl(klas.author,opt1.author));
 	goodDesc.appendChild(putEl(klas.caption,opt1.caption));
@@ -84,7 +101,7 @@ container.appendChild(goodDesc);
 	goodDesc.appendChild(putEl(klas.annot,opt1.annot));
 
 	goodDesc.appendChild(price);
-	/* button 'BUY NOW' */	   
+//button 'BUY NOW' 	   
 	  innerCart.forEach ((i)=>{
 		if (JSON.stringify(i)===JSON.stringify(itemID)) {
 			buyNowBtnCaption1=opt1.inCartTxt;   btnClass = klas.buyNowBtn + " buyNowBtnPressed";}

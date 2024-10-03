@@ -77,7 +77,7 @@ window.addEventListener('resize',frameDim);
 	};
 return slider;},
 
-slideShow=function(amount=0, timeout = 0, inactClr="palegreen", actClr="fuchsia", 
+slideShow=function(amount=0, timeout = 0, inactClr="rgb(239, 238, 246)", actClr="rgb(158, 152, 220)", 
 		   frameclass="sliderSwitch", sliderName=launchSlide){
 		const switchBlock = doc0.querySelector('.'+frameclass);
 if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wrong container name for sliderControl module'; 

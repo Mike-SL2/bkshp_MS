@@ -1,6 +1,6 @@
 ﻿//Iitialization module v.5.3.2 for bookshop prj
 'use strict';
-const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
@@ -63,12 +63,13 @@ plusPX = (value=0)=>{
 			else {return value+px;}
 	};
 },
-//cart to local store bridge
-processCart = (itemID=null,putToCart=false) => {
+//cart to local store bridge	
+processCart = (itemID=null, putToCart=false, emptyCart=false) => {
 msgSrv({'':'processCart func loaded','write to Cart':putToCart,'value':itemID});
      const keyName = 'cart9170436'; 
      let aux=localStorage.getItem(keyName), temp=[], putToCartEnable = true;	
  	if (aux) {
+		  if (emptyCart) {localStorage.setItem(keyName,JSON.stringify([]));return true;}
 		  aux=JSON.parse(aux);		
 	  } else {aux=[];}
 	aux.forEach((i)=>{			

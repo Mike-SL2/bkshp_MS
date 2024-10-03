@@ -1,4 +1,5 @@
 ﻿/* data acquisition by category name */
+'use strict';
 msgSrv({'':'fetchData module loaded'});
 const fetchData = (category,cbFuncName) =>{
 if (!category || !cbFuncName) {msgSrv({'fetchData':'No category or cbFuncName defined'});return null;}
@@ -9,25 +10,24 @@ f_options={method:"GET",
 	   mode:"cors",
 	   headers:{'content-type':'application/json'}		 
 };
+let y, dataOrigin = 'network';
 //fetch call
-msgSrv({'fetchData category':category,'fetchData request':requestString});
+msgSrv({'':'fetchData category '+category,'fetchData request':requestString});
 fetch(requestString,f_options)
 	.then((result)=>{return result.json();})	
 	.then((data)=>{
 			// data net load success
-			msgSrv({'fetchData':'data net load success'});
 			localStorage.setItem(storItemName,JSON.stringify(data));
-			cbFuncName(data);
+			y = data;			
 	})
-	.catch(()=>{
-			let y = JSON.parse(localStorage.getItem(storItemName));
-			if (y) {
-				// data localStorage load success
-				msgSrv({'fetch from storage - keyName':storItemName});
-				cbFuncName(y);
-			} else {
+	.catch(()=>{	y = JSON.parse(localStorage.getItem(storItemName)), dataOrigin = 'local ';
+			if (y)  {dataOrigin = dataOrigin + 'storage';
+			} else	{
 				// data localStorage load fail - loading from local file - locbase_respns.js
-				msgSrv({'fetch from loc file - category':category});
-				cbFuncName(JSON.parse(loc_response[category]));}
+				 dataOrigin = dataOrigin + 'file (locbase_respns.js)';
+			y = JSON.parse(loc_response[category]);}			
+	})
+	.finally(() =>{ msgSrv({'fetchData':'loaded from '+dataOrigin,'fetchData return':y});		
+		        cbFuncName(y);
 	});
 };
