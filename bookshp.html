@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.10.0</title></head>		<style> 
+	<title>BookShop-MS v.0.11.0</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;border:1px solid mediumseagreen; }
@@ -86,7 +86,7 @@
 			<div class="sidebarTextBlock">
 			</div>
 	</sidebar>
-	<div class="goodsBlock">
+	<div class="goodsBlock">	
 		<!-- content to be generated when user selection occur -->		
 	</div>	
 </main><button class='ldMoreBtn' id='loadMoreAncor'>Load More</button>
@@ -115,9 +115,23 @@ function categorySelect (category) {
 /* category: {'number':number,'name':String} */
  if (!category) {category={'number':0,'name':siList[0]};}
 	const bookblk = doc0.querySelector('.goodsBlock'), 
-cardDeal = (cardData) => {
-	cardData = cardData.items;	
+loaderShow = (state=true) => {
+	const genLoader = putEl('loaderRing');
 	bookblk.innerHTML='';
+	if (state) {bookblk.appendChild(genLoader);
+		    setProp(genLoader,{ 'display':'block','height':'10vw', 'width':'10vw', 'borderWidth':'2vw', 
+					'borderTop':'2vw solid mediumturquoise'});
+		    bookblk.classList.add('flex_centr'); 
+		    bookblk.style.backgroundColor='gainsboro';}
+	else {	    
+		    bookblk.classList.remove('flex_centr'); 
+		    bookblk.style.backgroundColor=es;}
+},
+cardDeal = (cardData) => {
+	
+	loaderShow(false);
+	cardData = cardData.items;	
+	 
     for (let i=0;i<6;i++){
 		const volInf = cardData[i].volumeInfo,
 		      imgLinks = volInf.imageLinks,		      
@@ -125,7 +139,7 @@ cardDeal = (cardData) => {
 		      volAuthors = volInf.authors,
 		      saleInfo = cardData[i].saleInfo;		
 		
-		let authorCaption = '',cena = 'HE',		imageCoverURL ='',
+		let authorCaption = es,cena = 'HE',		imageCoverURL =es,
 	         		       valut = 'ПРОДАЁТСЯ',	annot = 'НЕТ ОПИСАНИЯ';
 		if (imgLinks) {imageCoverURL = imgLinks.thumbnail};
  		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
@@ -142,11 +156,11 @@ cardDeal = (cardData) => {
 	 'annot':annot,
 	 'price':cena+' '+valut});
     };//for (let i=0;i<6;i++)...
-};   	
-  fetchData(category.name,cardDeal);	
+}; 
+ 	loaderShow();
+ 	fetchData(category.name,cardDeal);	
 };
 categorySelect();
-
 
 </script>
 </body></html>
