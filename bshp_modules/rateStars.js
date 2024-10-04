@@ -26,7 +26,7 @@ starWrapWidth=Math.ceil(getProp2(rateModul,'height')/11*12),
 	svgStyle1 = `${svgStyle2}0.3`, 					svgStylePstFx =`"/>`,
 	svgStyle=` Z${svgStyle1};fill:${fillColor}${svgStylePstFx}`,
 	path=`<path d="M`, 
-starAsy=`<svg viewBox="0 0 12 11" fill="none">
+starAsy=`<svg viewBox="0 0 12 11" fill=${none}>
 	${path}6 0 L7.80568 3.5147 L11.7063 4.1459 L12 4.1459 L12 0${svgStyle} 	
 	${path}12 4.1459  L8.92165 6.9493 L9.52671 11 L12 11${svgStyle}	
 	${path}9.52671 11 L6 9.072 L2.179629 11 ${svgStyle}

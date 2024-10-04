@@ -1,6 +1,6 @@
 ﻿//Iitialization module v.5.3.2 for bookshop prj
 'use strict';
-const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
@@ -10,7 +10,7 @@ const msgSrv = (msgObj) => {
 			console.log(startMark,msgObj[key].match(/\b\w{1,}\b/)[0],':',msgObj[key].match(/\s.+/)[0]);
 		} else {console.log(key,': ',msgObj[key]);}}
 },
-doc0 = document, sto = 100, flex = 'flex', es='',
+doc0 = document, sto = 100, flex = 'flex', es='', blk = 'block', none = 'none',
 //goods categories
 siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink',
 	'Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],

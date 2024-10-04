@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.11.0</title></head>		<style> 
+	<title>BookShop-MS v.0.12.2</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;border:1px solid mediumseagreen; }
@@ -14,8 +14,9 @@
 			   .sibarMark{width:13%;height:50%;padding:0px 0px 3% 0px;font-size:250%;color:darkmagenta; }				
 			   .sidebarItem{font-size:1vw;height:7%; }
 		.goodsBlock {flex-flow:row wrap;background:white;width:73%;margin:3% 0px 0px -4%;}
-		.cardContainer{width:49.5%;transition:transform;transition-duration:1000ms;}
-			.cardContainer:hover{transform:scale(1.1); }
+		.cardContainer{width:49.5%;transition:transform;transition-duration:800ms;}
+			.cardContainer:hover{transform:scale(1.1);border:.4px solid #ADD8E6;
+					     box-shadow:.3vw .3vw 2px 0px #DDDDDD; }
  	.ldMoreBtn{width:150px;height:2vw;margin:0px auto;}
 
 	footer {background:magenta;height:70px;}
@@ -51,8 +52,8 @@
 	<div class="logo fnt_size_24" title="Bookshop logotype">Bookshop</div>		
 <!-- Nav MENU -->
 	<div class="menu">									
-	  <a href='#loadMoreAncor' class="mnu_links spc_39 fnt_size_10" title="Books">	 Books				</a>	
-	  <a href='#' class="mnu_links spc_74 fnt_size_10" title="AUDIOBooks">		 AUDIOBooks			</a>	
+	  <a href='#sidebar1' class="mnu_links spc_39 fnt_size_10" title="Books">	 Books				</a>	
+	  <a href='#loadMoreAncor' class="mnu_links spc_74 fnt_size_10" title="AUDIOBooks"> AUDIOBooks			</a>	
 	  <a href='#' class="mnu_links spc_109 fnt_size_10" title="STATIONERY and GIFTS">STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
 	  <a href='#' class="mnu_links spc_30 fnt_size_10" title="Blog page">		 Blog				</a>		  	
 	</div>						
@@ -82,7 +83,7 @@
 	<div class="sliderSwitch"> 		</div>
 </slider>
 <main>
-	<sidebar>		
+	<sidebar id='sidebar1'>		
 			<div class="sidebarTextBlock">
 			</div>
 	</sidebar>
@@ -106,33 +107,52 @@
 <script src='bshp_modules/locbase_respns.js'></script>
 <script src='bshp_modules/fetchReq.js'></script>
 <script>
-
-//cart_bage element content fill (Init00.js)
-cartBage();
-
-//fires when sidebar category selected
-function categorySelect (category) {
+'use strict';
+const cardQuantity = 6,
+//scrolls up to top when cards have been dealt
+scrUp = function(){let runOnce = true, intervalID, num;
+		   const numThreshold = cardQuantity-1;
+	 msgSrv({'':'scrUp func loaded'});							 
+	 function scrUp(){
+			if (runOnce) {
+				runOnce=false;
+				intervalID = setInterval(()=>{
+					num = doc0.querySelectorAll('.cardContainer').length;
+					msgSrv({'scrUp cards':num});					
+					if (num>numThreshold){
+						clearInterval(intervalID);
+						msgSrv({'scrUp scrollUp by':window.innerHeight});
+						window.scrollBy(0, -window.innerHeight);}
+				},100);
+			};
+	};
+return scrUp;
+}(),
+//fires when sidebar category selected (call from sidebar2.js - category selection by user)
+categorySelect = (category) => {
 /* category: {'number':number,'name':String} */
  if (!category) {category={'number':0,'name':siList[0]};}
 	const bookblk = doc0.querySelector('.goodsBlock'), 
 loaderShow = (state=true) => {
-	const genLoader = putEl('loaderRing');
-	bookblk.innerHTML='';
+	const genLoader = putEl('loaderRing'), brThknss0=2, 
+	vw='vw ', brThknss =brThknss0+vw, ringDim = Math.floor(brThknss0*5)+vw;
+	bookblk.innerHTML=es;
 	if (state) {bookblk.appendChild(genLoader);
-		    setProp(genLoader,{ 'display':'block','height':'10vw', 'width':'10vw', 'borderWidth':'2vw', 
-					'borderTop':'2vw solid mediumturquoise'});
+		    setProp(genLoader,{ 'display':'block','height':ringDim, 'width':ringDim, 'borderWidth':brThknss, 
+					'borderTop':brThknss+'solid mediumturquoise'});
 		    bookblk.classList.add('flex_centr'); 
 		    bookblk.style.backgroundColor='gainsboro';}
 	else {	    
 		    bookblk.classList.remove('flex_centr'); 
 		    bookblk.style.backgroundColor=es;}
 },
+//goods cards building preparation
 cardDeal = (cardData) => {
 	
 	loaderShow(false);
-	cardData = cardData.items;	
-	 
-    for (let i=0;i<6;i++){
+
+    cardData = cardData.items;	
+    for (let i=0;i<cardQuantity;i++){
 		const volInf = cardData[i].volumeInfo,
 		      imgLinks = volInf.imageLinks,		      
 		      searchInf = cardData[i].searchInfo,
@@ -147,20 +167,26 @@ cardDeal = (cardData) => {
 		if (volAuthors) {authorCaption=volAuthors[0];
 			volAuthors.forEach ((i,n)=>{ if (n) {authorCaption=authorCaption+', '+i;}});
 		};
+
 	const cardContainer = putEl('cardContainer');
 		bookblk.appendChild(cardContainer);
-	buildCard(cardContainer,
-	{'imageSrc':imageCoverURL, 
-	 'author':authorCaption,
-	 'caption':volInf.title,
-	 'annot':annot,
-	 'price':cena+' '+valut});
-    };//for (let i=0;i<6;i++)...
+
+	buildCard(cardContainer, {
+		'imageSrc':imageCoverURL, 
+	 	'author':authorCaption,
+	 	'caption':volInf.title,
+	 	'annot':annot,
+	 	'price':cena+' '+valut});
+    };//for (let i=0;i<cardQuantity;i++)...
+	scrUp();
 }; 
  	loaderShow();
  	fetchData(category.name,cardDeal);	
 };
-categorySelect();
+//cart_bage element content initial fill (Init00.js)
+cartBage();
+//initial category selection + sidebar state setting (sidebar2.js)
+categorySelect(sbItemSel(0));
 
 </script>
 </body></html>

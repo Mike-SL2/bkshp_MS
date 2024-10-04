@@ -30,7 +30,7 @@ window.addEventListener('resize',frameDim);
 			  'backgroundRepeat':'no-repeat', 'display':flex, 'justifyContent':cntr, 'alignItems':cntr});	
 	container.appendChild(picFrame);
 	
-	setProp(warnBlk,{'color':'gray', 'backgroundColor':'gainsboro', 'opacity':'0.95', 'display':'none',
+	setProp(warnBlk,{'color':'gray', 'backgroundColor':'gainsboro', 'opacity':'0.95', 'display':none,
 			 'maxWidth':'90'+prcnt, 'padding':'1'+prcnt, 'fontSize':plusPX(warnFontSize*1.7),
 			 'fontWeight':'600', 'letterSpacing':plusPX(frameStep), 'textAlign':cntr, 'overflowWrap':'break-word'});					 			
 	picFrame.appendChild(warnBlk);   
@@ -45,10 +45,10 @@ window.addEventListener('resize',frameDim);
 		msgSrv({'slider module':nextSlide+' image: '+probeImg.src});
 
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
-		probeImg.addEventListener("error", () => {setProp(warnBlk,{'display':'block'});});
+		probeImg.addEventListener("error", () => {warnBlk.style.display=blk;});
 		    
 		probeImg.addEventListener("load", () => {
-				setProp(warnBlk,{'display':'none'});
+				warnBlk.style.display=none;
 				if (previousSlide===null) {setProp(picFrame,{'backgroundImage':`url('${bPrefx}${nextSlide}${bPstfx}')`});				
 				} else {
 				if (previousSlide!=nextSlide) {	

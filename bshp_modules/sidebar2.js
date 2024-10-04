@@ -1,5 +1,6 @@
-﻿//sidebar menu build & selector module v.2.5.0 for bookshop prj
+﻿//sidebar menu build & selector module v.3.2.0 for bookshop prj
 //sidebar menu build section
+'use strict';
 const sbList=function(){
 msgSrv({'':'sidebarMenu module loaded'});
 /*
@@ -17,11 +18,11 @@ siList.forEach((i)=>{let siItem = putEl('sidebarItem',liPrefx+i); sidebar.append
 const sbItemSel=function(){
 			   const sbItems=doc0.querySelectorAll('.sidebarItem'), sbMarkers=doc0.querySelectorAll('.sibarMark'),
 			         selectedFontWeight='900', selectedFontSizeFactor=1.2, markerSign='&#8226;';
-			// initial condition - category 0 selected
-			   let selectedItem =0, unselectedFontSize;
+			// initial condition - category 2 selected - local control
+			   let selectedItem =2, unselectedFontSize;
 			function getFontSize (){unselectedFontSize=getProp2(sbItems[selectedItem],'font-size');}
 			getFontSize();
-msgSrv({'':'sidebarSelector module loaded'});
+msgSrv({'':'sidebarSelector module loaded'});			
 			sbItems.forEach((i)=>{i.addEventListener('click',(ev)=>{categorySelect(sbItemSel(ev));})});
 			function rst0(x=null){				           
 				  if (x===null) {
@@ -35,11 +36,17 @@ msgSrv({'':'sidebarSelector module loaded'});
 						 sbMarkers[x].innerHTML=markerSign;
 						 msgSrv({'sidebar selector':'item '+selectedItem+' mark set "'+siList[selectedItem]+'"'});}
 			};
-			//set initial selection 
-			rst0(selectedItem); window.addEventListener('resize',()=>{rst0();rst0(selectedItem);});	
-			function sbItemSel(ev){				
-				rst0();
-				sbItems.forEach((i,n)=>{if (i===ev.target) {selectedItem=n;}});				
-				rst0(selectedItem);				 			
-			return {'number':selectedItem,'name':ev.target.lastChild.textContent};};
-return selectedItem;}();
+			window.addEventListener('resize',()=>{rst0();rst0(selectedItem);});
+				
+			function sbItemSel (ev=selectedItem) {
+			  let nameText;
+			  if (typeof ev ==='number') {	selectedItem=ev;
+							nameText=siList[selectedItem];
+						      rst0(selectedItem);}
+			  else {rst0();
+			    	sbItems.forEach((i,n)=>{if (i===ev.target) {selectedItem=n;}});				
+			    	rst0(selectedItem);
+				nameText=ev.target.lastChild.textContent;}				 			
+			return {'number':selectedItem,'name':nameText};
+			};
+return sbItemSel;}();

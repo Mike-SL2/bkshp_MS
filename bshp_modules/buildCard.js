@@ -47,7 +47,7 @@ const
 	buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
 	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'),
-	loadDelay = 500, blk = 'block',
+	loadDelay = 500, 
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
 	innerCart = processCart(),
@@ -76,7 +76,7 @@ container.appendChild(goodImgWrap);
 	loader.style.display=blk;			coverPH.style.display=blk;
 	goodImgWrap.appendChild(loader);		goodImgWrap.appendChild(coverPH);
 const showNoCoverMessage = (mode=true) => {
-	const none = 'none';	loader.style.display=none;
+	loader.style.display=none;
 	if (mode) {coverPH.innerHTML=opt2.noCvrImgText;
 	} else {   coverPH.style.display=none;}						    	      
 };	
