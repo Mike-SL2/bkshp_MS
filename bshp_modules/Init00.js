@@ -1,6 +1,6 @@
-﻿//Iitialization module v.5.4.2 for bookshop prj
+﻿//Iitialization module v.6.0.0 for bookshop prj
 'use strict';
-const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
@@ -103,7 +103,7 @@ headerColor();
 // this mod defined constants list display
 msgSrv({'':'Init00 module global func/const list ---',
 	'verbose':verbose,
-	'doc0':doc0,		'sto':sto, 'flex':flex,	
+	'doc0':doc0,	'sto':sto, 'flex':flex,	'es':es+'(empty string)', 'blk':'block', 'none':'none', 'loadDelay':loadDelay,
 	'siList':siList,
 	'getProp2':getProp2,
 	'setProp':setProp,
