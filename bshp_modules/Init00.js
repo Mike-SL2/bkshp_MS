@@ -1,4 +1,4 @@
-﻿//Iitialization module v.5.3.2 for bookshop prj
+﻿//Iitialization module v.5.4.2 for bookshop prj
 'use strict';
 const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
@@ -10,7 +10,7 @@ const msgSrv = (msgObj) => {
 			console.log(startMark,msgObj[key].match(/\b\w{1,}\b/)[0],':',msgObj[key].match(/\s.+/)[0]);
 		} else {console.log(key,': ',msgObj[key]);}}
 },
-doc0 = document, sto = 100, flex = 'flex', es='', blk = 'block', none = 'none',
+doc0 = document, sto = 100, flex = 'flex', es='', blk = 'block', none = 'none', loadDelay = 500,
 //goods categories
 siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink',
 	'Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],
@@ -69,7 +69,8 @@ msgSrv({'':'processCart func loaded','write to Cart':putToCart,'value':itemID});
      const keyName = 'cart9170436'; 
      let aux=localStorage.getItem(keyName), temp=[], putToCartEnable = true;	
  	if (aux) {
-		  if (emptyCart) {localStorage.setItem(keyName,JSON.stringify([]));return true;}
+		  if (emptyCart) {localStorage.setItem(keyName,JSON.stringify([]));
+				  msgSrv({'processCart': 'client cart has been cleaned up'});return true;}
 		  aux=JSON.parse(aux);		
 	  } else {aux=[];}
 	aux.forEach((i)=>{			
@@ -95,7 +96,6 @@ msgSrv({'':'cartBage func loaded','cartBage volume':cartItemsQuantity});
 		cart_bage.style.display=flex; cart_bage.innerHTML=cartItemsQuantity;}
 	else {	cart_bage.style.display=es; }						  
 };
-
 
 //-------------------------------------------------------
 headerColor();

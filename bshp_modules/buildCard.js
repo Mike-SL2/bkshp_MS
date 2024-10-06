@@ -8,12 +8,12 @@ const opt1Default = {
 	'imageAlt':'book cover image',
 	'author':'HO Commission on Social Determinants of Health, World Health Organization',
 	'caption':'Harry Potter: Crochet Wizardry | Crochet Patterns | Harry Potter Crafts',
-	'maxReviewCnt':400,
+	'averageRating':4,
 	'reviewCnt':354, 
 	'annot':'The Outrageously Funny Debut Novel About Three Super-Rich, Pedigreed Chinese Families And The Gossip about third world war',
-	'price':4.99,
+	'price':0,
 	'buyNowBtnTxt':'BuY nOW',
-	'inCartTxt':'In CART'
+	'inCartTxt':'IN THE CART'
 },
 klasDefault={
 	'goodImgWrap':'goodImgWrap',
@@ -46,11 +46,10 @@ fillDef = (defaults, inputOptions) => {
 const 	
 	buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
-	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'),
-	loadDelay = 500, 
+	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'), 
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
-	innerCart = processCart(),
+	innerCart = processCart(), maxAverageRating =5,
 //set card container height 78% of width
 setPropCard =() => {
 	let rateBlk;
@@ -61,8 +60,8 @@ setPropCard =() => {
 	goodImg.style.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
 	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
 
-rateBlk = rateModule(5,rateDisplay);
-rateBlk(Math.round(Number(opt1.reviewCnt)*sto/Number(opt1.maxReviewCnt)));
+rateBlk = rateModule(maxAverageRating,rateDisplay);
+rateBlk(Math.round(opt1.averageRating*sto/maxAverageRating));
 };
 let review=' review', 
 	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;
@@ -94,20 +93,23 @@ container.appendChild(putEl(klas.spc1));
 container.appendChild(goodDesc);
 	goodDesc.appendChild(putEl(klas.author,opt1.author));
 	goodDesc.appendChild(putEl(klas.caption,opt1.caption));
-	goodDesc.appendChild(rating);
+	   //4. Рейтинг: от 1 до 5 звёздочек плюс общее количество отзывов. Если в данных о книге нет рейтинга, не показывать эту строчку.
+	   if (opt1.averageRating) {
+	goodDesc.appendChild(rating);	   
 		rating.appendChild(rateDisplay);			
 		if (Number(opt1.reviewCnt)>1) {review=review+'s';}
 		rating.appendChild(putEl(klas.reviewCnt,opt1.reviewCnt+review));
-	goodDesc.appendChild(putEl(klas.annot,opt1.annot));
-
-	goodDesc.appendChild(price);
-//button 'BUY NOW' 	   
+	   };
+	goodDesc.appendChild(putEl(klas.annot,opt1.annot));	   
+//button 'BUY NOW' and price block	   
 	  innerCart.forEach ((i)=>{
 		if (JSON.stringify(i)===JSON.stringify(itemID)) {
 			buyNowBtnCaption1=opt1.inCartTxt;   btnClass = klas.buyNowBtn + " buyNowBtnPressed";}
 	  });
 		buyNowBtn=  putEl(btnClass,buyNowBtnCaption1);
-		if (opt1.price.match( /\d+/ )) {
+		//6. Цена с указанием валюты. Если в данных о книге нет цены, не показывать эту строчку.
+		if (opt1.price) {
+		     goodDesc.appendChild(price);
 			buyNowBtn.addEventListener('click',(ev)=>{
 				const buyBtn = ev.target;
 				if (buyBtn.textContent===buyNowBtnCaption) {buyBtn.textContent=opt1.inCartTxt;									

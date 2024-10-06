@@ -13,8 +13,7 @@ header, .logo,.menu,.ico_link_container	{align-items:center;}
 	        .mnu_links:focus{font-weight:900;text-decoration:underline;}
 							    .spc_39{width:39px;}   .spc_74{width:74px;}
 				     .spc_109{width:109px;} .spc_30{width:30px;}
-	.ico_link_container{width:121px;}
-		.menu_ico,.cart_bage,.slider_pic_link_box,.slider_pic_link_arrow{cursor:pointer;}
+	.ico_link_container{width:121px;}		
 		       .icon_link,.menu_ico{flex-shrink:0;width:17px;height:17px;}
 		/* icons selection circle when focused */
 		       .icon_link{border:1px solid transparent;}

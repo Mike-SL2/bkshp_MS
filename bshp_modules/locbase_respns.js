@@ -1,4 +1,4 @@
-﻿/* response samples local database */
+﻿/* response samples local database for debug purposes only */
 loc_response = 
 {
 'Architecture':

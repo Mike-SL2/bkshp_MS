@@ -31,7 +31,6 @@
    	 	overflow: hidden; /* Обрезаем за пределами блока*/
 }
 	.price{height:15%;font-size:70%; font-family: "Montserrat-Bold";color:black;}
-	.buyNowBtn{cursor:pointer;}
 	.buyNowBtn,.noBuyBtn{width:100%;height:24%;font-size:60%; font-family: "Montserrat-Bold";
 		   color:blueviolet;background-color:transparent; border-color:blueviolet;}
 	.noBuyBtn{color:gray;background-color:#D3D3D380;}

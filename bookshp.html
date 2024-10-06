@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css">	<link rel="stylesheet" href="styl/header.css">
 		<link rel="stylesheet" href="styl/fnt-0.css">	<link rel="stylesheet" href="styl/slider.css">
 								<link rel="stylesheet" href="styl/cardStyl.css">
-	<title>BookShop-MS v.0.12.2</title></head>		<style> 
+	<title>BookShop-MS v.0.15.1</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;border:1px solid mediumseagreen; }
@@ -17,8 +17,10 @@
 		.cardContainer{width:49.5%;transition:transform;transition-duration:800ms;}
 			.cardContainer:hover{transform:scale(1.1);border:.4px solid #ADD8E6;
 					     box-shadow:.3vw .3vw 2px 0px #DDDDDD; }
- 	.ldMoreBtn{width:150px;height:2vw;margin:0px auto;}
-
+	   .ldMoreBtnWrap{position:relative;width:20vw;margin:-0.5vw auto 8vw;}
+ 	   .ldMoreBtn{position:absolute;z-index:2;width:100%;height:4vw;font-size:2vw;background:floralwhite;border:1px solid lightgray;
+		      color:dimgray;transition:background,border-radius,color;transition-duration:800ms;}
+	   .ldMoreBtn:hover{background:white;color:black;border:1px solid blue;border-radius:1vw;}
 	footer {background:magenta;height:70px;}
 @media (max-width: 800px) { 
 			header{height:14vw;padding:0;} 
@@ -90,7 +92,7 @@
 	<div class="goodsBlock">	
 		<!-- content to be generated when user selection occur -->		
 	</div>	
-</main><button class='ldMoreBtn' id='loadMoreAncor'>Load More</button>
+</main><div class="ldMoreBtnWrap"><button class='ldMoreBtn' id='loadMoreAncor'>Load More</button></div>
 
 <footer>
 		<div id="footer_blk"> footer block</div>
@@ -107,67 +109,66 @@
 <script src='bshp_modules/locbase_respns.js'></script>
 <script src='bshp_modules/fetchReq.js'></script>
 <script>
+						/* main module */
 'use strict';
-const cardQuantity = 6,
+const 
+categorySelect = function () {
+	let runOnce = true, intervalID, lastCategory ={}, genLoader;
+	const bookblk = doc0.querySelector('.goodsBlock'), loadMoreBtn = doc0.querySelector('.ldMoreBtn'),
+	      cardQuantity = 6,	zero = 0,
 //scrolls up to top when cards have been dealt
-scrUp = function(){let runOnce = true, intervalID, num;
-		   const numThreshold = cardQuantity-1;
-	 msgSrv({'':'scrUp func loaded'});							 
-	 function scrUp(){
-			if (runOnce) {
-				runOnce=false;
-				intervalID = setInterval(()=>{
-					num = doc0.querySelectorAll('.cardContainer').length;
-					msgSrv({'scrUp cards':num});					
-					if (num>numThreshold){
-						clearInterval(intervalID);
-						msgSrv({'scrUp scrollUp by':window.innerHeight});
-						window.scrollBy(0, -window.innerHeight);}
-				},100);
-			};
+scrUp = () => {
+	let num, numThreshold;
+	if (runOnce) {
+		runOnce=false;
+		intervalID = setInterval(()=>{
+		num = doc0.querySelectorAll('.cardContainer').length;  numThreshold = cardQuantity-1;
+		msgSrv({'scrUp cards':num});					
+			if (num>numThreshold){
+					clearInterval(intervalID);
+					msgSrv({'scrUp scrollUp by':window.innerHeight});
+					window.scrollBy(zero, -window.innerHeight);}
+			},100);
 	};
-return scrUp;
-}(),
-//fires when sidebar category selected (call from sidebar2.js - category selection by user)
-categorySelect = (category) => {
-/* category: {'number':number,'name':String} */
- if (!category) {category={'number':0,'name':siList[0]};}
-	const bookblk = doc0.querySelector('.goodsBlock'), 
+},
 loaderShow = (state=true) => {
-	const genLoader = putEl('loaderRing'), brThknss0=2, 
-	vw='vw ', brThknss =brThknss0+vw, ringDim = Math.floor(brThknss0*5)+vw;
-	bookblk.innerHTML=es;
-	if (state) {bookblk.appendChild(genLoader);
-		    setProp(genLoader,{ 'display':'block','height':ringDim, 'width':ringDim, 'borderWidth':brThknss, 
-					'borderTop':brThknss+'solid mediumturquoise'});
-		    bookblk.classList.add('flex_centr'); 
-		    bookblk.style.backgroundColor='gainsboro';}
-	else {	    
-		    bookblk.classList.remove('flex_centr'); 
-		    bookblk.style.backgroundColor=es;}
+	const brThknss0=2, bookBlockLength = bookblk.children.length,
+	vw='vw ', brThknss =brThknss0+vw, ringDim = Math.floor(brThknss0*5)+vw;	
+	if (state) {genLoader = putEl('loaderRing');
+		    bookblk.appendChild(genLoader);
+		    setProp(genLoader,{ 'display':blk,'height':ringDim, 'width':ringDim, 'borderWidth':brThknss, 
+					'borderTop':brThknss+'solid mediumturquoise','margin':'0'});
+		 if (bookBlockLength<1) {bookblk.style.backgroundColor='gainsboro';bookblk.classList.add('flex_centr');}
+		 else {genLoader.style.margin='0px auto 5vw'}
+	}
+	else {	    bookblk.removeChild(genLoader);
+		 if (bookBlockLength<2) {   bookblk.classList.remove('flex_centr'); 
+		   			    bookblk.style.backgroundColor=es;}
+	};
 },
 //goods cards building preparation
 cardDeal = (cardData) => {
 	
-	loaderShow(false);
+	  loaderShow(false);
 
     cardData = cardData.items;	
-    for (let i=0;i<cardQuantity;i++){
+    for (let i=zero;i<cardQuantity;i++){
 		const volInf = cardData[i].volumeInfo,
 		      imgLinks = volInf.imageLinks,		      
 		      searchInf = cardData[i].searchInfo,
 		      volAuthors = volInf.authors,
 		      saleInfo = cardData[i].saleInfo;		
 		
-		let authorCaption = es,cena = 'HE',		imageCoverURL =es,
-	         		       valut = 'ПРОДАЁТСЯ',	annot = 'НЕТ ОПИСАНИЯ';
+		let authorCaption = es,cena = zero,		imageCoverURL =es,
+	         		       annot = 'No annotation';
 		if (imgLinks) {imageCoverURL = imgLinks.thumbnail};
  		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
-		if (saleInfo.saleability==='FOR_SALE') {cena = saleInfo.listPrice.amount;valut = saleInfo.listPrice.currencyCode;}
+		if (saleInfo.saleability==='FOR_SALE') {cena = saleInfo.retailPrice.amount+' '+saleInfo.retailPrice.currencyCode;}
 		if (volAuthors) {authorCaption=volAuthors[0];
 			volAuthors.forEach ((i,n)=>{ if (n) {authorCaption=authorCaption+', '+i;}});
 		};
-
+		let ratingsCount = volInf.ratingsCount, averageRating = volInf.averageRating;
+		if (!ratingsCount) {ratingsCount=zero;}    if (!averageRating) {averageRating=zero;}
 	const cardContainer = putEl('cardContainer');
 		bookblk.appendChild(cardContainer);
 
@@ -175,18 +176,30 @@ cardDeal = (cardData) => {
 		'imageSrc':imageCoverURL, 
 	 	'author':authorCaption,
 	 	'caption':volInf.title,
+		'averageRating':averageRating,
+		'reviewCnt':ratingsCount,
 	 	'annot':annot,
-	 	'price':cena+' '+valut});
+	 	'price':cena});
     };//for (let i=0;i<cardQuantity;i++)...
 	scrUp();
 }; 
- 	loaderShow();
- 	fetchData(category.name,cardDeal);	
-};
+function categorySelect (category,indexPlus=false) {
+	/* fires when sidebar category selected (call from sidebar2.js - category selection by user) */
+	/* category: {'number':number,'name':String} */
+ 	if (!category) {category={'number':zero,'name':siList[zero]};}
+	if (lastCategory != category) {bookblk.innerHTML=es;}
+
+ 	  loaderShow();
+
+	setTimeout(()=>{fetchData(category.name,cardDeal,indexPlus);},loadDelay);
+ 		
+lastCategory = category};
 //cart_bage element content initial fill (Init00.js)
 cartBage();
 //initial category selection + sidebar state setting (sidebar2.js)
 categorySelect(sbItemSel(0));
-
+loadMoreBtn.addEventListener('click',()=>{categorySelect(lastCategory,true);});
+return categorySelect;
+}();
 </script>
 </body></html>
