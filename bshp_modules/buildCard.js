@@ -53,9 +53,10 @@ const
 //set card container height 78% of width
 setPropCard =() => {
 	let rateBlk;
-	const cardContainerWidth = getProp2 (container,'width'),
+	const cardContainerWidth = getProp2 (container,'width'), loaderDim = cardContainerWidth/15, loaderDimPX = plusPX(loaderDim),
 		shd1=plusPX(cardContainerWidth*.04),shd2=plusPX(cardContainerWidth*.036),
 		shd3=plusPX(cardContainerWidth*.024);
+	setProp(loader,{'height':loaderDimPX, 'width':loaderDimPX, 'borderWidth':plusPX(loaderDim/5)});
 	setProp(container,{'height':plusPX(cardContainerWidth/1.277), 'fontSize':plusPX(cardContainerWidth/54.6)});	
 	goodImg.style.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
 	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336

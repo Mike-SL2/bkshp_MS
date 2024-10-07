@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css" type="text/css">	<link rel="stylesheet" href="styl/header.css" type="text/css">
 		<link rel="stylesheet" href="styl/fnt-0.css" type="text/css">	<link rel="stylesheet" href="styl/slider.css" type="text/css">
 		<link rel="stylesheet" href="styl/cardStyl.css" type="text/css">
-	<title>BookShop-MS v.0.16.4</title></head>		<style> 
+	<title>BookShop-MS v.0.16.5</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;}
@@ -17,8 +17,8 @@
 		.cardContainer{width:49.6%;transition:transform;transition-duration:800ms;}
 			.cardContainer:hover{transform:scale(1.1);border:.4px solid #ADD8E6;
 					     box-shadow:.3vw .3vw 2px 0px #DDDDDD; }
-	   .ldMoreBtnWrap{position:relative;width:20vw;margin:-0.5vw auto 8vw;}
- 	   .ldMoreBtn{position:absolute;z-index:2;width:100%;height:4vw;font-size:2vw;background:floralwhite;border:1px solid lightgray;
+	   .ldMoreBtnWrap{position:relative;width:20%;margin:-0.5vw auto 10%;}
+ 	   .ldMoreBtn{position:absolute;z-index:2;width:100%;background:floralwhite;border:1px solid lightgray;
 		      color:dimgray;transition:background,border-radius,color;transition-duration:800ms;}
 	   .ldMoreBtn:hover{background:white;color:black;border:1px solid blue;border-radius:1vw;}
 	footer {background:magenta;height:70px;}
@@ -112,11 +112,13 @@
 						/* main module */
 'use strict';
 const 
-categorySelect = function () {
+categorySelect = function () {	
 	let runOnce = true, intervalID, lastCategory ={}, genLoader;
 	const bookblk = doc0.querySelector('.goodsBlock'), loadMoreBtn = doc0.querySelector('.ldMoreBtn'),
-	      cardQuantity = 6,	zero = 0,
+	      cardQuantity = 6,	zero = 0,		
 //scrolls up to top when cards have been dealt
+bookblkWidth = () =>{return getProp2(bookblk,'width');
+},
 scrUp = () => {
 	let num, numThreshold;
 	if (runOnce) {
@@ -133,15 +135,16 @@ scrUp = () => {
 },
 bookBlockEmpty = ()  =>{if (bookblk.children.length) {return false;} else {return true;}},
 loaderShow = (state=true) => {
-	const brThknss0=2, 
-	vw='vw ', brThknss =brThknss0+vw, ringDim = Math.floor(brThknss0*5)+vw;	
+	// bookblkWidth from loadMoreBtnHeight()
+	const divider = 6, ringDim = bookblkWidth()/divider, 
+	ringDimPX = plusPX(ringDim), brThknss =plusPX(ringDim/divider) ;
 	if (state) {loadMoreBtn.style.display=none;
 		    genLoader = putEl('loaderRing');		    
-		    setProp(genLoader,{ 'display':blk,'height':ringDim, 'width':ringDim, 'borderWidth':brThknss, 
+		    setProp(genLoader,{ 'display':blk,'height':ringDimPX, 'width':ringDimPX, 'borderWidth':brThknss, 
 					'borderTop':brThknss+'solid mediumturquoise','margin':'0'});
 		 if (bookBlockEmpty()) {bookblk.style.backgroundColor='gainsboro';bookblk.classList.add('flex_centr');
 					bookblk.appendChild(genLoader);/* 1 */}
-		 else { genLoader.style.margin='1vw auto 5vw';
+		 else { genLoader.style.margin='1% auto 10%';
 	    		bookblk.appendChild(genLoader);	/* 2 */	window.scrollBy(zero, window.innerHeight);}
 	}
 	else {	 loadMoreBtn.style.display=blk;   
@@ -187,7 +190,11 @@ cardDeal = (cardData,localData=false) => {
 	 	'price':cena});
     };//for (let i=0;i<cardQuantity;i++)...
 	scrUp();
-}; 
+},
+loadMoreBtnHeight = () =>{
+	const bblkWidth = bookblkWidth();
+   	setProp(loadMoreBtn,{'height':plusPX(bblkWidth/15), 'fontSize':plusPX(bblkWidth/30)});
+};
 function categorySelect (category,indexPlus=false) {
 	/* fires when sidebar category selected (call from sidebar2.js - category selection by user) */
 	/* category: {'number':number,'name':String} */
@@ -203,7 +210,9 @@ lastCategory = category};
 cartBage();
 //initial category selection + sidebar state setting (sidebar2.js)
 categorySelect(sbItemSel(0));
-loadMoreBtn.addEventListener('click',()=>{categorySelect(lastCategory,true);});
+//load More Button
+loadMoreBtnHeight();	loadMoreBtn.addEventListener('click',()=>{categorySelect(lastCategory,true);});
+			window.addEventListener('resize',loadMoreBtnHeight);
 return categorySelect;
 }();
 </script>
