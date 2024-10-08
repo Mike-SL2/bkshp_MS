@@ -62,30 +62,30 @@ setPropCard =() => {
 	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
 
 rateBlk = rateModule(maxAverageRating,rateDisplay);
-rateBlk(Math.round(opt1.averageRating*sto/maxAverageRating));
+rateBlk(Math.round(opt1.averageRating*cnst.sto/maxAverageRating));
 };
 let review=' review', 
 	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;
 //building card
-setProp(container,{'display':flex, 'flexFlow':'row nowrap'});
-rating.style.display=flex;
+setProp(container,{'display':cnst.flex, 'flexFlow':'row nowrap'});
+rating.style.display=cnst.flex;
 goodImgWrap.classList.add('flex_centr'); //../styl/rst-0.css
-setProp(goodImg, {'height':sto+'%', 'width':sto+'%'});						
+setProp(goodImg, {'height':cnst.sto+'%', 'width':cnst.sto+'%'});						
 container.appendChild(goodImgWrap);
 // loader, placeholder, book cover image 
-	loader.style.display=blk;			coverPH.style.display=blk;
+	loader.style.display=cnst.blk;			coverPH.style.display=cnst.blk;
 	goodImgWrap.appendChild(loader);		goodImgWrap.appendChild(coverPH);
 const showNoCoverMessage = (mode=true) => {
-	loader.style.display=none;
+	loader.style.display=cnst.none;
 	if (mode) {coverPH.innerHTML=opt2.noCvrImgText;
-	} else {   coverPH.style.display=none;}						    	      
+	} else {   coverPH.style.display=cnst.none;}						    	      
 };	
 	if (opt1.imageSrc) {
 		goodImg.addEventListener('load', ()=>{
-			setTimeout(()=>{goodImgWrap.appendChild(goodImg); showNoCoverMessage(false);},loadDelay);
+			setTimeout(()=>{goodImgWrap.appendChild(goodImg); showNoCoverMessage(false);},cnst.loadDelay);
 		});
 		goodImg.addEventListener('error',()=>{
-			setTimeout(()=>{showNoCoverMessage();},loadDelay);
+			setTimeout(()=>{showNoCoverMessage();},cnst.loadDelay);
 		});
 	} else {showNoCoverMessage();}	
 //space block 	

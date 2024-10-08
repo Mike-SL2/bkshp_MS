@@ -9,14 +9,14 @@ msgSrv({'':'sidebarMenu module loaded'});
 		Art & Fashion			// - lastChild
 	</div>
 */
-const sidebar=doc0.querySelector('.sidebarTextBlock'), 
+const sidebar=cnst.doc0.querySelector('.sidebarTextBlock'), 
       liPrefx='<div class="sibarMark"></div>';
 siList.forEach((i)=>{let siItem = putEl('sidebarItem',liPrefx+i); sidebar.appendChild(siItem);});
 }();	
 
 //sidebar selector section
 const sbItemSel=function(){
-			   const sbItems=doc0.querySelectorAll('.sidebarItem'), sbMarkers=doc0.querySelectorAll('.sibarMark'),
+			   const sbItems=cnst.doc0.querySelectorAll('.sidebarItem'), sbMarkers=cnst.doc0.querySelectorAll('.sibarMark'),
 			         selectedFontWeight='900', selectedFontSizeFactor=1.2, markerSign='&#8226;';
 			// initial condition - category 2 selected - local control
 			   let selectedItem =2, unselectedFontSize;
@@ -26,8 +26,8 @@ msgSrv({'':'sidebarSelector module loaded'});
 			sbItems.forEach((i)=>{i.addEventListener('click',(ev)=>{categorySelect(sbItemSel(ev));})});
 			function rst0(x=null){				           
 				  if (x===null) {
-						 setProp(sbItems[selectedItem], {'fontWeight':es, 'fontSize':es});
-						 sbMarkers[selectedItem].innerHTML=es;
+						 setProp(sbItems[selectedItem], {'fontWeight':cnst.es, 'fontSize':cnst.es});
+						 sbMarkers[selectedItem].innerHTML=cnst.es;
 						 getFontSize();
 						 msgSrv({'sidebar selector':'item '+selectedItem+' mark clear "'+siList[selectedItem]+'"'});}
 					   else {

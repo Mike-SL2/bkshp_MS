@@ -21,8 +21,7 @@
 .goodDesc{width:35%;margin-top:10%;font-size:200%; font-family: "Montserrat-Regular";color:dimgray;}
 	.author{min-height:8%;margin-bottom:1%;font-size:50%;font-weight:600;}
 	.caption{min-height:10%;margin-bottom:2%;font-size:87%;font-family: "Montserrat-Bold";color:black; }
-	.rating{height:15%;font-size:60%; }
-		.ratStar{height:40%;}
+	.rating{font-size:60%; height:15%;}
 		.reviewCnt{margin-left:4%;}
 	.annot{height:21%;width:100%;margin-bottom:6%; font-size:51%;line-height:144%; 
  		-webkit-line-clamp: 3; /* Число отображаемых строк */

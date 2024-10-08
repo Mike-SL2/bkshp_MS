@@ -1,6 +1,6 @@
-﻿//Iitialization module v.6.0.0 for bookshop prj
+﻿//Iitialization module v.7.0.2 for bookshop prj
 'use strict';
-const verbose = true, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
+const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
@@ -10,7 +10,7 @@ const msgSrv = (msgObj) => {
 			console.log(startMark,msgObj[key].match(/\b\w{1,}\b/)[0],':',msgObj[key].match(/\s.+/)[0]);
 		} else {console.log(key,': ',msgObj[key]);}}
 },
-doc0 = document, sto = 100, flex = 'flex', es='', blk = 'block', none = 'none', loadDelay = 500,
+cnst = {'doc0':document, 'sto':100, 'flex':'flex', 'es':'', 'blk':'block', 'none':'none', 'loadDelay':500, 'cardQuantity':6},
 //goods categories
 siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink',
 	'Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],
@@ -20,8 +20,8 @@ getProp2 = (DomElement,propertyName) =>{
 	   let prVal = window.getComputedStyle(DomElement,null).getPropertyValue(propertyName);		
 		if (prVal.match(/px/)) {prVal=Math.round(prVal.match( /\d+/ )[0]);}
 	msgSrv( {'A':funcName+'func loaded',
-		 'DomElement':DomElement,
-		 'propertyName':propertyName,
+		 'getProp2 DomElement':DomElement,
+		 'getProp2 propertyName':propertyName,
 		 'getProp2_return':prVal})
 	return prVal;	
 },
@@ -33,8 +33,8 @@ setProp = (domEl,propObj)=>{
 //get header color from body background color
 headerColor = () => {
 	msgSrv({'headerColor func': 'loaded'});
-	const body=doc0.body,
-	bodyColor= getProp2(body,'background-color'),	headerWrap=doc0.querySelector('.header_wrap');
+	const body=cnst.doc0.body,
+	bodyColor= getProp2(body,'background-color'),	headerWrap=cnst.doc0.querySelector('.header_wrap');
 msgSrv({'body-color':bodyColor});
    if (headerWrap){let headerWrapStyle=headerWrap.style;
 
@@ -44,13 +44,13 @@ msgSrv({'body-color':bodyColor});
    } else {return;} 
 },
 //returns DOM element with className
-putEl = (className=es,innerContent=es,altTxt=es) => {
+putEl = (className=cnst.es,innerContent=cnst.es,altTxt=cnst.es) => {
 	let aux; 
 	if (altTxt) {
-		aux = doc0.createElement('img');	aux.src = innerContent;		aux.alt=altTxt;} 
+		aux = cnst.doc0.createElement('img');	aux.src = innerContent;		aux.alt=altTxt;} 
 	else {
-		if (className.match(/Btn/)) {aux = doc0.createElement('button');}
-		else {aux = doc0.createElement('div');}	
+		if (className.match(/Btn/)) {aux = cnst.doc0.createElement('button');}
+		else {aux = cnst.doc0.createElement('div');}	
 		aux.innerHTML=innerContent;} 
 	if (className) { aux.className=className; }	return aux;
 },
@@ -70,7 +70,7 @@ msgSrv({'':'processCart func loaded','write to Cart':putToCart,'value':itemID});
      let aux=localStorage.getItem(keyName), temp=[], putToCartEnable = true;	
  	if (aux) {
 		  if (emptyCart) {localStorage.setItem(keyName,JSON.stringify([]));
-				  msgSrv({'processCart': 'client cart has been cleaned up'});return true;}
+				  msgSrv({'processCart': 'client cart has been cleaned out'});return true;}
 		  aux=JSON.parse(aux);		
 	  } else {aux=[];}
 	aux.forEach((i)=>{			
@@ -90,20 +90,21 @@ return putToCartEnable;
 },
 //cart_bage element content fill
 cartBage = () =>{
-const cart_bage=doc0.querySelector('.cart_bage'), cartItemsQuantity = processCart().length; 
+const cart_bage=cnst.doc0.querySelector('.cart_bage'), cartItemsQuantity = processCart().length; 
 msgSrv({'':'cartBage func loaded','cartBage volume':cartItemsQuantity});
 	if (cartItemsQuantity) {
-		cart_bage.style.display=flex; cart_bage.innerHTML=cartItemsQuantity;}
-	else {	cart_bage.style.display=es; }						  
+		cart_bage.style.display=cnst.flex; cart_bage.innerHTML=cartItemsQuantity;}
+	else {	cart_bage.style.display=cnst.es; }						  
 };
 
 //-------------------------------------------------------
 headerColor();
 
 // this mod defined constants list display
-msgSrv({'':'Init00 module global func/const list ---',
+const shC173392 = function () {
+const globConstList = {
 	'verbose':verbose,
-	'doc0':doc0,	'sto':sto, 'flex':flex,	'es':es+'(empty string)', 'blk':'block', 'none':'none', 'loadDelay':loadDelay,
+	'cnst':cnst,
 	'siList':siList,
 	'getProp2':getProp2,
 	'setProp':setProp,
@@ -111,4 +112,14 @@ msgSrv({'':'Init00 module global func/const list ---',
 	'putEl':putEl,
 	'plusPX':plusPX,
 	'processCart':processCart,
-	'cartBage':cartBage});
+	'cartBage':cartBage}, prefix2 ='Init00 --- ';
+let globConstListPlus ={'':prefix2+'module global func/const list ---'}, keyName2;
+for (let key in globConstList) {keyName2 = prefix2+key;
+				globConstListPlus[keyName2] = globConstList[key];}
+msgSrv(globConstListPlus);
+}();
+
+
+
+
+

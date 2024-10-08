@@ -37,7 +37,7 @@
 msgSrv({'':'client_cart_page loaded'});
 const showCart = function (){
 	msgSrv({'':'client_cart_page showCart func loaded'});
-	const cartBlock = doc0.querySelector('.cartBlock'), emptCardBtn= doc0.querySelector('.emptyCardBtn'),
+	const cartBlock = cnst.doc0.querySelector('.cartBlock'), emptCardBtn= cnst.doc0.querySelector('.emptyCardBtn'),
 	      itemWrapKlas = 'itemWrap', authorCartKlas='authorCart', captionCartKlas='captionCart',
 showContent = () => {
  const innerCart = processCart();
@@ -55,18 +55,18 @@ showContent = () => {
 			 capEl =putEl(captionCartKlas,i.caption);	itemWrap.appendChild(capEl);	     
 	  });
         const setHei = () => {
-		const itemWrapArr = doc0.querySelectorAll('.'+itemWrapKlas); 
+		const itemWrapArr = cnst.doc0.querySelectorAll('.'+itemWrapKlas); 
 		let hei;
 		itemWrapArr.forEach((i)=>{
-			authEl=i.querySelector('.'+authorCartKlas);	authEl.style.height=es;
-			capEl =i.querySelector('.'+captionCartKlas);	capEl.style.height=es;			
+			authEl=i.querySelector('.'+authorCartKlas);	authEl.style.height=cnst.es;
+			capEl =i.querySelector('.'+captionCartKlas);	capEl.style.height=cnst.es;			
 			hei=plusPX(getProp2(i,'height'));		authEl.style.height=hei;
 									capEl.style.height=hei;
 		});
 	};setHei();
 	window.addEventListener('resize',setHei);
-	   emptCardBtn.style.display='block';
-   } else {emptCardBtn.style.display='';
+	   emptCardBtn.style.display=cnst.blk;
+   } else {emptCardBtn.style.display=cnst.es;
 	    cartBlock.innerHTML='Nothing in your cart. Empty :-((';
 	    setProp(cartBlock,{'display':'inline-block', 'background':'linear-gradient(to right, pink 35%, lime)',
 		'padding':'1ch','border-radius':'2vw', 'border':'1px solid gray', 'box-shadow':'1vw 1vw 5px 0px lightgray',

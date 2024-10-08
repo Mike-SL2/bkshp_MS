@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css" type="text/css">	<link rel="stylesheet" href="styl/header.css" type="text/css">
 		<link rel="stylesheet" href="styl/fnt-0.css" type="text/css">	<link rel="stylesheet" href="styl/slider.css" type="text/css">
 		<link rel="stylesheet" href="styl/cardStyl.css" type="text/css">
-	<title>BookShop-MS v.0.16.5</title></head>		<style> 
+	<title>BookShop-MS v.0.16.6</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;}
@@ -18,9 +18,9 @@
 			.cardContainer:hover{transform:scale(1.1);border:.4px solid #ADD8E6;
 					     box-shadow:.3vw .3vw 2px 0px #DDDDDD; }
 	   .ldMoreBtnWrap{position:relative;width:20%;margin:-0.5vw auto 10%;}
- 	   .ldMoreBtn{position:absolute;z-index:2;width:100%;background:floralwhite;border:1px solid lightgray;
+ 	   .ldMoreBtn{position:absolute;z-index:2;width:100%;background:floralwhite;border-color:lightgray;
 		      color:dimgray;transition:background,border-radius,color;transition-duration:800ms;}
-	   .ldMoreBtn:hover{background:white;color:black;border:1px solid blue;border-radius:1vw;}
+	   .ldMoreBtn:hover{background:white;color:black;border-color:blue;border-radius:1vw;}
 	footer {background:magenta;height:70px;}
 @media (max-width: 800px) { 
 			header{height:14vw;padding:0;} 
@@ -114,8 +114,8 @@
 const 
 categorySelect = function () {	
 	let runOnce = true, intervalID, lastCategory ={}, genLoader;
-	const bookblk = doc0.querySelector('.goodsBlock'), loadMoreBtn = doc0.querySelector('.ldMoreBtn'),
-	      cardQuantity = 6,	zero = 0,		
+	const bookblk = cnst.doc0.querySelector('.goodsBlock'), loadMoreBtn = cnst.doc0.querySelector('.ldMoreBtn'),
+	      zero = 0,		
 //scrolls up to top when cards have been dealt
 bookblkWidth = () =>{return getProp2(bookblk,'width');
 },
@@ -124,13 +124,13 @@ scrUp = () => {
 	if (runOnce) {
 		runOnce=false;
 		intervalID = setInterval(()=>{
-		num = doc0.querySelectorAll('.cardContainer').length;  numThreshold = cardQuantity-1;
+		num = cnst.doc0.querySelectorAll('.cardContainer').length;  numThreshold = cnst.cardQuantity-1;
 		msgSrv({'scrUp cards':num});					
 			if (num>numThreshold){
 					clearInterval(intervalID);
 					msgSrv({'scrUp scrollUp by':window.innerHeight});
 					window.scrollBy(zero, -window.innerHeight);}
-			},100);
+			},cnst.sto);
 	};
 },
 bookBlockEmpty = ()  =>{if (bookblk.children.length) {return false;} else {return true;}},
@@ -138,19 +138,19 @@ loaderShow = (state=true) => {
 	// bookblkWidth from loadMoreBtnHeight()
 	const divider = 6, ringDim = bookblkWidth()/divider, 
 	ringDimPX = plusPX(ringDim), brThknss =plusPX(ringDim/divider) ;
-	if (state) {loadMoreBtn.style.display=none;
+	if (state) {loadMoreBtn.style.display=cnst.none;
 		    genLoader = putEl('loaderRing');		    
-		    setProp(genLoader,{ 'display':blk,'height':ringDimPX, 'width':ringDimPX, 'borderWidth':brThknss, 
+		    setProp(genLoader,{ 'display':cnst.blk,'height':ringDimPX, 'width':ringDimPX, 'borderWidth':brThknss, 
 					'borderTop':brThknss+'solid mediumturquoise','margin':'0'});
 		 if (bookBlockEmpty()) {bookblk.style.backgroundColor='gainsboro';bookblk.classList.add('flex_centr');
 					bookblk.appendChild(genLoader);/* 1 */}
 		 else { genLoader.style.margin='1% auto 10%';
 	    		bookblk.appendChild(genLoader);	/* 2 */	window.scrollBy(zero, window.innerHeight);}
 	}
-	else {	 loadMoreBtn.style.display=blk;   
+	else {	 loadMoreBtn.style.display=cnst.blk;   
 		 bookblk.removeChild(genLoader);
 		 if (bookBlockEmpty()) {   bookblk.classList.remove('flex_centr'); 
-		   			   bookblk.style.backgroundColor=es;	 	}
+		   			   bookblk.style.backgroundColor=cnst.es;	 	}
 	};
 },
 //goods cards building preparation
@@ -160,14 +160,14 @@ cardDeal = (cardData,localData=false) => {
 	
     if (!bookBlockEmpty() && localData) {return;} 
     cardData = cardData.items;	
-    for (let i=zero;i<cardQuantity;i++){
+    for (let i=zero;i<cnst.cardQuantity;i++){
 		const volInf = cardData[i].volumeInfo,
 		      imgLinks = volInf.imageLinks,		      
 		      searchInf = cardData[i].searchInfo,
 		      volAuthors = volInf.authors,
 		      saleInfo = cardData[i].saleInfo;		
 		
-		let authorCaption = es,cena = zero,		imageCoverURL =es,
+		let authorCaption = cnst.es,cena = zero,		imageCoverURL =cnst.es,
 	         		       annot = 'No annotation';
 		if (imgLinks) {imageCoverURL = imgLinks.thumbnail};
  		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
@@ -188,22 +188,22 @@ cardDeal = (cardData,localData=false) => {
 		'reviewCnt':ratingsCount,
 	 	'annot':annot,
 	 	'price':cena});
-    };//for (let i=0;i<cardQuantity;i++)...
+    };//for (let i=0;i<cnst.cardQuantity;i++)...
 	scrUp();
 },
 loadMoreBtnHeight = () =>{
 	const bblkWidth = bookblkWidth();
-   	setProp(loadMoreBtn,{'height':plusPX(bblkWidth/15), 'fontSize':plusPX(bblkWidth/30)});
+   	setProp(loadMoreBtn,{'height':plusPX(bblkWidth/15), 'fontSize':plusPX(bblkWidth/35)});
 };
 function categorySelect (category,indexPlus=false) {
 	/* fires when sidebar category selected (call from sidebar2.js - category selection by user) */
 	/* category: {'number':number,'name':String} */
  	if (!category) {category={'number':zero,'name':siList[zero]};}
-	if (lastCategory != category) {bookblk.innerHTML=es; }
+	if (lastCategory != category) {bookblk.innerHTML=cnst.es; }
 
  	  loaderShow();
 
-	setTimeout(()=>{fetchData(category.name,cardDeal,indexPlus);},loadDelay);
+	setTimeout(()=>{fetchData(category.name,cardDeal,indexPlus);},cnst.loadDelay);
  		
 lastCategory = category};
 //cart_bage element content initial fill (Init00.js)

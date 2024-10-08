@@ -1,5 +1,5 @@
 ﻿*::selection{background-color:transparent;}
-*{background-color:transparent;text-underline-position:under;padding:0px;margin:0px;
+*{background-color:transparent;padding:0px;margin:0px;
   cursor:default;}
 body{background-color:ivory;}
 a,button,.sidebarItem,.menu_ico,.cart_bage,.slider_pic_link_box,.slider_pic_link_arrow{cursor:pointer;}

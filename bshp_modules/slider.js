@@ -5,14 +5,14 @@ msgSrv({'':'slider module v.3.0.5 loaded'});
 
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 msgSrv({'slider speed' : speed,'frameclass': frameclass});	
-		const container = doc0.querySelector('.'+frameclass),
+		const container = cnst.doc0.querySelector('.'+frameclass),
 		      picFrame = putEl(),	warnBlk = putEl(),  	      		      
 		      prcnt = '%',		bPstfx="."+bPstf, 
 		      cntr = 'center', 		 		zpx =`${cntr}, `+plusPX()+cntr,	/* center, 0px center */
 		      backGndCLr = getProp2(container,'background-color'); 
 	     
 		if (!container) return function (){const noPrnt ='Slider no parent/wrong container name for slider module'; 
-						   doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});};
+						   cnst.doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});};
 		let previousSlide = null, movSlow, frmWidth, 
 		picShiftX,
 		frameStep,warnFontSize,loadErr=false; 
@@ -26,11 +26,11 @@ function frameDim(){
 frameDim();
 window.addEventListener('resize',frameDim);
 												
-	setProp(picFrame,{'width':sto+prcnt, 'backgroundSize':'contain', 'backgroundColor':backGndCLr,
-			  'backgroundRepeat':'no-repeat', 'display':flex, 'justifyContent':cntr, 'alignItems':cntr});	
+	setProp(picFrame,{'width':cnst.sto+prcnt, 'backgroundSize':'contain', 'backgroundColor':backGndCLr,
+			  'backgroundRepeat':'no-repeat', 'display':cnst.flex, 'justifyContent':cntr, 'alignItems':cntr});	
 	container.appendChild(picFrame);
 	
-	setProp(warnBlk,{'color':'gray', 'backgroundColor':'gainsboro', 'opacity':'0.95', 'display':none,
+	setProp(warnBlk,{'color':'gray', 'backgroundColor':'gainsboro', 'opacity':'0.95', 'display':cnst.none,
 			 'maxWidth':'90'+prcnt, 'padding':'1'+prcnt, 'fontSize':plusPX(warnFontSize*1.7),
 			 'fontWeight':'600', 'letterSpacing':plusPX(frameStep), 'textAlign':cntr, 'overflowWrap':'break-word'});					 			
 	picFrame.appendChild(warnBlk);   
@@ -41,14 +41,14 @@ window.addEventListener('resize',frameDim);
 		 	 case "fast":	 movSlow = 3;	break;
 			 case "veryfast":movSlow = 0;	break;	default: movSlow = 10;}								 	
 	function slider(nextSlide=0){
-		let probeImg = putEl(es,`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
+		let probeImg = putEl(cnst.es,`${bPrefx}${nextSlide}${bPstfx}`,'slide picture'), idA, movInterval, loadFail = true;
 		msgSrv({'slider module':nextSlide+' image: '+probeImg.src});
 
 		    warnBlk.innerHTML=`<span style="color:salmon;">No image available at</span><br>${probeImg.src}`;
-		probeImg.addEventListener("error", () => {warnBlk.style.display=blk;});
+		probeImg.addEventListener("error", () => {warnBlk.style.display=cnst.blk;});
 		    
 		probeImg.addEventListener("load", () => {
-				warnBlk.style.display=none;
+				warnBlk.style.display=cnst.none;
 				if (previousSlide===null) {setProp(picFrame,{'backgroundImage':`url('${bPrefx}${nextSlide}${bPstfx}')`});				
 				} else {
 				if (previousSlide!=nextSlide) {	
@@ -77,16 +77,16 @@ window.addEventListener('resize',frameDim);
 	};
 return slider;},
 
-slideShow=function(amount=0, timeout = 0, inactClr="rgb(239, 238, 246)", actClr="rgb(158, 152, 220)", 
+slideShow=function(amount=0, timeout = 0, inactClr="rgb(209, 208, 216)", actClr="rgb(138, 132, 225)", 
 		   frameclass="sliderSwitch", sliderName=launchSlide){
-		const switchBlock = doc0.querySelector('.'+frameclass);
+		const switchBlock = cnst.doc0.querySelector('.'+frameclass);
 if (!switchBlock) return function (){const noPrnt ='SliderControl: no parent/wrong container name for sliderControl module'; 
-				     doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});
+				     cnst.doc0.write(noPrnt+'<br>');	                  msgSrv({'':noPrnt});
 				    };
 		const   slideControlButtonClassName = "slideCtrlButton", slideShowPauseCount = 2;
 		let ctrlBtn = null, pauseShow = 0, slideNum = 0,
 		    swHeightNum,  swWidthNum,  maxAmount, amountMinusOne;
-setProp(switchBlock,{'display':flex, 'justifyContent':'space-between'});
+setProp(switchBlock,{'display':cnst.flex, 'justifyContent':'space-between'});
 function switchDim (){
 	swHeightNum = getProp2(switchBlock,'height');		
 	swWidthNum = getProp2(switchBlock,'width');			
@@ -96,13 +96,13 @@ maxAmount = Math.round((swWidthNum/swHeightNum+0.5)/1.5);
 if ((amount<2) || (amount>maxAmount))  {amount = maxAmount};		
 amountMinusOne = amount-1;
 // switch block clear
-switchBlock.innerHTML=es;
+switchBlock.innerHTML=cnst.es;
 for (let i=0;i<amount;i++) {ctrlBtn =putEl(slideControlButtonClassName); 
 		    setProp(ctrlBtn,{'cursor':'pointer', 'borderRadius':'50%', 'backgroundColor':inactClr, 
 			 	     'width':plusPX(swHeightNum), 'height':plusPX(swHeightNum)});	
     switchBlock.appendChild(ctrlBtn);
 };
-ctrlBtn	= doc0.querySelectorAll('.'+slideControlButtonClassName);
+ctrlBtn	= cnst.doc0.querySelectorAll('.'+slideControlButtonClassName);
 // switch block onresize
 window.addEventListener('resize',()=>{	
 		switchDim ();		

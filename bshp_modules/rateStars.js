@@ -1,32 +1,31 @@
-﻿// rateModule  v.5.7.0 for bookshop prj
+﻿// rateModule  v.5.7.1 for bookshop prj
 // dependencies : bshp_modules/Init00.js
 'use strict';
-const rateModule = (quantity=5, rateModul=document.querySelector('.rateModule') , 
+const rateModule = (quantity=5, rateModul=cnst.doc0.querySelector('.rateModule'), 
 		    aClr= 'rgb(242, 201, 76)', bClr = 'rgb(238, 237, 245)', 
 		    //gap between stars - percents of star picture width
 		    spaceBetween = 10) => { 
 let rate=0, 
 	/* intervalID for DEMO MODE on/off control */
     	intervalID=null;	
-const   starWrapClasName = 'starWrap',
-	moduleName = 'rateModule',	moduleVer =' v.5.7.0 ',	demoMode = 'demo mode ', act='activated',
+const   starWrapClasName = 'starWrap', spcBlkClasName = 'spcBlk',
+	moduleName = 'rateModule',	moduleVer =' v.5.7.5 ',	demoMode = 'demo mode ', act='activated',
 	//error handle function
 	dumbFunc = () =>{console.log('dumbFunc');return null;};
 	if (rateModul) {  
-	       if (rateModul.querySelector('.'+starWrapClasName)) { setProp(rateModul,{'background':es, 'height':es});  
-								    rateModul.innerHTML=es;	
+	       if (rateModul.querySelector('.'+starWrapClasName)) { setProp(rateModul,{'background':cnst.es, 'height':cnst.es});  
+								    rateModul.innerHTML=cnst.es;	
 								   msgSrv({'':moduleName+' Secondary instance'});}
 	} else {msgSrv({'':moduleName+' No '+moduleName+' DomElement Specified'}); return dumbFunc;}
 // successful loading report
 msgSrv({'':moduleName+moduleVer+'loaded ---'});	
 const fillColor = getProp2(rateModul,'background-color'),
-starWrapWidth=Math.ceil(getProp2(rateModul,'height')/11*12),
 	/* star SVG image */
 	svgStyle2 = `" style="stroke:${fillColor};stroke-width:`,
 	svgStyle1 = `${svgStyle2}0.3`, 					svgStylePstFx =`"/>`,
 	svgStyle=` Z${svgStyle1};fill:${fillColor}${svgStylePstFx}`,
 	path=`<path d="M`, 
-starAsy=`<svg viewBox="0 0 12 11" fill=${none}>
+starAsy=`<svg viewBox="0 0 12 11" fill=${cnst.none}>
 	${path}6 0 L7.80568 3.5147 L11.7063 4.1459 L12 4.1459 L12 0${svgStyle} 	
 	${path}12 4.1459  L8.92165 6.9493 L9.52671 11 L12 11${svgStyle}	
 	${path}9.52671 11 L6 9.072 L2.179629 11 ${svgStyle}
@@ -37,35 +36,32 @@ starAsy=`<svg viewBox="0 0 12 11" fill=${none}>
 	${path}12 0 L12 11${svgStyle2}1${svgStylePstFx}
 	${path}12 11 L0 11${svgStyle2}1${svgStylePstFx}
 	${path}0 11 L0 0${svgStyle2}1${svgStylePstFx}
-</svg>`;				
-setProp(rateModul,{'display':flex});	spaceBetween = Math.round(starWrapWidth*spaceBetween/100);	
-//${path}12 0 L12 11${svgStyle}					
+</svg>`,
+starWrapWidthD=Math.ceil(getProp2(rateModul,'height')/11*4.8),   starWrapWidth= plusPX(starWrapWidthD);				
+						  		 spaceBetween = plusPX(starWrapWidthD*spaceBetween/100);
+rateModul.style.display=cnst.flex;		
+				
 msgSrv({'height':moduleName+' '+getProp2(rateModul,'height'),'gap':moduleName+' '+spaceBetween});
 /* rating block filling with stars and space hoopers between */
 for (let i=0;i<quantity;i++){
-	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl('spcBlk'), 
-	      starWrapBorder = putEl();
-		setProp(starWrap,{'position':'relative', 'width':plusPX(starWrapWidth)});
-		setProp(starWrapBorder,{'zIndex':'2', 'position':'absolute', 
-					'top':plusPX(), 'left':plusPX(), 'right':plusPX(), 'bottom':plusPX(),
-					'border':plusPX(1)+`solid ${fillColor}`});								
-	starWrap.appendChild(starWrapBorder);				
+	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl(spcBlkClasName);					  
+	      starWrap.style.width=starWrapWidth;	   				
 	rateModul.appendChild(starWrap);
 	if (i) {
-		setProp(spcBlk,{'backgroundColor':fillColor, 'width':plusPX(spaceBetween)});
+		setProp(spcBlk,{'backgroundColor':fillColor, 'width':spaceBetween});
 		rateModul.insertBefore(spcBlk,starWrap);};
 };
+//window.addEventListener('resize',()=>{console.log('rateModul height',getProp2(rateModul,'height'));});
 /* main function - rating background fill */
 function ratingDisplay(rate1=75,  demo=false) {	
 	let dir=true;  rate = rate1;
 	msgSrv({'rateModule':'rating '+rate});	
 	const display = () => {
-		const maskLineH = plusPX(2);
+		const maskLineH = '60%';
 		if (rate>100) {rate=100;dir=false;} if (rate<0) {rate=0;dir=true;} 
 		
-		setProp(rateModul,{
-			'background': `linear-gradient(to top, ${fillColor} ${maskLineH}, transparent ${maskLineH}, transparent),
-				       linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`});
+		rateModul.style.background=`linear-gradient(to top, ${fillColor} ${maskLineH}, transparent ${maskLineH}, transparent),
+				            linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`;
 		};		
 	display();
 	if (demo) {		
