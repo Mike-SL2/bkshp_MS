@@ -1,22 +1,13 @@
-﻿// rateModule  v.5.7.1 for bookshop prj
+﻿// rateModule  v.5.8.4 for bookshop prj
 // dependencies : bshp_modules/Init00.js
 'use strict';
-const rateModule = (quantity=5, rateModul=cnst.doc0.querySelector('.rateModule'), 
-		    aClr= 'rgb(242, 201, 76)', bClr = 'rgb(238, 237, 245)', 
-		    //gap between stars - percents of star picture width
-		    spaceBetween = 10) => { 
-let rate=0, 
-	/* intervalID for DEMO MODE on/off control */
-    	intervalID=null;	
+const rateModule = (quantity=5, rateModul, 
+		    aClr= 'rgb(242, 201, 76)', bClr = 'rgb(238, 237, 245)', space = 20) => { 
 const   starWrapClasName = 'starWrap', spcBlkClasName = 'spcBlk',
-	moduleName = 'rateModule',	moduleVer =' v.5.7.5 ',	demoMode = 'demo mode ', act='activated',
+	moduleName = 'rateModule',     moduleVer =' v.5.8.4 ',
 	//error handle function
 	dumbFunc = () =>{console.log('dumbFunc');return null;};
-	if (rateModul) {  
-	       if (rateModul.querySelector('.'+starWrapClasName)) { setProp(rateModul,{'background':cnst.es, 'height':cnst.es});  
-								    rateModul.innerHTML=cnst.es;	
-								   msgSrv({'':moduleName+' Secondary instance'});}
-	} else {msgSrv({'':moduleName+' No '+moduleName+' DomElement Specified'}); return dumbFunc;}
+	if (!rateModul) {msgSrv({'':moduleName+' No '+moduleName+' DomElement Specified'}); return dumbFunc;} 
 // successful loading report
 msgSrv({'':moduleName+moduleVer+'loaded ---'});	
 const fillColor = getProp2(rateModul,'background-color'),
@@ -37,42 +28,48 @@ starAsy=`<svg viewBox="0 0 12 11" fill=${cnst.none}>
 	${path}12 11 L0 11${svgStyle2}1${svgStylePstFx}
 	${path}0 11 L0 0${svgStyle2}1${svgStylePstFx}
 </svg>`,
-starWrapWidthD=Math.ceil(getProp2(rateModul,'height')/11*4.8),   starWrapWidth= plusPX(starWrapWidthD);				
-						  		 spaceBetween = plusPX(starWrapWidthD*spaceBetween/100);
-rateModul.style.display=cnst.flex;		
-				
-msgSrv({'height':moduleName+' '+getProp2(rateModul,'height'),'gap':moduleName+' '+spaceBetween});
+spaceBlocks = rateModul.querySelectorAll('.'+spcBlkClasName),
+starWrapHeightD = getProp2(rateModul,'height'),  starWrapHeight = plusPX(starWrapHeightD),
+ starWrapWidthD = starWrapHeightD*12/11, 	 starWrapWidth = plusPX(starWrapWidthD),
+rateStep = Math.round(cnst.sto/quantity);
+						let starWraps = rateModul.querySelectorAll('.'+starWrapClasName); 
+space = plusPX(starWrapWidthD*space/100); 				
+msgSrv({'height':moduleName+' '+starWrapHeight});					  		
+//.ratStar = rateModul
+if (starWraps.length){
+	msgSrv({'rateModule':'resizing existing elements'});
+	starWraps.forEach((starWrapI)=>{setProp(starWrapI,{'height':starWrapHeight, 'width':starWrapWidth});});
+	spaceBlocks.forEach((spaceBlockI)=>{spaceBlockI.style.width=space;});
+} else {
+starWraps = [];
+rateModul.style.display=cnst.flex;				
+msgSrv({'rateModule':'building new one'});
 /* rating block filling with stars and space hoopers between */
 for (let i=0;i<quantity;i++){
-	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl(spcBlkClasName);					  
-	      starWrap.style.width=starWrapWidth;	   				
+	const starWrap=putEl(starWrapClasName,starAsy), spcBlk = putEl(spcBlkClasName);	
+	starWraps.push(starWrap);				  
+	setProp(starWrap,{'height':starWrapHeight, 'width':starWrapWidth});  				
 	rateModul.appendChild(starWrap);
 	if (i) {
-		setProp(spcBlk,{'backgroundColor':fillColor, 'width':spaceBetween});
+		spcBlk.style.width=space;
 		rateModul.insertBefore(spcBlk,starWrap);};
-};
-//window.addEventListener('resize',()=>{console.log('rateModul height',getProp2(rateModul,'height'));});
+};} //if (starWraps){...
+
 /* main function - rating background fill */
-function ratingDisplay(rate1=75,  demo=false) {	
-	let dir=true;  rate = rate1;
-	msgSrv({'rateModule':'rating '+rate});	
-	const display = () => {
-		const maskLineH = '60%';
-		if (rate>100) {rate=100;dir=false;} if (rate<0) {rate=0;dir=true;} 
-		
-		rateModul.style.background=`linear-gradient(to top, ${fillColor} ${maskLineH}, transparent ${maskLineH}, transparent),
-				            linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`;
-		};		
-	display();
-	if (demo) {		
-		if (!intervalID) {
-			msgSrv({'rateModule':demoMode+act});
-		    rate=0;	
-			intervalID=setInterval(()=>{
-						    if (dir) {rate++;} else {rate--;}					
-						    display();},10);
-		};
-	} else {if (intervalID) {clearTimeout(intervalID);intervalID=null;msgSrv({'rateModule':demoMode+'dis'+act});}
-		}
+function ratingDisplay(rate=75) {	
+	msgSrv({'rateModule':'rating '+rate});		
+		let i=0;  
+		if (rate>cnst.sto) {rate=cnst.sto;}; if (rate<0) {rate=0;};  rate = Math.round(rate)-rateStep;
+while (rate>0){rate=rate-rateStep;    	       
+               starWraps[i].style.backgroundColor=aClr;	i++;
+};	rate=Math.round((rate+rateStep)*cnst.sto/rateStep);
+/*
+const maskLineH = '1%'; 
+starWraps[i].style.background=`linear-gradient(to top, ${fillColor} ${maskLineH}, transparent ${maskLineH}, transparent),
+			       linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`;
+*/
+starWraps[i].style.background=`linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`;
+i++;
+while (quantity>i){starWraps[i].style.backgroundColor=bClr;i++;}
 }; return ratingDisplay;
 };

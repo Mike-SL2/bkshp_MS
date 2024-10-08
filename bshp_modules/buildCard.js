@@ -9,6 +9,7 @@ const opt1Default = {
 	'author':'HO Commission on Social Determinants of Health, World Health Organization',
 	'caption':'Harry Potter: Crochet Wizardry | Crochet Patterns | Harry Potter Crafts',
 	'averageRating':4,
+	'maxAverageRating':5,
 	'reviewCnt':354, 
 	'annot':'The Outrageously Funny Debut Novel About Three Super-Rich, Pedigreed Chinese Families And The Gossip about third world war',
 	'price':0,
@@ -49,7 +50,7 @@ const
 	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'), 
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
-	innerCart = processCart(), maxAverageRating =5,
+	innerCart = processCart(), rateInPercents = opt1.averageRating*cnst.sto/opt1.maxAverageRating,
 //set card container height 78% of width
 setPropCard =() => {
 	let rateBlk;
@@ -61,8 +62,8 @@ setPropCard =() => {
 	goodImg.style.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
 	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
 
-rateBlk = rateModule(maxAverageRating,rateDisplay);
-rateBlk(Math.round(opt1.averageRating*cnst.sto/maxAverageRating));
+rateBlk = rateModule(opt1.maxAverageRating,rateDisplay);
+rateBlk(rateInPercents);
 };
 let review=' review', 
 	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;

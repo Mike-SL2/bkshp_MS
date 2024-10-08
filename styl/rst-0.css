@@ -3,7 +3,7 @@
   cursor:default;}
 body{background-color:ivory;}
 a,button,.sidebarItem,.menu_ico,.cart_bage,.slider_pic_link_box,.slider_pic_link_arrow{cursor:pointer;}
-a{text-decoration:none;color:black;}
+a{text-decoration:none;text-underline-position:under;color:black;}
 .flex_centr{justify-content:center;align-items:center;}
 .blok_centr,header,footer,.sidebarTextBlock{margin:0px auto 0px;}
 	    header,footer,main,.sidebarItem,.sibarMark,.goodsBlock,.flex_centr,
