@@ -1,10 +1,10 @@
-﻿// rateModule  v.5.8.4 for bookshop prj
+﻿// rateModule  v.5.8.5 for bookshop prj
 // dependencies : bshp_modules/Init00.js
 'use strict';
 const rateModule = (quantity=5, rateModul, 
 		    aClr= 'rgb(242, 201, 76)', bClr = 'rgb(238, 237, 245)', space = 20) => { 
 const   starWrapClasName = 'starWrap', spcBlkClasName = 'spcBlk',
-	moduleName = 'rateModule',     moduleVer =' v.5.8.4 ',
+	moduleName = 'rateModule',     moduleVer =' v.5.8.5 ',
 	//error handle function
 	dumbFunc = () =>{console.log('dumbFunc');return null;};
 	if (!rateModul) {msgSrv({'':moduleName+' No '+moduleName+' DomElement Specified'}); return dumbFunc;} 
@@ -58,18 +58,23 @@ for (let i=0;i<quantity;i++){
 /* main function - rating background fill */
 function ratingDisplay(rate=75) {	
 	msgSrv({'rateModule':'rating '+rate});		
-		let i=0;  
-		if (rate>cnst.sto) {rate=cnst.sto;}; if (rate<0) {rate=0;};  rate = Math.round(rate)-rateStep;
+		let i=0, clr = bClr;  
+		if (rate>cnst.sto) {rate=cnst.sto;}; if (rate<1) {rate=0;};  
+	if (rate===cnst.sto || rate===0) {
+		if (rate) {clr = aClr;} 
+		starWraps.forEach((starWrapI)=>{starWrapI.style.backgroundColor=clr});
+		return;
+	};
+/* I */
+rate = Math.round(rate)-rateStep;
 while (rate>0){rate=rate-rateStep;    	       
-               starWraps[i].style.backgroundColor=aClr;	i++;
-};	rate=Math.round((rate+rateStep)*cnst.sto/rateStep);
-/*
-const maskLineH = '1%'; 
-starWraps[i].style.background=`linear-gradient(to top, ${fillColor} ${maskLineH}, transparent ${maskLineH}, transparent),
-			       linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`;
-*/
+               starWraps[i].style.backgroundColor=aClr;		i++;
+};	
+/* II */
+rate=Math.round((rate+rateStep)*cnst.sto/rateStep);
 starWraps[i].style.background=`linear-gradient(to right, ${aClr}, ${aClr} ${rate}%, ${bClr} ${rate}%, ${bClr})`;
 i++;
-while (quantity>i){starWraps[i].style.backgroundColor=bClr;i++;}
+/* III */
+while (quantity>i){starWraps[i].style.backgroundColor=bClr;	i++;}
 }; return ratingDisplay;
 };

@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="styl/rst-0.css" type="text/css">	<link rel="stylesheet" href="styl/header.css" type="text/css">
 		<link rel="stylesheet" href="styl/fnt-0.css" type="text/css">	<link rel="stylesheet" href="styl/slider.css" type="text/css">
 		<link rel="stylesheet" href="styl/cardStyl.css" type="text/css">
-	<title>BookShop-MS v.0.16.7</title></head>		<style> 
+	<title>BookShop-MS v.0.18.2</title></head>		<style> 
 .container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;}
@@ -134,21 +134,25 @@ scrUp = () => {
 	};
 },
 bookBlockEmpty = ()  =>{if (bookblk.children.length) {return false;} else {return true;}},
-loaderShow = (state=true) => {
-	// bookblkWidth from loadMoreBtnHeight()
+ringProp = () =>{
 	const divider = 6, ringDim = bookblkWidth()/divider, 
 	ringDimPX = plusPX(ringDim), brThknss =plusPX(ringDim/divider) ;
+return {'ringDim':ringDimPX, 'borderTh':brThknss};
+},
+loaderShow = (state=true) => {
+	// bookblkWidth from loadMoreBtnHeight()
+	const RD = ringProp(), genLoaderClassName = 'genLoader';
 	if (state) {loadMoreBtn.style.display=cnst.none;
-		    genLoader = putEl('loaderRing');		    
-		    setProp(genLoader,{ 'display':cnst.blk,'height':ringDimPX, 'width':ringDimPX, 'borderWidth':brThknss, 
-					'borderTop':brThknss+'solid mediumturquoise','margin':'0'});
+		    genLoader = putEl('loaderRing '+genLoaderClassName);		    
+		    setProp(genLoader,{ 'display':cnst.blk,'height':RD.ringDim, 'width':RD.ringDim, 'borderWidth':RD.borderTh, 
+					'borderTop':RD.borderTh+'solid mediumturquoise','margin':'0'});
 		 if (bookBlockEmpty()) {bookblk.style.backgroundColor='gainsboro';bookblk.classList.add('flex_centr');
 					bookblk.appendChild(genLoader);/* 1 */}
 		 else { genLoader.style.margin='1% auto 10%';
 	    		bookblk.appendChild(genLoader);	/* 2 */	window.scrollBy(zero, window.innerHeight);}
 	}
-	else {	 loadMoreBtn.style.display=cnst.blk;   
-		 bookblk.removeChild(genLoader);
+	else {	 loadMoreBtn.style.display=cnst.blk;  
+		if (cnst.doc0.querySelector('.'+genLoaderClassName)) {bookblk.removeChild(genLoader);} 		 
 		 if (bookBlockEmpty()) {   bookblk.classList.remove('flex_centr'); 
 		   			   bookblk.style.backgroundColor=cnst.es;	 	}
 	};
@@ -211,8 +215,14 @@ cartBage();
 //initial category selection + sidebar state setting (sidebar2.js)
 categorySelect(sbItemSel(0));
 //load More Button
-loadMoreBtnHeight();	loadMoreBtn.addEventListener('click',()=>{categorySelect(lastCategory,true);});
-			window.addEventListener('resize',loadMoreBtnHeight);
+loadMoreBtnHeight();	
+	loadMoreBtn.addEventListener('click',()=>{categorySelect(lastCategory,true);
+	});
+	window.addEventListener('resize',()=>{	
+		const RD = ringProp();
+		loadMoreBtnHeight();
+		setProp(genLoader,{'height':RD.ringDim, 'width':RD.ringDim, 'borderWidth':RD.borderTh});
+	});
 return categorySelect;
 }();
 </script>

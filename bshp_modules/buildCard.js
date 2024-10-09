@@ -8,7 +8,7 @@ const opt1Default = {
 	'imageAlt':'book cover image',
 	'author':'HO Commission on Social Determinants of Health, World Health Organization',
 	'caption':'Harry Potter: Crochet Wizardry | Crochet Patterns | Harry Potter Crafts',
-	'averageRating':4,
+	'averageRating':0,
 	'maxAverageRating':5,
 	'reviewCnt':354, 
 	'annot':'The Outrageously Funny Debut Novel About Three Super-Rich, Pedigreed Chinese Families And The Gossip about third world war',
@@ -51,6 +51,7 @@ const
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
 	innerCart = processCart(), rateInPercents = opt1.averageRating*cnst.sto/opt1.maxAverageRating,
+	
 //set card container height 78% of width
 setPropCard =() => {
 	let rateBlk;
@@ -60,10 +61,11 @@ setPropCard =() => {
 	setProp(loader,{'height':loaderDimPX, 'width':loaderDimPX, 'borderWidth':plusPX(loaderDim/5)});
 	setProp(container,{'height':plusPX(cardContainerWidth/1.277), 'fontSize':plusPX(cardContainerWidth/54.6)});	
 	goodImg.style.boxShadow=plusPX()+shd1+shd2+'-'+shd3+opt2.coverShdClr;
-	goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
-
-rateBlk = rateModule(opt1.maxAverageRating,rateDisplay);
-rateBlk(rateInPercents);
+	//goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
+    if (opt1.averageRating) {
+	rateBlk = rateModule(opt1.maxAverageRating,rateDisplay);
+	rateBlk(rateInPercents);
+    };
 };
 let review=' review', 
 	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;
@@ -95,13 +97,13 @@ container.appendChild(putEl(klas.spc1));
 container.appendChild(goodDesc);
 	goodDesc.appendChild(putEl(klas.author,opt1.author));
 	goodDesc.appendChild(putEl(klas.caption,opt1.caption));
+	goodDesc.appendChild(rating);
 	   //4. Рейтинг: от 1 до 5 звёздочек плюс общее количество отзывов. Если в данных о книге нет рейтинга, не показывать эту строчку.
-	   if (opt1.averageRating) {
-	goodDesc.appendChild(rating);	   
+	   if (opt1.averageRating) {		   
 		rating.appendChild(rateDisplay);			
 		if (Number(opt1.reviewCnt)>1) {review=review+'s';}
 		rating.appendChild(putEl(klas.reviewCnt,opt1.reviewCnt+review));
-	   };
+	   } else {rating.classList.add('noRateData');};
 	goodDesc.appendChild(putEl(klas.annot,opt1.annot));	   
 //button 'BUY NOW' and price block	   
 	  innerCart.forEach ((i)=>{
@@ -127,8 +129,7 @@ container.appendChild(goodDesc);
 				cartBage();
 			});
 		} else {price.style.opacity = '0.4';buyNowBtn =  putEl(klas.noBuyBtn,buyNowBtnCaption);}
-		goodDesc.appendChild(buyNowBtn);
-		
+	goodDesc.appendChild(buyNowBtn);
 //set card container height			
 setPropCard();
 //set card container height on resize event

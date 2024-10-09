@@ -1,7 +1,7 @@
 ﻿//slider module v.3.2.5 for bookshop prj
 // dependencies : bshp_modules/Init00.js - plusPX func, putEl func
 'use strict';
-msgSrv({'':'slider module v.3.0.5 loaded'});
+msgSrv({'':'slider module v.3.2.5 loaded'});
 
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 msgSrv({'slider speed' : speed,'frameclass': frameclass});	

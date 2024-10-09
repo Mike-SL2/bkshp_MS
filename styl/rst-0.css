@@ -7,4 +7,4 @@ a{text-decoration:none;text-underline-position:under;color:black;}
 .flex_centr{justify-content:center;align-items:center;}
 .blok_centr,header,footer,.sidebarTextBlock{margin:0px auto 0px;}
 	    header,footer,main,.sidebarItem,.sibarMark,.goodsBlock,.flex_centr,
-	    .itemWrap,.authorCart,.captionCart,.cartPicWrap{display:flex;}
+	    .itemWrap,.authorCart,.captionCart,.cartPicWrap,.goodDesc{display:flex;}

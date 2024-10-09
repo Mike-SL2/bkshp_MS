@@ -3,7 +3,8 @@
 
 .cardContainer,.goodDesc,.rating,.ratStar{background-color:inherit;}
 .goodImg,.goodDesc,.starWrap{flex-shrink:0;}
-.goodImgWrap{flex-flow:column nowrap;
+.goodImgWrap,.goodDesc{flex-flow:column nowrap;}
+.goodImgWrap{
 	     color:white;font-weight:600;font-size:150%; 
 	     width:42.5%; height:76.5%;border-radius:3px;
 	     background:radial-gradient(circle at 20% 15%, aqua, darkblue,palegreen);
@@ -19,20 +20,23 @@
 .spcBlk,.spc1{flex-shrink:4;}
 .spc1{width:7.2%; height:20px;}
 
-.goodDesc{width:35%;margin-top:10%;font-size:200%; font-family: "Montserrat-Regular";color:dimgray;}
+.goodDesc{width:40%;height:65%;margin-top:8%;font-size:200%; font-family: "Montserrat-Regular";color:dimgray;}
 	.author{min-height:8%;margin-bottom:1%;font-size:50%;font-weight:600;}
-	.caption{min-height:10%;margin-bottom:2%;font-size:87%;font-family: "Montserrat-Bold";color:black; }
-	.rating{font-size:60%; height:15%;  }
-		.ratStar{height:40%;}	
-		.reviewCnt{margin-left:4%;}
-	.annot{height:21%;width:100%;margin-bottom:6%; font-size:51%;line-height:144%; 
- 		-webkit-line-clamp: 3; /* Число отображаемых строк */
+	.caption,.annot{-webkit-line-clamp: 3; /* Число отображаемых строк */
     		display: -webkit-box; /* Включаем флексбоксы */
     		-webkit-box-orient: vertical; /* Вертикальная ориентация */
    	 	overflow: hidden; /* Обрезаем за пределами блока*/
-}
+		}
+	.caption{min-height:10%;margin-bottom:2%;font-size:87%;font-family: "Montserrat-Bold";color:black;-webkit-line-clamp: 4; }
+
+	.rating{font-size:60%; height:10%;} .noRateData {height:5%;}
+		.ratStar{height:50%;}	
+		.reviewCnt{margin-left:4%;}
+	.annot{width:100%;margin-bottom:6%; font-size:51%;line-height:144%; } 	
+	
 	.price{height:15%;font-size:70%; font-family: "Montserrat-Bold";color:black;}
-	.buyNowBtn,.noBuyBtn{width:100%;height:24%;font-size:60%; font-family: "Montserrat-Bold";
+
+	.buyNowBtn,.noBuyBtn{width:100%;height:14%;margin:auto 0px 0px 0px;font-size:60%; font-family: "Montserrat-Bold";		   
 		   color:blueviolet;background-color:transparent; border-color:blueviolet;}
 	.noBuyBtn{color:gray;background-color:#D3D3D380;}
 	.buyNowBtnPressed{background:pink;color:black;}
