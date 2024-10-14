@@ -1,4 +1,5 @@
 ﻿/* response samples local database for debug purposes only */
+/* mock server */
 loc_response = 
 {
 'Architecture':

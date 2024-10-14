@@ -1,4 +1,4 @@
-﻿slider,.icon_link{position:relative;}		
+﻿slider{position:relative;}		
 		.slider_pic_link{position:absolute;z-index:1;}
 		  .slider_pic_link_pos1{top:3vw;right:6vw;}
 		  .slider_pic_link_pos2{top:23vw;;right:0px;}

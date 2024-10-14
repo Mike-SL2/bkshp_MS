@@ -1,5 +1,6 @@
 ﻿//building card with loader and dynamic PH
 //dependencies: Init00.js, rst-0.css, cardStyl.css
+'use strict';
 const buildCard = (container,   opt1={},
      				klas={},
      				opt2={}) => {
@@ -44,13 +45,13 @@ fillDef = (defaults, inputOptions) => {
 		if (!(key in inputOptions)){inputOptions[key]=defaults[key];}
 	};
 };	fillDef(opt1Default,opt1);	fillDef(klasDefault,klas);	fillDef(opt2Default,opt2);
-const 	
+const 	flx = 'flex', sto = 100,
 	buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
 	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'), 
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
-	innerCart = processCart(), rateInPercents = opt1.averageRating*cnst.sto/opt1.maxAverageRating,
+	innerCart = processCart(), rateInPercents = opt1.averageRating*sto/opt1.maxAverageRating,
 	
 //set card container height 78% of width
 setPropCard =() => {
@@ -64,24 +65,27 @@ setPropCard =() => {
 	//goodDesc.style.height=plusPX(getProp2 (goodDesc,'width')*1.14);	//width:294 x height:336
     if (opt1.averageRating) {
 	rateBlk = rateModule(opt1.maxAverageRating,rateDisplay);
-	rateBlk(rateInPercents);
+	rateBlk(rateInPercents);	
     };
-};
+},
+colNoWrap='column nowrap';
 let review=' review', 
 	btnClass = klas.buyNowBtn, buyNowBtnCaption1 = buyNowBtnCaption, buyNowBtn;
 //building card
-setProp(container,{'display':cnst.flex, 'flexFlow':'row nowrap'});
-rating.style.display=cnst.flex;
+setProp(container,{'display':flx, 'flexFlow':'row nowrap'}); setProp(goodDesc,{'display':flx, 'flexFlow':colNoWrap});
+rating.style.display=flx;
 goodImgWrap.classList.add('flex_centr'); //../styl/rst-0.css
-setProp(goodImg, {'height':cnst.sto+'%', 'width':cnst.sto+'%'});						
+	goodImgWrap.style.flexFlow=colNoWrap;
+	setProp(goodImg, {'height':sto+'%', 'width':sto+'%'});						
 container.appendChild(goodImgWrap);
 // loader, placeholder, book cover image 
-	loader.style.display=cnst.blk;			coverPH.style.display=cnst.blk;
+	loader.style.display='block';			coverPH.style.display='block';
 	goodImgWrap.appendChild(loader);		goodImgWrap.appendChild(coverPH);
 const showNoCoverMessage = (mode=true) => {
-	loader.style.display=cnst.none;
+	const none = 'none';
+	loader.style.display=none;
 	if (mode) {coverPH.innerHTML=opt2.noCvrImgText;
-	} else {   coverPH.style.display=cnst.none;}						    	      
+	} else {   coverPH.style.display=none;}						    	      
 };	
 	if (opt1.imageSrc) {
 		goodImg.addEventListener('load', ()=>{

@@ -1,11 +1,12 @@
 ﻿<!DOCTYPE HTML><html lang="ru"><head>	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta charset="UTF-8">		
-	<link rel="icon" type="image/png" sizes="32x32" href="ico/book_r.gif">  
+	<link rel="icon" type="image/gif" sizes="32x32" href="ico/book_r.gif">  
 		<link rel="stylesheet" href="styl/rst-0.css" type="text/css">	<link rel="stylesheet" href="styl/header.css" type="text/css">
 		<link rel="stylesheet" href="styl/fnt-0.css" type="text/css">	<link rel="stylesheet" href="styl/slider.css" type="text/css">
 		<link rel="stylesheet" href="styl/cardStyl.css" type="text/css">
-	<title>BookShop-MS v.0.18.2</title></head>		<style> 
-.container0{max-width:1440px;}				.container0,.sliderContainer{background-color:#F2F2F2;}
+	<title>BookShop-MS v.0.18.8</title></head>		<style> 
+.container0{max-width:1440px;}				.container0,.sliderContainer,.cardContainer{background-color:inherit;}
+							.container0,.header{border:1px solid red; border-color:#FFFFFF00 #F2F2F2 #FFFFFF00 #F2F2F2;}
    .sliderContainer,header,footer,main{width:95%;}
 	main   {margin:129px auto 0px;}
 		sidebar    {background-color:#EAEAF5;height:46vw;width:30%; }				  
@@ -13,25 +14,35 @@
 			.sidebarItem,.sibarMark{align-items:center;}   		   
 			   .sibarMark{width:13%;height:50%;padding:0px 0px 3% 0px;font-size:250%;color:darkmagenta; }				
 			   .sidebarItem{font-size:1vw;height:7%; }
-		.goodsBlock {flex-flow:row wrap;background:white;width:73%;margin:3% 0px 0px -4%;}
-		.cardContainer{width:49.6%;transition:transform;transition-duration:800ms;}
+		.goodsBlock {position:relative;flex-flow:row wrap;background:#FEFEFE;width:73%;margin:3% 0px 0px -4%;}
+    .genLoader{display:block;border-color: mediumturquoise red red red;}
+	
+		.cardContainer{width:49.6%;transition:transform,background;transition-duration:800ms;}
 			.cardContainer:hover{transform:scale(1.1);border:.4px solid #ADD8E6;
-					     box-shadow:.3vw .3vw 2px 0px #DDDDDD; }
+					     box-shadow:.3vw .3vw 2px 0px #DDDDDD; background:#FFFFFF ;}
 	   .ldMoreBtnWrap{position:relative;width:20%;margin:-0.5vw auto 10%;}
- 	   .ldMoreBtn{position:absolute;z-index:2;width:100%;background:floralwhite;border-color:lightgray;
+ 	   .ldMoreBtn{position:absolute;z-index:2;background:floralwhite;border-color:lightgray;
 		      color:dimgray;transition:background,border-radius,color;transition-duration:800ms;}
 	   .ldMoreBtn:hover{background:white;color:black;border-color:blue;border-radius:1vw;}
 	footer {background:magenta;height:70px;}
-@media (max-width: 800px) { 
-			header{height:14vw;padding:0;} 
-			   .header_wrap{height:15vw;margin-top:2.5vw;}
-			   .header_hoop,header{width:85vw;}	.menu{margin:0px 10px 0px 10px;}
-			   .fnt_size_10{font-size:8px;} .spc_39,.spc_74,.spc_109,.spc_30{width:auto;}
-			   .ico_link_container{width:15vw;}
+/* max-width: 1525px +*/
+@media (max-width: 1525px) { .logo{font-size:2vw;height:auto;width:12%;margin:0px;}
+			header{height:14vw;padding:0;min-width:360px;} 
+			   .header_wrap{height:15vw;margin-top:2vw;}
+			   .header_hoop,header{width:96vw;}	
+.menu{justify-content:space-between;margin:0px 5px 0px 5px;}
+.spc_39,.spc_74,.spc_109,.spc_30{width:auto;}
+			   .mnu_links{font-size:60%;} 
+			   .icon_link{width:2vw;height:2vw;} 
+			   .ico_link_container{width:7vw;}
+				.cart_bage{font-size:1.5vw;}
 	.slider_pic_link_box{font-weight:500;}
 			main{margin:10vw auto 1vw;}			
 }
-@media (min-width: 1440px) {
+/* min-width: 1530px -*/
+@media (min-width: 1530px) {.container0{max-width:2160px;}
+			    .mnu_links{font-size:.6vw;} .logo{font-size:.8vw;} .menu{min-width:20vw;}
+			    .icon_link{width:.8vw;height:.8vw;} .ico_link_container{width:4vw;}			    
 			.slider_pic_link_pos1{top:41px;right:90px;}
 		  .slider_pic_link_pos2{top:350px}
 		     .slider_pic_link_box{
@@ -43,41 +54,41 @@
 			.slider_pic_link_box2{width:130px; height:250px;
 					      padding:110px 40px 10px 20px;}
 	.sliderSwitch{width:56px;height:12px;margin:17px auto 0px;}
-	sidebar    {height:700px; }
-	.sidebarItem{font-size:14px;height:38px; }
+	sidebar    {height:900px;width:25%; } .goodsBlock {width:77%;margin:3% 0px 0px -2%;}
+	.sidebarItem{font-size:20px;height:50px; }
 }
 </style><body>
 <div class="container0 blok_centr"> 
 <div class="header_wrap"> 
 <header>
 <!-- LOGO -->	
-	<div class="logo fnt_size_24" title="Bookshop logotype">Bookshop</div>		
+	<div class="logo" title="Bookshop logotype">Bookshop</div>		
 <!-- Nav MENU -->
 	<div class="menu">									
-	  <a href='#sidebar1' class="mnu_links spc_39 fnt_size_10" title="Books">	 Books				</a>	
-	  <a href='#loadMoreAncor' class="mnu_links spc_74 fnt_size_10" title="AUDIOBooks"> AUDIOBooks			</a>	
-	  <a href='#' class="mnu_links spc_109 fnt_size_10" title="STATIONERY and GIFTS">STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
-	  <a href='#' class="mnu_links spc_30 fnt_size_10" title="Blog page">		 Blog				</a>		  	
+	  <a href='#sidebar1' class="mnu_links spc_39" title="Books">	 	Books				</a>	
+	  <a href='#loadMoreAncor' class="mnu_links spc_74" title="AUDIOBooks"> AUDIOBooks			</a>	
+	  <a href='#' class="mnu_links spc_109" title="STATIONERY and GIFTS">	STATIONERY&nbsp;&&nbsp;GIFTS	</a>	
+	  <a href='#' class="mnu_links spc_30" title="Blog page">		Blog				</a>		  	
 	</div>						
 <!-- Nav Links: profile, search, client cart icons block -->			
 		<div class="ico_link_container">		
 			<a href='#' class="icon_link" title="client profile page">
-						<img src="ico/user.svg"  type="image/svg+xml" alt='user profile' class="menu_ico">		</a>	
+						<img src="ico/user.svg"  type="image/svg+xml" alt='user profile' class="menu_ico"></a>	
 			<a href='#' class="icon_link" title="search page">
-						<img src="ico/search.svg"  type="image/svg+xml" alt='search' class="menu_ico">		</a>	
-			<a href='pages/usr_cart.html' class="icon_link" title="client cart page">
+						<img src="ico/search.svg"  type="image/svg+xml" alt='search' class="menu_ico">	  </a>	
+			<a href='pages/usr_cart.html' class="icon_link" title="client cart page" type="text/html">
 						<img src="ico/cart.svg"  type="image/svg+xml" alt='client cart' class="menu_ico">
-						<div class="cart_bage fnt_size_10 flex_centr"></div>	</a>
+						<div class="cart_bage flex_centr"></div>					  </a>
 		</div>				
 </header>
 <div class="header_hoop blok_centr"> </div>
 </div><!-- header_wrap -->
 <slider>
-   	<a href="pages/href_debug.htm" class="slider_pic_link slider_pic_link_pos1" title="Change old book on new">
+   	<a href="pages/href_debug.htm" class="slider_pic_link slider_pic_link_pos1" title="Change old book on new" type="text/html">
 		<div class="slider_pic_link_box slider_pic_link_box1">Change old book on new
 		<img src="img/arrow.svg"  type="image/svg+xml" alt='Change old book on new' class="slider_pic_link_arrow slider_pic_link_arrow1"></div>
 	</a>	
-	<a href="pages/href_debug.htm" class="slider_pic_link slider_pic_link_pos2" title="top 100 books 2022">
+	<a href="pages/startest.html" class="slider_pic_link slider_pic_link_pos2" title="top 100 books 2022" type="text/html">
 		<div class="slider_pic_link_box slider_pic_link_box2">top 100 books 2022
 		<img src="img/arrow.svg"  type="image/svg+xml" alt='top 100 books 2022' class="slider_pic_link_arrow slider_pic_link_arrow2"></div>
 	</a>  
@@ -89,7 +100,7 @@
 			<div class="sidebarTextBlock">
 			</div>
 	</sidebar>
-	<div class="goodsBlock">	
+	<div class="goodsBlock">
 		<!-- content to be generated when user selection occur -->		
 	</div>	
 </main><div class="ldMoreBtnWrap"><button class='ldMoreBtn' id='loadMoreAncor'>Load More</button></div>
@@ -114,7 +125,7 @@
 const 
 categorySelect = function () {	
 	let runOnce = true, intervalID, lastCategory ={}, genLoader;
-	const bookblk = cnst.doc0.querySelector('.goodsBlock'), loadMoreBtn = cnst.doc0.querySelector('.ldMoreBtn'),
+	const bookblk = cnst.d7.querySelector('.goodsBlock'), loadMoreBtn = cnst.d7.querySelector('.ldMoreBtn'),
 	      zero = 0,		
 //scrolls up to top when cards have been dealt
 bookblkWidth = () =>{return getProp2(bookblk,'width');
@@ -124,37 +135,36 @@ scrUp = () => {
 	if (runOnce) {
 		runOnce=false;
 		intervalID = setInterval(()=>{
-		num = cnst.doc0.querySelectorAll('.cardContainer').length;  numThreshold = cnst.cardQuantity-1;
+		num = cnst.d7.querySelectorAll('.cardContainer').length;  numThreshold = cnst.cardQuantity-1;
 		msgSrv({'scrUp cards':num});					
 			if (num>numThreshold){
 					clearInterval(intervalID);
 					msgSrv({'scrUp scrollUp by':window.innerHeight});
 					window.scrollBy(zero, -window.innerHeight);}
-			},cnst.sto);
+			},100);
 	};
 },
 bookBlockEmpty = ()  =>{if (bookblk.children.length) {return false;} else {return true;}},
 ringProp = () =>{
-	const divider = 6, ringDim = bookblkWidth()/divider, 
+	const divider = 5, ringDim = bookblkWidth()/divider, 
 	ringDimPX = plusPX(ringDim), brThknss =plusPX(ringDim/divider) ;
 return {'ringDim':ringDimPX, 'borderTh':brThknss};
 },
 loaderShow = (state=true) => {
-	// bookblkWidth from loadMoreBtnHeight()
-	const RD = ringProp(), genLoaderClassName = 'genLoader';
-	if (state) {loadMoreBtn.style.display=cnst.none;
-		    genLoader = putEl('loaderRing '+genLoaderClassName);		    
-		    setProp(genLoader,{ 'display':cnst.blk,'height':RD.ringDim, 'width':RD.ringDim, 'borderWidth':RD.borderTh, 
-					'borderTop':RD.borderTh+'solid mediumturquoise','margin':'0'});
-		 if (bookBlockEmpty()) {bookblk.style.backgroundColor='gainsboro';bookblk.classList.add('flex_centr');
-					bookblk.appendChild(genLoader);/* 1 */}
+	const RD = ringProp(), genLoaderClassName = 'genLoader', flexCentr = 'flex_centr';  
+	if (state) {loadMoreBtn.style.display='none';
+		    genLoader = putEl('loaderRing '+genLoaderClassName);
+		    
+		    setProp(genLoader,{ 'height':RD.ringDim, 'width':RD.ringDim, 'borderWidth':RD.borderTh, 'margin':'0'});
+		 if (bookBlockEmpty()) {bookblk.style.backgroundColor='gainsboro';bookblk.classList.add(flexCentr);
+					bookblk.appendChild(genLoader); /* 1 */}
 		 else { genLoader.style.margin='1% auto 10%';
-	    		bookblk.appendChild(genLoader);	/* 2 */	window.scrollBy(zero, window.innerHeight);}
+	    		bookblk.appendChild(genLoader);	/* 2 */window.scrollBy(zero, window.innerHeight);}
 	}
-	else {	 loadMoreBtn.style.display=cnst.blk;  
-		if (cnst.doc0.querySelector('.'+genLoaderClassName)) {bookblk.removeChild(genLoader);} 		 
-		 if (bookBlockEmpty()) {   bookblk.classList.remove('flex_centr'); 
-		   			   bookblk.style.backgroundColor=cnst.es;	 	}
+	  else { loadMoreBtn.style.display='block';  
+		 if (cnst.d7.querySelector('.'+genLoaderClassName)) {bookblk.removeChild(genLoader);} 		 
+		 if (bookBlockEmpty()) {   bookblk.classList.remove(flexCentr); 
+		   			   bookblk.style.backgroundColor='';	 	}
 	};
 },
 //goods cards building preparation
@@ -171,12 +181,12 @@ cardDeal = (cardData,localData=false) => {
 		      volAuthors = volInf.authors,
 		      saleInfo = cardData[i].saleInfo;		
 		
-		let authorCaption = cnst.es,cena = zero,		imageCoverURL =cnst.es,
+		let authorCaption = '',cena = zero,		imageCoverURL ='',
 	         		       annot = 'No annotation';
 		if (imgLinks) {imageCoverURL = imgLinks.thumbnail};
  		if (searchInf) {if ('textSnippet' in searchInf) {annot = searchInf.textSnippet;}}
 		if (saleInfo.saleability==='FOR_SALE') {cena = saleInfo.retailPrice.amount+' '+saleInfo.retailPrice.currencyCode;}
-		if (volAuthors) {authorCaption=volAuthors[0];
+		if (volAuthors) {authorCaption=volAuthors[zero];
 			volAuthors.forEach ((i,n)=>{ if (n) {authorCaption=authorCaption+', '+i;}});
 		};
 		let ratingsCount = volInf.ratingsCount, averageRating = volInf.averageRating;
@@ -203,7 +213,7 @@ function categorySelect (category,indexPlus=false) {
 	/* fires when sidebar category selected (call from sidebar2.js - category selection by user) */
 	/* category: {'number':number,'name':String} */
  	if (!category) {category={'number':zero,'name':siList[zero]};}
-	if (lastCategory != category) {bookblk.innerHTML=cnst.es; }
+	if (lastCategory != category) {bookblk.innerHTML=''; }
 
  	  loaderShow();
 
@@ -213,7 +223,7 @@ lastCategory = category};
 //cart_bage element content initial fill (Init00.js)
 cartBage();
 //initial category selection + sidebar state setting (sidebar2.js)
-categorySelect(sbItemSel(0));
+categorySelect(sbItemSel(zero));
 //load More Button
 loadMoreBtnHeight();	
 	loadMoreBtn.addEventListener('click',()=>{categorySelect(lastCategory,true);
