@@ -1,16 +1,20 @@
-﻿//Iitialization module v.7.0.4 for bookshop prj
+﻿//Iitialization module v.9.0.1 for bookshop prj
 'use strict';
 const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
 const msgSrv = (msgObj) => {
 	if (!verbose) {return;}
+	let msgObjKey;
 	if (typeof msgObj !='object') {console.log('msgSrv error');return;}
 	for (let key in msgObj){
+		msgObjKey = msgObj[key];
 		if (key.length<2) {
-			console.log(startMark,msgObj[key].match(/\b\w{1,}\b/)[0],':',msgObj[key].match(/\s.+/)[0]);
-		} else {console.log(key,': ',msgObj[key]);}}
+			console.log(startMark,msgObjKey.match(/\b\w{1,}\b/)[0],':',msgObjKey.match(/\s.+/)[0]);
+		} else {console.log(key,': ',msgObjKey);};
+	};
 },
-cnst = {'d7':document, 'loadDelay':500, 'cardQuantity':6},
+cnst = {'d7':document, 'loadDelay':500, 'cardQuantity':6, 
+	'buttonClasId':'Btn', 'placeHolderSrc':'img/plcHldr.jpg'},
 //goods categories
 siList=['Architecture','Art & Fashion','Biography','Business','Crafts & Hobbies','Drama','Fiction','Food & Drink',
 	'Health & Wellbeing','History & Politics','Humor','Poetry','Psychology','Science','Technology','Travel & Maps'],
@@ -47,9 +51,9 @@ msgSrv({'body-color':bodyColor});
 putEl = (className='',innerContent='',altTxt='') => {
 	let aux; 
 	if (altTxt) {
-		aux = cnst.d7.createElement('img');	aux.src = innerContent;		aux.alt=altTxt;} 
-	else {
-		if (className.match(/Btn/)) {aux = cnst.d7.createElement('button');}
+		aux = cnst.d7.createElement('img');	aux.src =innerContent;	  	aux.alt=altTxt;
+	} else {
+		if (className.match(cnst.buttonClasId)) {aux = cnst.d7.createElement('button');}
 		else {aux = cnst.d7.createElement('div');}	
 		aux.innerHTML=innerContent;} 
 	if (className) { aux.className=className; }	return aux;
@@ -95,7 +99,41 @@ msgSrv({'':'cartBage func loaded','cartBage volume':cartItemsQuantity});
 	if (cartItemsQuantity) {
 		cart_bage.style.display='flex'; cart_bage.innerHTML=cartItemsQuantity;}
 	else {	cart_bage.style.display=''; }						  
-};
+},
+watchInScope = function () {
+   msgSrv({'':'watchInScope func loaded'});
+	const 
+	none = 'none', blk = 'block',
+	optObj = {root:document.querySelector('#scroll'), threshold:1},	
+	cbFunc1 = (entriesArr,observer) =>{
+		entriesArr.forEach((entry)=>{let targetImg=entry.target,
+					     loader = targetImg.previousSibling,
+					     coverPH = targetImg.nextSibling;
+			const showNoCoverMessage = (mode=true) => {
+					loader.style.display=none;
+					if (mode) {coverPH.innerHTML=coverPH.dataset.bText;
+					   } else {coverPH.style.display=none;	targetImg.style.display=blk;}						    	      
+			};
+			if (entry.isIntersecting) {	
+				observer.unobserve(targetImg);	msgSrv({'watchInScope caught in scope':targetImg});
+				targetImg.src = targetImg.dataset.src;
+				targetImg.style.display=none;	coverPH.style.display=blk;
+								loader.style.display=blk;
+				if (targetImg.src) {
+					targetImg.addEventListener('load', ()=>{
+						setTimeout(()=>{ showNoCoverMessage(false);},cnst.loadDelay);
+					});
+					targetImg.addEventListener('error',()=>{
+						setTimeout(()=>{showNoCoverMessage();},cnst.loadDelay);
+					});
+				} else {showNoCoverMessage();msgSrv({'watchInScope':'no image src'});}	
+			};
+		});
+	},    observer = new IntersectionObserver(cbFunc1,optObj);	
+	function obsyr (img) {			     
+			      observer.observe(img);}
+	return 	obsyr;	
+}();
 
 //-------------------------------------------------------
 headerColor();
@@ -112,7 +150,8 @@ const globConstList = {
 	'putEl':putEl,
 	'plusPX':plusPX,
 	'processCart':processCart,
-	'cartBage':cartBage}, prefix2 ='Init00 --- ';
+	'cartBage':cartBage,
+	'watchInScope':watchInScope}, prefix2 ='Init00 --- ';
 let globConstListPlus ={'':prefix2+'module global func/const list ---'}, keyName2;
 for (let key in globConstList) {keyName2 = prefix2+key;
 				globConstListPlus[keyName2] = globConstList[key];}

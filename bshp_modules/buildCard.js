@@ -6,6 +6,7 @@ const buildCard = (container,   opt1={},
      				opt2={}) => {
 const opt1Default = {
 	'imageSrc':'goodImg0.png',
+	'imagePlaceHolderSrc':cnst.placeHolderSrc,
 	'imageAlt':'book cover image',
 	'author':'HO Commission on Social Determinants of Health, World Health Organization',
 	'caption':'Harry Potter: Crochet Wizardry | Crochet Patterns | Harry Potter Crafts',
@@ -32,8 +33,8 @@ klasDefault={
 	'annot':'annot',
 	'price':'price',
 //buyNowBtn key value should contain 'Btn' in the name
-	'buyNowBtn':'buyNowBtn',
-	'noBuyBtn':'noBuyBtn'
+	'buyNowBtn':'buyNow'+cnst.buttonClasId,
+	'noBuyBtn':'noBuy'+cnst.buttonClasId
 },
 opt2Default={
 	'noCvrImgText':'NO COVER IMAGE',
@@ -45,9 +46,10 @@ fillDef = (defaults, inputOptions) => {
 		if (!(key in inputOptions)){inputOptions[key]=defaults[key];}
 	};
 };	fillDef(opt1Default,opt1);	fillDef(klasDefault,klas);	fillDef(opt2Default,opt2);
-const 	flx = 'flex', sto = 100,
+msgSrv({'':'buildCard module loaded'});
+const 	flx = 'flex', sto = 100, blk = 'block', none = 'none',
 	buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
-	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imageSrc,opt1.imageAlt),
+	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imagePlaceHolderSrc,opt1.imageAlt),
 	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'), 
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
@@ -76,25 +78,17 @@ setProp(container,{'display':flx, 'flexFlow':'row nowrap'}); setProp(goodDesc,{'
 rating.style.display=flx;
 goodImgWrap.classList.add('flex_centr'); //../styl/rst-0.css
 	goodImgWrap.style.flexFlow=colNoWrap;
-	setProp(goodImg, {'height':sto+'%', 'width':sto+'%'});						
+							
 container.appendChild(goodImgWrap);
-// loader, placeholder, book cover image 
-	loader.style.display='block';			coverPH.style.display='block';
-	goodImgWrap.appendChild(loader);		goodImgWrap.appendChild(coverPH);
-const showNoCoverMessage = (mode=true) => {
-	const none = 'none';
-	loader.style.display=none;
-	if (mode) {coverPH.innerHTML=opt2.noCvrImgText;
-	} else {   coverPH.style.display=none;}						    	      
-};	
-	if (opt1.imageSrc) {
-		goodImg.addEventListener('load', ()=>{
-			setTimeout(()=>{goodImgWrap.appendChild(goodImg); showNoCoverMessage(false);},cnst.loadDelay);
-		});
-		goodImg.addEventListener('error',()=>{
-			setTimeout(()=>{showNoCoverMessage();},cnst.loadDelay);
-		});
-	} else {showNoCoverMessage();}	
+// loader, placeholder, book cover image append to goodImg Wrap
+   loader.style.display=none;			setProp(goodImg, {'height':sto+'%', 'width':sto+'%'});
+   goodImgWrap.appendChild(loader);		goodImgWrap.appendChild(goodImg);
+						goodImg.dataset.src = opt1.imageSrc;
+						
+   coverPH.style.display=none;
+   coverPH.dataset.bText = opt2.noCvrImgText;
+   goodImgWrap.appendChild(coverPH);
+						watchInScope(goodImg);	
 //space block 	
 container.appendChild(putEl(klas.spc1));
 //item description
@@ -112,7 +106,7 @@ container.appendChild(goodDesc);
 //button 'BUY NOW' and price block	   
 	  innerCart.forEach ((i)=>{
 		if (JSON.stringify(i)===JSON.stringify(itemID)) {
-			buyNowBtnCaption1=opt1.inCartTxt;   btnClass = klas.buyNowBtn + " buyNowBtnPressed";}
+			buyNowBtnCaption1=opt1.inCartTxt;   btnClass = klas.buyNowBtn+ " buyNowBtnPressed";}
 	  });
 		buyNowBtn=  putEl(btnClass,buyNowBtnCaption1);
 		//6. Цена с указанием валюты. Если в данных о книге нет цены, не показывать эту строчку.
@@ -136,6 +130,7 @@ container.appendChild(goodDesc);
 	goodDesc.appendChild(buyNowBtn);
 //set card container height			
 setPropCard();
+msgSrv({'buildCard image width':getProp2(goodImgWrap,'width'), 'buildCard image height':getProp2(goodImgWrap,'height')});
 //set card container height on resize event
 window.addEventListener('resize',setPropCard);
 };

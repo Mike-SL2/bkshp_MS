@@ -1,12 +1,11 @@
 ﻿// rateModule for bookshop prj
 // dependencies : bshp_modules/Init00.js
 'use strict';
-const paintSVG = function (){
+const paintStar = function (){
 			     let figNo = 1; 
-msgSrv({'':'paintSVG'+'v.2.1.1 loaded ---'});	
+msgSrv({'':'paintStar'+'v.2.1.2 loaded ---'});	
 function mekeStar (color='', colorA = 'rgb(242, 201, 76)', colorB = 'rgb(238, 237, 245)') {
-	const 
-	pre0 = `<svg viewBox="0 0 12 11" fill="none">`, 
+   const 
 	mainSvgCode =`<path d="M6 0L7.80568 3.5147L11.7063 4.1459L8.92165 6.9493L9.52671 10.8541L6 9.072L2.47329 10.8541L3.07835 6.9493L0.293661 4.1459L4.19432 3.5147L6 0Z" `, 
 	pre1 = `<stop class="stp`, mid1 = `" offset="`, ps1 = `%"/>`,
 	mid2 = `{stop-color:`, linGrd = `linearGradient`, figId = `ast${figNo}`, pre2=`fill="`;
@@ -29,13 +28,13 @@ if (!isNaN(color)) {
     			</style>
   		       </defs>`;
 	ps2 = `id="${figId}"`;
-	figNo++;	msgSrv({'paintSVG':'mekeStar figNo'+figNo});
+	figNo++;	msgSrv({'paintStar':'mekeStar figNo'+figNo});
 	};
 };
-return `${pre0}${gradientDefs}${mainSvgCode}${ps2}/></svg>`;
+return `<svg viewBox="0 0 12 11" fill="none">${gradientDefs}${mainSvgCode}${ps2}/></svg>`;
 };
 return mekeStar;
-}(),			paintStar = paintSVG,		/* paintStar(color); */
+}(),
 
 rateModule = (quantity=5, rateModul, space = 20) => { 
 const   starWrapClasName = 'starWrap', spcBlkClasName = 'spcBlk',
@@ -73,7 +72,7 @@ for (let i=0;i<quantity;i++){
 		rateModul.insertBefore(spcBlk,starWrap);};
 };} //if (starWraps){...
 
-/* main function - rating background fill */
+/* main function - rating stars fill */
 function ratingDisplay(rate=75) {	
 	msgSrv({'rateModule':'rating '+rate});	
 	if (rate<1) {return;}	
