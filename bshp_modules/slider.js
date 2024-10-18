@@ -1,7 +1,7 @@
-﻿//slider module v.3.2.8 for bookshop prj
+﻿//slider module v.3.2.9 for bookshop prj
 // dependencies : bshp_modules/Init00.js - plusPX func, putEl func
 'use strict';
-msgSrv({'':'slider module v.3.2.8 loaded'});
+msgSrv({'':'slider module v.3.2.9 loaded'});
 
 const slider=function(speed="slow", frameclass="sliderContainer", 	bPrefx="img/slide", 	bPstf="png"){
 msgSrv({'slider speed' : speed,'frameclass': frameclass});	
@@ -129,6 +129,5 @@ if ((timeout>0) && (timeout<101)) {
 				swState(n);				
 	};
 return slide;};
-const launchSlide = slider('moderate');
 
-slideShow(3,8);
+slideShow(3,8,undefined,undefined,undefined, slider('moderate'));

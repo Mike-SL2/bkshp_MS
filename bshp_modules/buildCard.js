@@ -1,5 +1,5 @@
 ﻿//building card with loader and dynamic PH
-//dependencies: Init00.js, rst-0.css, cardStyl.css
+//dependencies: Init00.js, rateStars.js, rst-0.css, cardStyl.css
 'use strict';
 const buildCard = (container,   opt1={},
      				klas={},
@@ -50,7 +50,7 @@ msgSrv({'':'buildCard module loaded'});
 const 	flx = 'flex', sto = 100, blk = 'block', none = 'none',
 	buyNowBtnCaption = opt1.buyNowBtnTxt.toUpperCase(),
 	goodImgWrap = putEl(klas.goodImgWrap), 	goodImg = putEl(klas.goodImg,opt1.imagePlaceHolderSrc,opt1.imageAlt),
-	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LOADING...'), 
+	loader = putEl(klas.loaderRing),	coverPH = putEl(klas.coverPH,'LAZY LOADING...'), 
 	goodDesc = putEl(klas.goodDesc), rating = putEl(klas.rating), rateDisplay = putEl(klas.ratStar),					      
 	price = putEl(klas.price,opt1.price),  itemID = {'author':opt1.author,'caption':opt1.caption},
 	innerCart = processCart(), rateInPercents = opt1.averageRating*sto/opt1.maxAverageRating,

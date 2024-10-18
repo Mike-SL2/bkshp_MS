@@ -10,9 +10,9 @@
 <div class="container"> </div>
 <script> 
 'use strict';
-const aClr= 'red', bClr = 'blue', rate = ' 50%', body = document.querySelector('.container');
+const body = document.querySelector('.container'),
 
-const paintSVG = function (){
+paintSVG = function (){
 			     let figNo = 1, clrNo = 1, clrA = 'red', clrB = 'blue'; 
 function mekeStar (color='', colorA = '', colorB = '') {
 	const 
@@ -49,29 +49,25 @@ return `${pre0}${gradientDefs}${mainSvgCode}${ps2}/></svg>`;
 };
 return mekeStar;
 }();
-
-const paintStar = paintSVG;	
-
-let flop=true, cid, lastStar;
+let cid, lastStar;
 
 for (let i=0; i<200;i++){const starWrap = document.createElement('div');
 			       starWrap.classList.add('starWrap');
-			switch (i) {case 39:starWrap.innerHTML=paintStar(i,'orange','green');break;
-				    case 65:starWrap.innerHTML=paintStar(i,'magenta','lime');break;
-				    case 100:starWrap.innerHTML=paintStar(i,'green','lime');break;
-			default:if (i>100) {starWrap.innerHTML=paintStar(i-100);} else {starWrap.innerHTML=paintStar(i);}
-			};
-			       
+			switch (i) {case 39:starWrap.innerHTML=paintSVG(i,'orange','green');break;
+				    case 65:starWrap.innerHTML=paintSVG(i,'magenta','lime');break;
+				    case 100:starWrap.innerHTML=paintSVG(i,'green','lime');break;
+			default:if (i>100) {starWrap.innerHTML=paintSVG(i-100);} else {starWrap.innerHTML=paintSVG(i);}
+			};			       
 			 body.appendChild(starWrap);
 			};
 lastStar = document.querySelectorAll('.starWrap');cid = lastStar.length-1;
 		
-cid--;	lastStar[cid].innerHTML=paintStar(30,'magenta','lime');
-cid--;	lastStar[cid].innerHTML=paintStar(70);
-cid--;	lastStar[cid].innerHTML=paintStar('green');
-cid--;	lastStar[cid].innerHTML=paintStar(101);
-cid--;	lastStar[cid].innerHTML=paintStar(-1);
-cid--;	lastStar[cid].innerHTML=paintStar('yellow');
+cid--;	lastStar[cid].innerHTML=paintSVG(30,'magenta','lime');
+cid--;	lastStar[cid].innerHTML=paintSVG(70);
+cid--;	lastStar[cid].innerHTML=paintSVG('green');
+cid--;	lastStar[cid].innerHTML=paintSVG(101);
+cid--;	lastStar[cid].innerHTML=paintSVG(-1);
+cid--;	lastStar[cid].innerHTML=paintSVG('yellow');
 </script>
 </body></html>
 

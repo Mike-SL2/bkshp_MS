@@ -1,4 +1,4 @@
-﻿//Iitialization module v.9.0.1 for bookshop prj
+﻿//Iitialization module v.9.1.2 for bookshop prj
 'use strict';
 const verbose = false, startMark ='    --- ' ;		if (verbose) {console.log(startMark+'Init00 module loaded ---');}
 //false true
@@ -35,7 +35,7 @@ setProp = (domEl,propObj)=>{
 	for (let prop in propObj){	elementStyle[prop]=propObj[prop];	}
 },
 //get header color from body background color
-headerColor = () => {
+headerColor = function () {
 	msgSrv({'headerColor func': 'loaded'});
 	const body=cnst.d7.body,
 	bodyColor= getProp2(body,'background-color'),	headerWrap=cnst.d7.querySelector('.header_wrap');
@@ -46,7 +46,7 @@ msgSrv({'body-color':bodyColor});
 	} else {headerWrapStyle.backgroundColor = bodyColor;}
 
    } else {return;} 
-},
+}(),
 //returns DOM element with className
 putEl = (className='',innerContent='',altTxt='') => {
 	let aux; 
@@ -134,9 +134,7 @@ watchInScope = function () {
 			      observer.observe(img);}
 	return 	obsyr;	
 }();
-
 //-------------------------------------------------------
-headerColor();
 
 // this mod defined constants list display
 const shC173392 = function () {

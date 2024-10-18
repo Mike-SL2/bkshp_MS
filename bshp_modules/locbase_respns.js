@@ -1,6 +1,7 @@
 ﻿/* response samples local database for debug purposes only */
 /* mock server */
-loc_response = 
+'use strict';
+const loc_response = 
 {
 'Architecture':
 `
