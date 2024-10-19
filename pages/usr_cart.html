@@ -29,36 +29,59 @@
 <hr>
 
 <div class='cartBlock'></div>
-<script src="../bshp_modules/Init00.js">  </script>
 <script>
 'use strict';
-msgSrv({'':'client_cart_page loaded'});
-const showCart = function (){
-	msgSrv({'':'client_cart_page showCart func loaded'});
-	const cartBlock = cnst.d7.querySelector('.cartBlock'), emptCardBtn= cnst.d7.querySelector('.emptyCardBtn'),
+const 
+processCart1 = (emptyCart=false) => {
+     const keyName = 'cart9170436'; 
+     let aux=localStorage.getItem(keyName);	
+ 	if (aux) {
+		  if (emptyCart) {localStorage.setItem(keyName,JSON.stringify([]));
+				  return true;}
+		  aux=JSON.parse(aux);return aux;		
+	  } else {return [];};	
+},
+setProp = (domEl,propObj)=>{
+	const elementStyle = domEl.style; 
+	for (let prop in propObj){	elementStyle[prop]=propObj[prop];	}
+},
+putEl1 = (className='',innerContent='') => {
+	let aux; 
+		if (className.match(/Btn/)) {aux = document.createElement('button');}
+		else {aux = document.createElement('div');}	
+		aux.innerHTML=innerContent; 
+	if (className) { aux.className=className; }	return aux;
+},
+getProp2 = (DomElement,propertyName) =>{
+	   let prVal = window.getComputedStyle(DomElement,null).getPropertyValue(propertyName);		
+		if (prVal.match(/px/)) {prVal=Math.round(prVal.match( /\d+/ )[0]);}
+return prVal;	
+},
+showCart = function (){
+	const cartBlock = document.querySelector('.cartBlock'), emptCardBtn= document.querySelector('.emptyCardBtn'),
 	      itemWrapKlas = 'itemWrap', authorCartKlas='authorCart', captionCartKlas='captionCart',
 showContent = () => {
- const innerCart = processCart(), flexCentr = ' flex_centr';
+ const innerCart = processCart1(), flexCentr = ' flex_centr';
    if (innerCart.length) { 
-	let itemWrap = putEl(itemWrapKlas+' noBackNoBorder'), authEl, capEl;	
+	let itemWrap = putEl1(itemWrapKlas+' noBackNoBorder'), authEl, capEl;	
 			cartBlock.appendChild(itemWrap);
-		itemWrap.appendChild(putEl('ordNum'+flexCentr+' noBackNoBorder'));  
-			itemWrap.appendChild(putEl(authorCartKlas+flexCentr+' headerGoods','Author'));
-			itemWrap.appendChild(putEl(captionCartKlas+flexCentr+' headerGoods','Caption'));
+		itemWrap.appendChild(putEl1('ordNum'+flexCentr+' noBackNoBorder'));  
+			itemWrap.appendChild(putEl1(authorCartKlas+flexCentr+' headerGoods','Author'));
+			itemWrap.appendChild(putEl1(captionCartKlas+flexCentr+' headerGoods','Caption'));
 	  innerCart.forEach((i,n)=>{
-		itemWrap = putEl(itemWrapKlas);	
+		itemWrap = putEl1(itemWrapKlas);	
 			cartBlock.appendChild(itemWrap);
-		itemWrap.appendChild(putEl('ordNum'+flexCentr,n+1)); 
-			 authEl=putEl(authorCartKlas,i.author);		itemWrap.appendChild(authEl);
-			 capEl =putEl(captionCartKlas,i.caption);	itemWrap.appendChild(capEl);	     
+		itemWrap.appendChild(putEl1('ordNum'+flexCentr,n+1)); 
+			 authEl=putEl1(authorCartKlas,i.author);		itemWrap.appendChild(authEl);
+			 capEl =putEl1(captionCartKlas,i.caption);	itemWrap.appendChild(capEl);	     
 	  });
         const setHei = () => {
-		const itemWrapArr = cnst.d7.querySelectorAll('.'+itemWrapKlas); 
+		const itemWrapArr = document.querySelectorAll('.'+itemWrapKlas); 
 		let hei;
 		itemWrapArr.forEach((i)=>{
 			authEl=i.querySelector('.'+authorCartKlas);	authEl.style.height='';
 			capEl =i.querySelector('.'+captionCartKlas);	capEl.style.height='';			
-			hei=plusPX(getProp2(i,'height'));		authEl.style.height=hei;
+			hei=getProp2(i,'height')+'px';		authEl.style.height=hei;
 									capEl.style.height=hei;
 		});
 	};setHei();
@@ -73,7 +96,7 @@ showContent = () => {
  showContent();
  emptCardBtn.addEventListener('click',()=>{let ans = confirm ("Are you shure you want to delete all cart items?");
 					   if (ans) {
-					   	processCart(null,false,true); // clean client's cart	     
+					   	processCart1(true); // clean client's cart	     
 					   	setProp(emptCardBtn,{'backgroundColor':'red','boxShadow':'0px 0px 0px 0px white'});	
 					   	setTimeout(()=>{showContent();},500);}
  });   

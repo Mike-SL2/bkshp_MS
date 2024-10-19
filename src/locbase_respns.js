@@ -1,7 +1,8 @@
 ﻿/* response samples local database for debug purposes only */
 /* mock server */
 'use strict';
-const loc_response = 
+
+export const loc_response = 
 {
 'Architecture':
 `
