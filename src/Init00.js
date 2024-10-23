@@ -1,4 +1,4 @@
-﻿//Iitialization module v.10.1.2 for bookshop prj
+﻿//Iitialization module v.10.1.3 for bookshop prj
 "use strict";
 const cnst = {
     d7: document,
@@ -37,10 +37,12 @@ const cnst = {
   },
   //setting style properties
   setProp = (domEl, propObj) => {
+  if (domEl) {
     const elementStyle = domEl.style;
     for (let prop in propObj) {
       elementStyle[prop] = propObj[prop];
     }
+  };
   },
   //get header color from body background color
   headerColor = (function () {
