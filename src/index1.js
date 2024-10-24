@@ -1,4 +1,4 @@
-﻿// BookShop-MS v.0.21.3 main module
+﻿// BookShop-MS v.0.21.5 main module
 "use strict";
 
 import {
@@ -22,31 +22,33 @@ import "../styl/slider.css";
 import "../styl/cardStyl.css";
 import "../styl/main.css";
 const categorySelect = (function () {
-    let runOnce = true,
-      intervalID,
-      lastCategory = {},
+    let lastCategory = {},
       genLoader;
     const bookblk = cnst.d7.querySelector(".goodsBlock"),
       loadMoreBtn = cnst.d7.querySelector(".ldMoreBtn"),
       zero = 0,
-      //scrolls up to top when cards have been dealt
       bookblkWidth = () => {
         return getProp2(bookblk, "width");
       },
-      scrUp = () => {
-        let num, numThreshold;
-        if (runOnce) {
-          runOnce = false;
-          intervalID = setInterval(() => {
-            num = cnst.d7.querySelectorAll(".cardContainer").length;
-            numThreshold = cnst.cardQuantity - 1;
-            if (num > numThreshold) {
-              clearInterval(intervalID);
-              window.scrollBy(zero, -window.innerHeight);
-            }
-          }, 100);
-        }
-      },
+      //scrolls up to the top once when cards have been dealt
+      scrUp = function () {
+	const numThreshold = cnst.cardQuantity-1;
+	let runOnce = true, intervalID, num;
+   	       function runScrUp () {
+		    if (runOnce) {
+			runOnce=false;
+			// numThreshold waiting/watching
+			intervalID = setInterval(()=>{
+				num = cnst.d7.querySelectorAll('.cardContainer').length;  					
+				if (num>numThreshold){
+					clearInterval(intervalID);
+					window.scrollBy(zero, -window.innerHeight);
+				};
+			},100);
+		    };
+   	       };
+      return runScrUp;
+      }(),
       bookBlockEmpty = () => {
         if (bookblk.children.length) {
           return false;
